@@ -1,0 +1,14 @@
+{
+    "require": {
+        "silex/silex": "^1.2",
+        "guzzlehttp/guzzle": "^5.2",
+        "symfony/yaml": "^2.6",
+        "symfony/config": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "gif\\": "src/",
+            "app\\": "app/"
+        }
+    }    
+}
