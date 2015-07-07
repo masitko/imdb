@@ -7,7 +7,7 @@
     },
     "autoload": {
         "psr-4": {
-            "gif\\": "src/",
+            "imdb\\": "src/",
             "app\\": "app/"
         }
     }    

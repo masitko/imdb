@@ -9,8 +9,8 @@ _user:
     requirements:
         id:  \d+
         
-_get_gif:
-    path:        /gif/{id}
-    defaults:    { _controller: "controllers.gif:getGif"}
+_imdb_search:
+    path:        /s/{name}
+    defaults:    { _controller: "controllers.imdb:imdbSearch"}
         
         

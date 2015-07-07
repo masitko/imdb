@@ -21,7 +21,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
 
-    config.vm.network :forwarded_port, guest: 80,   host: 8280, auto_correct: true
+    config.vm.network :forwarded_port, guest: 22,   host: 8212, auto_correct: true
+    config.vm.network :forwarded_port, guest: 80,   host: 8218, auto_correct: true
     config.vm.network :forwarded_port, guest: 8219, host: 8219, auto_correct: true
 
 
@@ -37,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-    config.vm.synced_folder "code", "/var/www", type: "nfs"
+    config.vm.synced_folder "code", "/var/www/html", type: "nfs"
 #    config.vm.synced_folder "code/counter", "/var/www/counter", type: "nfs"
 #    config.vm.synced_folder "code/resident", "/var/www/resident", type: "nfs"
 #    config.vm.synced_folder "code/main", "/var/www/main", type: "nfs"

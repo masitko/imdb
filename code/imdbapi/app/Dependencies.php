@@ -2,7 +2,7 @@
 
 namespace app;
 
-use \gif\controllers;
+use \imdb\controllers;
 
 use GuzzleHttp\Client;
 
@@ -10,8 +10,8 @@ class Dependencies {
 
     static function configure($app) {
 
-        $app["controllers.gif"] = $app->share(function($app) {
-            return new controllers\Gif($app["services.guzzle.client"]);
+        $app["controllers.imdb"] = $app->share(function($app) {
+            return new controllers\Imdb($app["services.guzzle.client"]);
         });        
         
         $app["services.guzzle.client"] = function() {
