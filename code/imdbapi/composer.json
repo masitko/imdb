@@ -3,7 +3,9 @@
         "silex/silex": "^1.2",
         "guzzlehttp/guzzle": "^5.2",
         "symfony/yaml": "^2.6",
-        "symfony/config": "^2.6"
+        "symfony/config": "^2.6",
+        "twig/twig": "^1.18",
+        "sunra/php-simple-html-dom-parser": "^1.5"
     },
     "autoload": {
         "psr-4": {
