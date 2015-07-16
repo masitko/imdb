@@ -22,7 +22,8 @@ class Crawler {
 
     
     private function parseRecommendation( $node ) {
-          
+        
+        $directors = explode(':',$node->find('.rec-director', 0)->plaintext);
         $rec = [
             'imdbId' => $node->attr["data-tconst"],
             'title'  => $node->find('.rec-title > a > b', 0)->plaintext,
@@ -31,7 +32,7 @@ class Crawler {
             'rating' => $node->find('.rating-rating > span.value', 0)->plaintext,
             'outline' => $node->find('.rec-outline > p', 0)->plaintext,
             'actors' => trim(ltrim($node->find('.rec-actor', 0)->plaintext, 'Stars: ')),
-//            'director' => $node->find('.rec-director', 0)->children(),
+            'director' => sizeof($directors)>1?trim($directors[1]):"",
         ];
         
         return $rec;
