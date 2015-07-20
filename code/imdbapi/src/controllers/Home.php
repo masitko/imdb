@@ -15,7 +15,7 @@ class Home {
     
     function index(Request $request) {
         return $this->twig->render('home.html.twig', array(
-            'dupa' => 'DUPA',
+            'request' => $request,
         ));        
     }
     

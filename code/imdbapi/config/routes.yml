@@ -11,7 +11,7 @@ _user:
         
 _imdb_api_suggests:
     path:        /s/{name}
-    defaults:    { _controller: "controllers.api:imdbSuggests"}
+    defaults:    { _controller: "controllers.api:imdbSuggests", name:'' }
         
 _imdb_api_title:
     path:        /t/{title}

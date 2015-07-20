@@ -3,6 +3,7 @@
 namespace imdb\controllers;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use GuzzleHttp\Exception\ClientException;
  
 
@@ -30,7 +31,7 @@ class Api {
             $result = '{}';
         }
         
-        return $result;        
+        return new Response($result, 200, array('Content-Type' => 'application/json'));
     }
 
     /**

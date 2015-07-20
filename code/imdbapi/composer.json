@@ -5,7 +5,8 @@
         "symfony/yaml": "^2.6",
         "symfony/config": "^2.6",
         "twig/twig": "^1.18",
-        "sunra/php-simple-html-dom-parser": "^1.5"
+        "sunra/php-simple-html-dom-parser": "^1.5",
+        "symfony/twig-bridge": "^2.7"
     },
     "autoload": {
         "psr-4": {
