@@ -101,64 +101,64 @@ class groups {
   group { "puppet": }
 }
 
-class { 'nodejs':
-  version => 'stable',
-}
+#class { 'nodejs':
+#  version => 'stable',
+#}
 
-class socket_io {
-  exec { "install_socket_io":
+#class socket_io {
+#  exec { "install_socket_io":
 #    path    => ["/usr/local/node/node-default/bin" ],
-    command => "/usr/local/node/node-default/bin/npm install --prefix /usr/lib/node_modules socket.io",
-    require => Class["nodejs"],
-  }
-}
+#    command => "/usr/local/node/node-default/bin/npm install --prefix /usr/lib/node_modules socket.io",
+#    require => Class["nodejs"],
+#  }
+#}
 
-class upstart {
+#class upstart {
 
-    file { "/etc/init/sbiars.conf":
-        ensure  => file,
-        source  => "puppet:///files/sbiars.conf",
-        require => Class["socket_io"],
+#    file { "/etc/init/sbiars.conf":
+#        ensure  => file,
+#        source  => "puppet:///files/sbiars.conf",
+#        require => Class["socket_io"],
 #        require => Class["nodejs"],
-    }
+#    }
 
-    service { 'sbiars':
-        ensure => running,
-        provider => 'upstart',
-        require => File['/etc/init/sbiars.conf'],
-    }
+#    service { 'sbiars':
+#        ensure => running,
+#        provider => 'upstart',
+#        require => File['/etc/init/sbiars.conf'],
+#    }
 
-}
+#}
 
-class mongodb {
-    exec { "import_public_key":
-        command => "apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10",
-    }
-    exec { "create_list_file":
-        command => 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list',
-        require => Exec["import_public_key"],
-    }
-    exec { "reload_packages":
-        command => "apt-get update",
-        require => Exec["create_list_file"],
-    }
-    exec { "install_mongodb":
-        command => "apt-get install -y mongodb-org",
-        require => Exec["reload_packages"],
-    }
-    service{ "mongod":
-        require => Exec["install_mongodb"],
-    }
-}
+#class mongodb {
+#    exec { "import_public_key":
+#        command => "apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10",
+#    }
+#    exec { "create_list_file":
+#        command => 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list',
+#        require => Exec["import_public_key"],
+#    }
+#    exec { "reload_packages":
+#        command => "apt-get update",
+#        require => Exec["create_list_file"],
+#    }
+#    exec { "install_mongodb":
+#        command => "apt-get install -y mongodb-org",
+#        require => Exec["reload_packages"],
+#    }
+#    service{ "mongod":
+#        require => Exec["install_mongodb"],
+#    }
+#}
 
 include apache
 include curl
 include php
-include mysql
-include mongodb
+#include mysql
+#include mongodb
 include groups
 include git
-include nodejs
+#include nodejs
 #include socket_io
 #include upstart
 
