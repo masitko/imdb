@@ -1,54 +1,70 @@
-
 {% extends "layout.html.twig" %}
 
 {% block content %}
+    <main>
+        <div id="home-search">
+            <h1 id="home-logo">
+                <img src="img/movie-rex.png" alt="MovieRex" />
+            </h1>
+                <input class="title-box" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tell me a movie you love'" type="text" placeholder="Tell me a movie you like"></input>
+                <ul class="results-container"></ul>
+            <a class="action-button green">suggest films</a>
+        </div>
+    </main>
+    <div id="overlay" class="transition"></div>
 
-    <input class="title-box" type="text" placeholder="Please enter title">
 
-    <ul class="results-container">
 
-    </ul>
-    
-    
+{% endblock content %}
+{% block postscripts %}
     <script>
 
         $(function () {
             $('.title-box').keyup(function () {
                 $('.results-container').html('');
-                if( this.value.length > 0 ) {
+                if (this.value.length > 0) {
                     getData(this.value);
                 }
             });
-        });
-        
-        function getData( title ) {
-            console.log(title);
-            var url = "{{ url('_imdb_api_suggests') }}";
-            return $.ajax({
-                url: url+'/'+title
-            }).success(function ( data ) {
-                if( data.d !== undefined ) {
-                    displayTitles(data.d);
-                }
-            });            
-        }
-        
-        function displayTitles( titles ) {
-            $.each( titles, function( index, title ) {
-                var image = title.i[0];
-                var ia = image.split('.');
-                var type = ia.pop();
-                ia.pop();
-                ia.push('_V1');
-                ia.push('_SX40_CR0,0,40,54_');
-                ia.push(type);
-                image = ia.join('.');
-                var html = '<li><img src="'+image+'">'+title.l + ', '+ title.q + ', '+ title.y + '</li>';
-                $('.results-container').append(html);
+            $('body').addClass('loaded');
+            $('#home-search').delay(800).animate({top: 120}, 700, 'easeOutBack');
+        {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
+        {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
+        {#            });#}
             });
-        }
+
+            function getData(title) {
+                console.log(title);
+                var url = "{{ url('_imdb_api_suggests') }}";
+                return $.ajax({
+                    url: url + '/' + title
+                }).success(function (data) {
+                    if (data.d !== undefined) {
+                        displayTitles(data.d);
+                    }
+                });
+            }
+
+            function displayTitles(titles) {
+                $.each(titles, function (index, title) {
+                    var image = title.i[0];
+                    var ia = image.split('.');
+                    var type = ia.pop();
+                    var check1 = "movie";
+                    var check2 = "feature";
+                    ia.pop();
+                    ia.push('_V1');
+                    ia.push('_SX40_CR0,0,40,54_');
+                    ia.push(type);
+                    image = ia.join('.');
+                    if (title.q.indexOf(check1) != -1 || title.q.indexOf(check2) != -1) {
+{#                    if (title.q.indexOf(check2) != -1) {#}
+{#                        var html = '<li><img src="' + image + '">' + title.l + ', ' + title.q + ', ' + title.y + '</li>';#}
+                        var html = '<li><div class="row"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' +title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
+                        $('.results-container').append(html);
+                    }
+                });
+            }
     </script>
 
-
-
-{% endblock content %}
+{% endblock postscripts %}
