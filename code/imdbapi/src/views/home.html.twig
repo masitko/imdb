@@ -10,6 +10,7 @@
                 <ul class="results-container"></ul>
             <a class="action-button green">suggest films</a>
         </div>
+        <ul class="suggestions-container"></ul>
     </main>
     <div id="overlay" class="transition"></div>
 
@@ -21,9 +22,11 @@
 
         $(function () {
             $('.title-box').keyup(function () {
-                $('.results-container').html('');
                 if (this.value.length > 0) {
                     getData(this.value);
+                }
+                else{
+                    $('.results-container').html('');
                 }
             });
             $('body').addClass('loaded');
@@ -34,7 +37,6 @@
             });
 
             function getData(title) {
-                console.log(title);
                 var url = "{{ url('_imdb_api_suggests') }}";
                 return $.ajax({
                     url: url + '/' + title
@@ -46,8 +48,10 @@
             }
 
             function displayTitles(titles) {
+                $('.results-container').html('');
+                $('.suggestions-container').html('');
                 $.each(titles, function (index, title) {
-                    var image = title.i[0];
+                    var image = (title.i !== undefined)?title.i[0]:'';
                     var ia = image.split('.');
                     var type = ia.pop();
                     var check1 = "movie";
@@ -57,14 +61,42 @@
                     ia.push('_SX40_CR0,0,40,54_');
                     ia.push(type);
                     image = ia.join('.');
-                    if (title.q.indexOf(check1) != -1 || title.q.indexOf(check2) != -1) {
+                    if (title.q && (title.q.indexOf(check1) !== -1 || title.q.indexOf(check2) !== -1)) {
 {#                    if (title.q.indexOf(check2) != -1) {#}
 {#                        var html = '<li><img src="' + image + '">' + title.l + ', ' + title.q + ', ' + title.y + '</li>';#}
-                        var html = '<li><div class="row"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' +title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
+                        var html = '<li><div class="row title-container" data-id="'+ title.id +'"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' +title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
                         $('.results-container').append(html);
                     }
                 });
+                $('.title-container').click( function( e ) {
+                    getTitleData($(this).data('id'));
+                });
             }
+            
+            function getTitleData(id) {
+                console.log(id);
+                var url = "{{ url('_imdb_api_title') }}";
+                return $.ajax({
+                    url: url + '/' + id
+                }).success(function (data) {
+                    if (data !== undefined) {
+                        displaySuggestions(data);
+                    }
+                });
+            }
+
+            function displaySuggestions(titles) {
+{#                    console.log(titles);#}
+                $('.results-container').html('');
+                $('.suggestions-container').html('');
+                $.each(titles, function (index, title) {
+                    var html = '<li><div class="row" data-id="'+ title.id +'"><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong> (' + title.years + ')</div></div></li>';
+                    $('.suggestions-container').append(html);
+{#                    console.log(title);#}
+                });
+            }
+
+            
     </script>
 
 {% endblock postscripts %}

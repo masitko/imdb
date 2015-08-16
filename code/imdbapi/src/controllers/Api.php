@@ -37,13 +37,13 @@ class Api {
     /**
      * 
      * @param Request $request
-     * @param type $title - in imdb format tt1553656
+     * @param type $id - in imdb format tt1553656
      * @return string
      */
-    function imdbTitle(Request $request, $title ) {
+    function imdbTitle(Request $request, $id ) {
 
         try{ 
-            $response = $this->client->get('http://www.imdb.com/title/'.$title, [ 'headers' => $this->headers ]);
+            $response = $this->client->get('http://www.imdb.com/title/'.$id, [ 'headers' => $this->headers ]);
             
 //            $response = $this->client->get('http://www.google.co.uk' );
             $result = $this->crawler->getRecommendations($response->getBody()->getContents());
@@ -52,7 +52,7 @@ class Api {
             $result = '{error}';
         }
         
-        return $result;        
+        return new Response($result, 200, array('Content-Type' => 'application/json'));
     }
     
 }
