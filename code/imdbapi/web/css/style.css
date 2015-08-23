@@ -104,7 +104,27 @@ body {
 #suggestive-slider {
     max-width:650px;margin:30px auto 0;
 }
-#suggestive-slider button {display:none !important;}
+#suggestive-slider a.slider-control {
+    position:absolute;
+    display:block;
+    width:17px;height:38px;
+    top:62px;
+    opacity:0.75;
+    z-index: 10;
+}
+
+#suggestive-slider a.slider-control:hover {
+    opacity:1;
+}
+
+#suggestive-slider a.slick-prev {
+    left:0;
+    background: url('../img/left.png');
+}
+#suggestive-slider a.slick-next {
+    right:0;
+    background: url('../img/right.png');
+}
 
 #suggestive-slider .slick-slide {
     height:250px;

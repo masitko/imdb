@@ -130,7 +130,10 @@
         {#                    console.log(title);#}
                 });
                 $('#suggestive-slider').slick({
-                    slidesToShow: 3
+                    slidesToShow: 3,
+                    swipeToSlide: true,
+                    prevArrow: '<a class="slider-control slick-prev transition"></a>',
+                    nextArrow: '<a class="slider-control slick-next transition"></a>'
                 });
             }
 
