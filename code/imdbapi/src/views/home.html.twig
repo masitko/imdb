@@ -117,7 +117,10 @@
             function displaySuggestions(titles) {
         {#                    console.log(titles);#}
                 $('.results-container').html('');
-                $('.suggestions-container').html('');
+                if ($('#suggestive-slider').hasClass('slick-initialized')) {
+                  $('#suggestive-slider').slick('unslick');    
+                } 
+                $('#suggestive-slider').html('');
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
                     var titleShort = title.title.trimToLength(40);
