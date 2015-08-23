@@ -6,11 +6,36 @@
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
-                <input class="title-box" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tell me a movie you love'" type="text" placeholder="Tell me a movie you like"></input>
-                <ul class="results-container"></ul>
+            <input class="title-box" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tell me a movie you like'" type="text" placeholder="Tell me a movie you like"></input>
+            <ul class="results-container"></ul>
             <a class="action-button green">suggest films</a>
         </div>
+
         <ul class="suggestions-container"></ul>
+        <div id="suggestive-slider">
+          {#  <div>
+                <div class="suggestion" style="background:url('/img/jpark.jpg')">
+                    <h4>Movie title here</h4>
+                    <h5 class="imdb">8.1</h5>
+                </div>
+            </div>
+            <div>
+                <div class="suggestion">
+                    
+                    <img src="/img/jpark.jpg" />
+                    <h4>Movie title here</h4>
+                    <h5 class="imdb">9.9</h5>
+                </div>
+            </div>
+            <div>
+                <div class="suggestion">
+                    
+                    <img src="/img/jpark.jpg" />
+                    <h4>Movie title here</h4>
+                    <h5 class="imdb">9.9</h5>
+                </div>
+            </div>#}
+        </div>
     </main>
     <div id="overlay" class="transition"></div>
 
@@ -18,19 +43,23 @@
 
 {% endblock content %}
 {% block postscripts %}
+    <script type="text/javascript" src="/js/slick.min.js"></script>
     <script>
 
         $(function () {
+      {#      $('#suggestive-slider').slick({
+                slidesToShow:3
+            });#}
             $('.title-box').keyup(function () {
                 if (this.value.length > 0) {
                     getData(this.value);
                 }
-                else{
+                else {
                     $('.results-container').html('');
                 }
             });
             $('body').addClass('loaded');
-            $('#home-search').delay(800).animate({top: 60}, 700, 'easeOutBack');
+            $('#home-search').delay(800).animate({top: 20}, 700, 'easeOutBack');
         {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
         {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
         {#            });#}
@@ -51,7 +80,7 @@
                 $('.results-container').html('');
                 $('.suggestions-container').html('');
                 $.each(titles, function (index, title) {
-                    var image = (title.i !== undefined)?title.i[0]:'';
+                    var image = (title.i !== undefined) ? title.i[0] : '';
                     var ia = image.split('.');
                     var type = ia.pop();
                     var check1 = "movie";
@@ -62,17 +91,17 @@
                     ia.push(type);
                     image = ia.join('.');
                     if (title.q && (title.q.indexOf(check1) !== -1 || title.q.indexOf(check2) !== -1)) {
-{#                    if (title.q.indexOf(check2) != -1) {#}
-{#                        var html = '<li><img src="' + image + '">' + title.l + ', ' + title.q + ', ' + title.y + '</li>';#}
-                        var html = '<li><div class="row title-container" data-id="'+ title.id +'"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' +title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
+        {#                    if (title.q.indexOf(check2) != -1) {#}
+        {#                        var html = '<li><img src="' + image + '">' + title.l + ', ' + title.q + ', ' + title.y + '</li>';#}
+                        var html = '<li><div class="row title-container" data-id="' + title.id + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
                         $('.results-container').append(html);
                     }
                 });
-                $('.title-container').click( function( e ) {
+                $('.title-container').click(function (e) {
                     getTitleData($(this).data('id'));
                 });
             }
-            
+
             function getTitleData(id) {
                 console.log(id);
                 var url = "{{ url('_imdb_api_title') }}";
@@ -86,17 +115,29 @@
             }
 
             function displaySuggestions(titles) {
-{#                    console.log(titles);#}
+        {#                    console.log(titles);#}
                 $('.results-container').html('');
                 $('.suggestions-container').html('');
                 $.each(titles, function (index, title) {
-                    var html = '<li><div class="row" data-id="'+ title.id +'"><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong> (' + title.years + ')</div></div></li>';
-                    $('.suggestions-container').append(html);
-{#                    console.log(title);#}
+                    var image1 = (title.i !== undefined) ? title.i[0] : '';
+{#                    var ia1 = image1.split('.');#}
+{#                    var type = ia1.pop();#}
+{#                    ia1.pop();#}
+{#                    ia1.push('_V1');#}
+{#                    ia1.push('_SX40_CR0,0,40,54_');#}
+{#                    ia1.push(type);#}
+{#                    image1 = ia1.join('.');#}
+                    var html = '<div><div class="suggestion" style="background:url('+ image1 + ')" data-id="' + title.id + '"><h4>' + title.title + '<i> (' + title.years + ')</i></h4><h5>8.1</h5></div></div>';
+                    $('#suggestive-slider').append(html);
+                    
+        {#                    console.log(title);#}
+                });
+                $('#suggestive-slider').slick({
+                        slidesToShow:3
                 });
             }
 
-            
+
     </script>
 
 {% endblock postscripts %}

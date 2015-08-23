@@ -11,7 +11,7 @@ body, html {
   height: 100%; }
 
 body {
-  background: url("../img/curtains.jpg") #000 center -30px/contain no-repeat;
+  background: url("../img/curtains.jpg") #000 center -100px/1000px no-repeat;
   position: relative; }
   body #overlay {
     position: absolute;
@@ -96,6 +96,70 @@ body {
 }
 .results-container li:hover {background:#AEEEEE;}
 .fuzzy-title {padding-left:0}
+
+/*Suggestions*/
+/*=============================*/
+
+.suggestions-container {list-style: none;}
+#suggestive-slider {
+    max-width:650px;margin:30px auto 0;
+}
+#suggestive-slider button {display:none !important;}
+
+#suggestive-slider .slick-slide {
+    height:250px;
+    background: url('../img/shadow.png') center bottom no-repeat;
+}
+
+.suggestion {
+    width:137px;
+    height:204px;
+    margin:auto;
+    padding:12px; 
+    position:relative;
+    border:2px solid white;
+    box-sizing:border-box;
+}
+.suggestion:before {
+    content:'';
+    position:absolute;
+    top:0;right:0;bottom:0;left:0;
+    background:rgba(0,0,0,.75);
+    z-index: 0;
+}
+
+.suggestion img {position:relative; z-index:0}
+
+.suggestion h4, .suggestion h5 {
+    color:white;
+    text-align: center;
+    font-size:14px;
+    font-weight: bold;
+    position:relative;
+    z-index: 1;
+}
+
+.suggestion h5 {
+    font-size: 30px;
+    background:url('../img/imdb.png') left / 30px no-repeat;
+    padding-left:34px;
+}
+/*.suggestion h5:before {
+    content:'';
+    display:block;
+    width:30px;height:30px;
+    background:url('../img/imdb.png') center / cover no-repeat;
+}*/
+
+.suggestion .synopsis {
+    position:absolute;
+    background-color:white;
+    top: -100px;
+    width:133px;
+    height:150px;
+    
+}
+
 
 /*Transitions*/
 /*=============================*/
