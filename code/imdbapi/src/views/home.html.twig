@@ -47,19 +47,16 @@
     <script>
 
         $(function () {
-        {#      $('#suggestive-slider').slick({
-                  slidesToShow:3
-              });#}
-                      $('.title-box').keyup(function () {
-                          if (this.value.length > 0) {
-                              getData(this.value);
-                          }
-                          else {
-                              $('.results-container').html('');
-                          }
-                      });
-                      $('body').addClass('loaded');
-                      $('#home-search').delay(800).animate({top: 20}, 700, 'easeOutBack');
+            $('.title-box').keyup(function () {
+                if (this.value.length > 0) {
+                    getData(this.value);
+                }
+                else {
+                    $('.results-container').html('');
+                }
+            });
+            $('body').addClass('loaded');
+            $('#home-search').delay(800).animate({top: 20}, 700, 'easeOutBack');
         {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
         {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
         {#            });#}
@@ -103,7 +100,7 @@
             }
 
             function getTitleData(id) {
-{#                console.log(id);#}
+        {#                console.log(id);#}
                 var url = "{{ url('_imdb_api_title') }}";
                 return $.ajax({
                     url: url + '/' + id
@@ -118,8 +115,8 @@
         {#                    console.log(titles);#}
                 $('.results-container').html('');
                 if ($('#suggestive-slider').hasClass('slick-initialized')) {
-                  $('#suggestive-slider').slick('unslick');    
-                } 
+                    $('#suggestive-slider').slick('unslick');
+                }
                 $('#suggestive-slider').html('');
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
@@ -135,8 +132,18 @@
                     prevArrow: '<a class="slider-control slick-prev transition"></a>',
                     nextArrow: '<a class="slider-control slick-next transition"></a>'
                 });
+                
+                
+                
             }
-
+            
+            $('#suggestive-slider').on('init', function(){
+                    console.log('fired');
+                    var tl = new TimelineMax();
+                    var $slides = $('.slick-slide');
+                    tl.staggerFrom($('.slick-slide'), 1,{x:1000}, 0.1);
+                });
+            
             String.prototype.trimToLength = function (m) {
                 return (this.length > m)
                         ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."
