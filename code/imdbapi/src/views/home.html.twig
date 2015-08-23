@@ -13,28 +13,28 @@
 
         <ul class="suggestions-container"></ul>
         <div id="suggestive-slider">
-          {#  <div>
-                <div class="suggestion" style="background:url('/img/jpark.jpg')">
-                    <h4>Movie title here</h4>
-                    <h5 class="imdb">8.1</h5>
-                </div>
-            </div>
-            <div>
-                <div class="suggestion">
-                    
-                    <img src="/img/jpark.jpg" />
-                    <h4>Movie title here</h4>
-                    <h5 class="imdb">9.9</h5>
-                </div>
-            </div>
-            <div>
-                <div class="suggestion">
-                    
-                    <img src="/img/jpark.jpg" />
-                    <h4>Movie title here</h4>
-                    <h5 class="imdb">9.9</h5>
-                </div>
-            </div>#}
+            {#  <div>
+                  <div class="suggestion" style="background:url('/img/jpark.jpg')">
+                      <h4>Movie title here</h4>
+                      <h5 class="imdb">8.1</h5>
+                  </div>
+              </div>
+              <div>
+                  <div class="suggestion">
+                      
+                      <img src="/img/jpark.jpg" />
+                      <h4>Movie title here</h4>
+                      <h5 class="imdb">9.9</h5>
+                  </div>
+              </div>
+              <div>
+                  <div class="suggestion">
+                      
+                      <img src="/img/jpark.jpg" />
+                      <h4>Movie title here</h4>
+                      <h5 class="imdb">9.9</h5>
+                  </div>
+              </div>#}
         </div>
     </main>
     <div id="overlay" class="transition"></div>
@@ -47,19 +47,19 @@
     <script>
 
         $(function () {
-      {#      $('#suggestive-slider').slick({
-                slidesToShow:3
-            });#}
-            $('.title-box').keyup(function () {
-                if (this.value.length > 0) {
-                    getData(this.value);
-                }
-                else {
-                    $('.results-container').html('');
-                }
-            });
-            $('body').addClass('loaded');
-            $('#home-search').delay(800).animate({top: 20}, 700, 'easeOutBack');
+        {#      $('#suggestive-slider').slick({
+                  slidesToShow:3
+              });#}
+                      $('.title-box').keyup(function () {
+                          if (this.value.length > 0) {
+                              getData(this.value);
+                          }
+                          else {
+                              $('.results-container').html('');
+                          }
+                      });
+                      $('body').addClass('loaded');
+                      $('#home-search').delay(800).animate({top: 20}, 700, 'easeOutBack');
         {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
         {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
         {#            });#}
@@ -120,24 +120,22 @@
                 $('.suggestions-container').html('');
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
-{#                    var ia1 = image1.split('.');#}
-{#                    var type = ia1.pop();#}
-{#                    ia1.pop();#}
-{#                    ia1.push('_V1');#}
-{#                    ia1.push('_SX40_CR0,0,40,54_');#}
-{#                    ia1.push(type);#}
-{#                    image1 = ia1.join('.');#}
-                    var html = '<div><div class="suggestion" style="background:url('+ image1 + ')" data-id="' + title.id + '"><h4>' + title.title + '<i> (' + title.years + ')</i></h4><h5>8.1</h5></div></div>';
+                    var titleShort = title.title.trimToLength(40);
+                    var html = '<div><div class="suggestion" style="background:url(' + image1 + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
                     $('#suggestive-slider').append(html);
-                    
+
         {#                    console.log(title);#}
                 });
                 $('#suggestive-slider').slick({
-                        slidesToShow:3
+                    slidesToShow: 3
                 });
             }
 
-
+            String.prototype.trimToLength = function (m) {
+                return (this.length > m)
+                        ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."
+                        : this;
+            };
     </script>
 
 {% endblock postscripts %}

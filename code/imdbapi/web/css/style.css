@@ -144,6 +144,7 @@ body {
     background:url('../img/imdb.png') left / 30px no-repeat;
     padding-left:34px;
 }
+.suggestion h4 i {font-weight: normal}
 /*.suggestion h5:before {
     content:'';
     display:block;
