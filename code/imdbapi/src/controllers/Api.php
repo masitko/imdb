@@ -44,9 +44,10 @@ class Api {
 
         try{ 
             $response = $this->client->get('http://www.imdb.com/title/'.$id, [ 'headers' => $this->headers ]);
+            $response2 = $this->client->get('http://m.imdb.com/title/'.$id, [ 'headers' => $this->headers ]);
             
 //            $response = $this->client->get('http://www.google.co.uk' );
-            $result = $this->crawler->getRecommendations($response->getBody()->getContents());
+            $result = $this->crawler->getRecommendations($response->getBody()->getContents(), $response2->getBody()->getContents());
         }
         catch (ClientException $e){
             $result = '{error}';
