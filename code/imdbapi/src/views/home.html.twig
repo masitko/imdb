@@ -49,7 +49,7 @@
         $(function () {
             $('.title-box').keyup(function () {
                 if (this.value.length > 0) {
-                    getData(this.value);
+                    getData(this.value.replace(/ /g,'_').toLowerCase());
                 }
                 else {
                     $('.results-container').html('');
