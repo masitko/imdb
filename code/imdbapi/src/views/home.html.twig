@@ -77,16 +77,18 @@
                 $('.results-container').html('');
                 $('.suggestions-container').html('');
                 $.each(titles, function (index, title) {
-                    var image = (title.i !== undefined) ? title.i[0] : '';
-                    var ia = image.split('.');
-                    var type = ia.pop();
                     var check1 = "movie";
                     var check2 = "feature";
-                    ia.pop();
-                    ia.push('_V1');
-                    ia.push('_SX40_CR0,0,40,54_');
-                    ia.push(type);
-                    image = ia.join('.');
+                    var image = '';
+                    if(title.i !== undefined) {
+                        var ia = title.i[0].split('.');
+                        var type = ia.pop();
+                        ia.pop();
+                        ia.push('_V1');
+                        ia.push('_SX40_CR0,0,40,54_');
+                        ia.push(type);
+                        image = ia.join('.');
+                    }
                     if (title.q && (title.q.indexOf(check1) !== -1 || title.q.indexOf(check2) !== -1)) {
         {#                    if (title.q.indexOf(check2) != -1) {#}
         {#                        var html = '<li><img src="' + image + '">' + title.l + ', ' + title.q + ', ' + title.y + '</li>';#}
