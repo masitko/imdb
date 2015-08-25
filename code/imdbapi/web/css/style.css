@@ -139,6 +139,7 @@ body {
     position:relative;
     border:2px solid white;
     box-sizing:border-box;
+    background-size: cover;
 }
 .suggestion:before {
     content:'';
