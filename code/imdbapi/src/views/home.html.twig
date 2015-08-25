@@ -85,7 +85,7 @@
                         var type = ia.pop();
                         ia.pop();
                         ia.push('_V1');
-                        ia.push('_SX40_CR0,0,40,54_');
+                        ia.push('_UX40_CR0,0,40,54_');
                         ia.push(type);
                         image = ia.join('.');
                     }
@@ -123,7 +123,13 @@
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
                     var titleShort = title.title.trimToLength(40);
-                    var html = '<div><div class="suggestion" style="background-image:url('+ title.image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
+                    var ia = title.image.split('.');
+                    var type = ia.pop();
+                    ia.pop();
+                    ia.push('_V1_UX133_CR0,0,133,200_AL_');
+                    ia.push(type);
+                    var image = ia.join('.');
+                    var html = '<div><div class="suggestion" style="background-image:url('+ image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
                     $('#suggestive-slider').append(html);
 
         {#                    console.log(title);#}
