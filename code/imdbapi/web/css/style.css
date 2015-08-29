@@ -112,6 +112,19 @@ label.tv {color:white;}
 /*Suggestions*/
 /*=============================*/
 
+body.searching:after {
+    content:'MovieRex is Hunting...';
+    color:white;
+    text-align: center;
+    padding-top:30%;
+    font-size: 1.6em;
+    font-weight: bold;
+    position: absolute;
+    top:0;left:0;right:0;bottom:0;
+    z-index: 9999;
+    background: rgba(0,0,0,0.75);
+}
+
 .suggestions-container {list-style: none;}
 #suggestive-slider {
     max-width:650px;margin:60px auto 0;

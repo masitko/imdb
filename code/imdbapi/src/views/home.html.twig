@@ -119,6 +119,7 @@
                 });
                 $('.title-container').click(function (e) {
                     getTitleData($(this).data('id'));
+                    $('body').toggleClass('searching');
                 });
             }
 
@@ -141,6 +142,7 @@
                     $('#suggestive-slider').slick('unslick');
                 }
                 $('#suggestive-slider').html('');
+                $('body').toggleClass('searching');
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
                     var titleShort = title.title.trimToLength(40);
@@ -157,10 +159,12 @@
                     if ($('#tv').is(':checked')) {
                             var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
                             $('#suggestive-slider').append(html);
+{#                            $('body').removeClass('searching');#}
                     } else {
                         if (title.years && (title.years.indexOf('Series') === -1 )) {
                             var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
                             $('#suggestive-slider').append(html);
+{#                            $('body').removeClass('searching');#}
                         }
                     }
                     
@@ -177,9 +181,6 @@
                                 prevArrow: '<a class="slider-control slick-prev transition"></a>',
                                 nextArrow: '<a class="slider-control slick-next transition"></a>'
                             });
-
-
-
                         }
 
                         $('#suggestive-slider').on('init', function () {
