@@ -146,12 +146,27 @@
                     var titleShort = title.title.trimToLength(40);
                     var ia = title.image.split('.');
                     var type = ia.pop();
+                    var check1 = "movie";
+                    var check2 = "feature";
+                    var check3 = "TV series";
                     ia.pop();
                     ia.push('_V1_UX133_CR0,0,133,200_AL_');
                     ia.push(type);
                     var image = ia.join('.');
-                    var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
-                    $('#suggestive-slider').append(html);
+                    
+                    if ($('#tv').is(':checked')) {
+                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
+                            $('#suggestive-slider').append(html);
+                    } else {
+                        if (title.years && (title.years.indexOf('Series') === -1 )) {
+                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
+                            $('#suggestive-slider').append(html);
+                        }
+                    }
+                    
+                    
+                   {# var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
+                    $('#suggestive-slider').append(html);#}
 
         {#                    console.log(title);#}
                 });
