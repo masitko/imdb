@@ -116,7 +116,7 @@ label.tv {color:white;}
     content:'MovieRex is Hunting...';
     color:white;
     text-align: center;
-    padding-top:30%;
+    padding-top:300px;
     font-size: 1.6em;
     font-weight: bold;
     position: absolute;
@@ -160,6 +160,7 @@ label.tv {color:white;}
 #suggestive-slider .slick-slide {
     height:250px;
     background: url('../img/shadow.png') center bottom no-repeat;
+    outline:none;
 }
 
 .suggestion {
