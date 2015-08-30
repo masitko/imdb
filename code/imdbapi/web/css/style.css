@@ -70,7 +70,7 @@ body {
   
 #home-logo {
   display: block;
-  /*position: absolute;*/
+  position: relative;
   /*left: 0px;*/
   /*right: 0px;*/
   margin: auto;
@@ -112,7 +112,7 @@ label.tv {color:white;}
 /*Suggestions*/
 /*=============================*/
 
-body.searching:after {
+.searching:after {
     content:'MovieRex is Hunting...';
     color:white;
     text-align: center;
@@ -121,9 +121,15 @@ body.searching:after {
     font-weight: bold;
     position: absolute;
     top:0;left:0;right:0;bottom:0;
-    z-index: 9999;
+    z-index: 9990;
     background: rgba(0,0,0,0.75);
 }
+
+.searching #home-logo {
+    z-index: 9999;
+}
+
+
 
 .suggestions-container {list-style: none;}
 #suggestive-slider {
