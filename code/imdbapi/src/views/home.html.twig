@@ -178,7 +178,7 @@
                     ia.push(type);
                     var image = ia.join('.');
                     var imdbScore = '';
-                    if (title.rating !== 'null') {
+                    if (title.rating) {
                         imdbScore = title.rating;
                     } else {
                         imdbScore =  '?';
