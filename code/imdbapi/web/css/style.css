@@ -7,6 +7,32 @@ and open the template in the editor.
     Created on : 15-Jul-2015, 22:06:07
     Author     : Amon Jafarbay
 */
+
+//FONTS
+@font-face {
+    font-family: 'comic neue';
+    src: url('fonts/ComicNeue-Regular.woff');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'comic neue';
+    src: url('fonts/ComicNeue-Regular-Oblique.woff');
+    font-weight: bold;
+    font-style: oblique;
+}
+@font-face {
+    font-family: 'comic neue';
+    src: url('fonts/ComicNeue-Light.woff');
+}
+@font-face {
+    font-family: 'comic neue';
+    src: url('fonts/ComicNeue-Light-Oblique.woff');
+    font-style: oblique;
+}
+
+
+//STYLES
+
 body, html {
   height: 100%; }
 
@@ -110,6 +136,7 @@ label.tv {color:white;}
 }
 .results-container li:hover, .results-container li.selected {background:#AEEEEE;}
 .fuzzy-title {padding-left:0}
+.fuzzy-image img {width:27px;}
 
 /*Suggestions*/
 /*=============================*/

@@ -1,5 +1,8 @@
 {% extends "layout.html.twig" %}
-
+{% block headEnd %}
+    <link rel="stylesheet" type="text/css" href="/css/slick.css"/>
+{% endblock headEnd %}
+    
 {% block content %}
     <main>
         <div id="home-search">
@@ -176,7 +179,7 @@
             {#                            $('body').addClass('searching');#}
             {#                            getTitleData(selectedId); //find recommendations#}
             {#                            $('.title-box').val(selectedTitle);#}
-                                    $('li.selected .title-container').click().stopPropagation();
+                                    $('li.selected .title-container').click().bullshit();
                                     return false;
                                 } else {
                                     return false;
