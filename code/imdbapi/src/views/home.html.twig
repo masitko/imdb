@@ -159,11 +159,6 @@
                                 return false;
                             } else if (e.which === 13) { // enter key
                                 if (liSelected) {
-{#                                    var selectedId = $('li.selected .title-container').data('id');#}
-{#                                    var selectedTitle = $('li.selected .title-container').data('title');#}
-            {#                            $('body').addClass('searching');#}
-            {#                            getTitleData(selectedId); //find recommendations#}
-            {#                            $('.title-box').val(selectedTitle);#}
                                     $('li.selected .title-container').click();
                                 }
                                 return false;
