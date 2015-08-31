@@ -271,9 +271,12 @@
                     var type = ia.pop();
                     var cropText = cropImage(ia.pop());
                     ia.push(cropText);
-{#                    ia.push('_V1_UX133_CR0,0,133,200_AL_');#}
                     ia.push(type);
                     var image = ia.join('.');
+                    if( cropText.substring(1,5) === 'CB35') {
+                        console.log('i want default here!');
+{#                        image = ....;#}
+                    }
                     var imdbScore = '';
                     if (title.rating) {
                         imdbScore = title.rating;
