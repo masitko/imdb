@@ -14,7 +14,7 @@
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv">
             </div>
-            <img id="rex-fill" class="transition" src="img/movie-rex-fill.png" alt="MovieRex" />
+            <img id="rex-fill" class="" src="img/movie-rex-fill.png" alt="MovieRex" />
         </div>
 
         <ul class="suggestions-container"></ul>
@@ -53,13 +53,14 @@
     <script>
 
         $(function () {
-
+            //for browsers that don't support pointer events none
             $('#home-logo').click(function () {
                 setTimeout(function () {
                     $('.title-box').focus();
                 }, 0.01);
             });
 
+            // cue fuzzy seatch
             $('.title-box').keyup(function () {
                 if (this.value.length > 0) {
                     getData(this.value.replace(/ /g, '_').toLowerCase());
@@ -68,15 +69,20 @@
                     $('.results-container').html('');
                 }
             });
+
+            //fade in and animate logo
             $('body').addClass('loaded');
             var homeSearch = $('#home-search');
             TweenMax.from(homeSearch, 2.5, {ease: Bounce.easeOut, top: -600});
-        {#            $('#home-search').from({top: 20}, 700, 'easeOutBack');#}
         {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
         {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
         {#            });#}
+
+
+
             });
 
+            //fuzzy search
             function getData(title) {
                 var url = "{{ url('_imdb_api_suggests') }}";
                 return $.ajax({
@@ -88,9 +94,9 @@
                 });
             }
 
+            //fuzzy search results
             function displayTitles(titles) {
                 $('.results-container').html('');
-                $('.suggestions-container').html('');
                 $.each(titles, function (index, title) {
                     var check1 = "movie";
                     var check2 = "feature";
@@ -124,13 +130,16 @@
                         }
                     }
                 });
+
+                //Move title into input field, toggle searching class, start search
                 $('.title-container').click(function (e) {
                     $('.title-box').val($(this).data('title'));
-                    getTitleData($(this).data('id'));
+                    getTitleData($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
                 });
             }
 
+            //Search for recommendations
             function getTitleData(id) {
         {#                console.log(id);#}
                 var url = "{{ url('_imdb_api_title') }}";
@@ -143,45 +152,44 @@
                 });
             }
 
+            //display recommendations
             function displaySuggestions(titles) {
-        {#                    console.log(titles);#}
+
+                //empty the fuzzy search
                 $('.results-container').html('');
+
+                //destroy and empty the slider if it exists
                 if ($('#suggestive-slider').hasClass('slick-initialized')) {
                     $('#suggestive-slider').slick('unslick');
                 }
                 $('#suggestive-slider').html('');
+
+                //remove searching class
                 $('body').toggleClass('searching');
+
+                //create results
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
-                    var titleShort = title.title.trimToLength(40);
+                    var titleShort = title.title.trimToLength(40); //create short title
                     var ia = title.image.split('.');
                     var type = ia.pop();
-                    var check1 = "movie";
-                    var check2 = "feature";
-                    var check3 = "TV series";
                     ia.pop();
                     ia.push('_V1_UX133_CR0,0,133,200_AL_');
                     ia.push(type);
                     var image = ia.join('.');
 
+                    //populate the slider 
                     if ($('#tv').is(':checked')) {
-                        var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5></div></div>';
+                        var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
                         $('#suggestive-slider').append(html);
-        {#                            $('body').removeClass('searching');#}
                     } else {
                         if (title.years && (title.years.indexOf('Series') === -1)) {
-                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5></div></div>';
+                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
                             $('#suggestive-slider').append(html);
-        {#                            $('body').removeClass('searching');#}
                         }
                     }
-
-
-        {# var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
-         $('#suggestive-slider').append(html);#}
-
-        {#                    console.log(title);#}
                 });
+                //initialise the slider
                 $('#suggestive-slider').slick({
                     slidesToShow: 3,
                     slidesToScroll: 3,
@@ -189,14 +197,23 @@
                     prevArrow: '<a class="slider-control slick-prev transition"></a>',
                     nextArrow: '<a class="slider-control slick-next transition"></a>'
                 });
+
+                //rex it 
+                $('.rex-it').click(function (e) {
+                    $('.title-box').val($(this).data('title'));
+                    getTitleData($(this).data('id')); //find recommendations
+                    $('body').toggleClass('searching');
+                });
             }
 
+            //animate the slides in on creation
             $('#suggestive-slider').on('init', function () {
                 var tl = new TimelineMax();
                 var $slides = $('.slick-slide');
                 tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
             });
 
+            //truncation function
             String.prototype.trimToLength = function (m) {
                 return (this.length > m)
                         ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."

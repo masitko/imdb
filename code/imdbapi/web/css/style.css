@@ -123,11 +123,11 @@ label.tv {color:white;}
     position: absolute;
     top:0;left:0;right:0;bottom:0;
     z-index: 9990;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.82);
 }
 
 .searching #home-logo {
-    z-index: 9999;
+    /*z-index: 9999;*/
 }
 
 #rex-fill {
@@ -138,9 +138,16 @@ label.tv {color:white;}
     top: 0px;
     z-index: -1;
     opacity: 0;
+    -webkit-transition: opacity .6s ease-in-out;
+    -moz-transition: opacity .6s ease-in-out;
+    -ms-transition: opacity .6s ease-in-out;
+    -o-transition: opacity .6s ease-in-out;
+    transition: opacity .6s ease-in-out;
 }
 
-.searching #rex-fill {opacity: 1;z-index: 99999;}
+.searching #rex-fill {
+    opacity: 1;z-index: 99999;
+}
 
 
 .suggestions-container {list-style: none;}
@@ -202,7 +209,7 @@ transition: all 400ms ease-in-out;
 
 .suggestion img {position:relative; z-index:0}
 
-.suggestion h4, .suggestion h5 {
+.suggestion h4, .suggestion h5, .rex-it {
     color:white;
     text-align: center;
     font-size:14px;
@@ -230,8 +237,24 @@ transition: all 200ms ease-in-out;
     background:url('../img/imdb.png') center / cover no-repeat;
 }*/
 
-.suggestion:hover h4, .suggestion:hover h5, .suggestion:hover:before {opacity:1}
+.suggestion:hover h4, .suggestion:hover h5, .suggestion:hover:before, .suggestion:hover .rex-it {opacity:1}
 
+.rex-it {
+    font-weight: normal;
+    position: absolute;
+    left: 0px;
+    width: 70px;
+    right: 0px;
+    text-align: center;
+    margin: auto;
+    bottom: 12px;
+    background: #25ab44;
+    padding: 2px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.rex-it:hover { background: #148d31;color:white}
 
 .suggestion .synopsis {
     position:absolute;
