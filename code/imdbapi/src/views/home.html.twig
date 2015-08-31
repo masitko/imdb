@@ -14,7 +14,7 @@
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv">
             </div>
-            <img id="rex-fill" class="" src="img/movie-rex-fill.png" alt="MovieRex" />
+            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />
         </div>
 
         <ul class="suggestions-container"></ul>
@@ -177,14 +177,19 @@
                     ia.push('_V1_UX133_CR0,0,133,200_AL_');
                     ia.push(type);
                     var image = ia.join('.');
-
+                    var imdbScore = '';
+                    if (title.rating !== 'null') {
+                        imdbScore = title.rating;
+                    } else {
+                        imdbScore =  '?';
+                    }
                     //populate the slider 
                     if ($('#tv').is(':checked')) {
-                        var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
+                        var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
                         $('#suggestive-slider').append(html);
                     } else {
                         if (title.years && (title.years.indexOf('Series') === -1)) {
-                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
+                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
                             $('#suggestive-slider').append(html);
                         }
                     }
