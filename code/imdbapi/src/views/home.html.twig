@@ -9,7 +9,8 @@
             <h1 id="home-logo">
                 <img src="img/movie-rex-fill.png" alt="MovieRex" />
             </h1>
-            <input class="title-box" onfocus="this.placeholder = ''; this.select();" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>
+            <input class="title-box" type="text" placeholder="Tell me a movie you like"></input>
+{#            <input class="title-box" onfocus="this.placeholder = ''; this.select();" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>#}
             <ul class="results-container"></ul>
             {#            <a class="action-button green">suggest films</a>#}
             <div class="tv-checkbox">
@@ -64,12 +65,13 @@
         {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
         {#            });#}
 
-
                 //typing class
                 $('.title-box').focus(function () {
+                    this.placeholder = '';
                     $('body').addClass('typing');
                 });
                 $('.title-box').blur(function () {
+                    this.placeholder = 'Tell me a movie you like';
                     $('body').removeClass('typing');
                 });
 
@@ -125,9 +127,9 @@
 
                     //keyboard selector
                     var li = $('.results-container li');
-                    var liSelected;
+                    var liSelected = null;
         {#                $('.title-box').keydown(function (e) {#}
-                    $('.title-box').keydown(function (e) {
+                    $('.title-box').off('keydown').keydown(function (e) {
                         if ($('.results-container li').length > 0) {
                             if (e.which === 40) { //down key
                                 if (liSelected) {
@@ -162,11 +164,9 @@
             {#                            $('body').addClass('searching');#}
             {#                            getTitleData(selectedId); //find recommendations#}
             {#                            $('.title-box').val(selectedTitle);#}
-                                    $('li.selected .title-container').click().bullshit();
-                                    return false;
-                                } else {
-                                    return false;
+                                    $('li.selected .title-container').click();
                                 }
+                                return false;
                             }
                         }
 
@@ -179,6 +179,7 @@
                     $('.title-box').val($(this).data('title'));
                     getTitleData($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
+                    return false;
                 });
 
 
