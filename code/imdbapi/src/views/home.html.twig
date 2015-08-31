@@ -17,6 +17,7 @@
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv">
             </div>
+            {#            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />#}
             <div id="tooltip" style=''>
                 <aside class="choose">Select your title when you see it below.</aside>
                 <aside class="spell"><strong>RAWR!</strong> Check your spelling.</aside>
@@ -203,6 +204,28 @@
 
             }
 
+            var cropImageY = 200;
+            var cropImageX = 133;
+
+            function cropImage( imageText ) {
+                var it = imageText.split('_');
+                if( it[3] === undefined ) {
+                    return imageText;
+                }
+                it[2] = (it[2][1] === 'Y')? 'UY'+ cropImageY : 'UX'+ cropImageX;
+                it[3] = cropImageCR(it[3]);
+                return it.join('_');
+
+            }
+            
+            function cropImageCR( crText ) {
+                var ct = crText.split(',');
+                ct[0] = 'CR' + (ct[0].substring(2)*1.5 | 0);
+                ct[2] = cropImageX;
+                ct[3] = cropImageY;
+                return ct.join(',');
+            }
+
             //Search for recommendations
             function getTitleData(id) {
         {#                console.log(id);#}
@@ -242,8 +265,9 @@
                     var titleShort = title.title.trimToLength(40); //create short title
                     var ia = title.image.split('.');
                     var type = ia.pop();
-                    ia.pop();
-                    ia.push('_V1_UX133_CR0,0,133,200_AL_');
+                    var cropText = cropImage(ia.pop());
+                    ia.push(cropText);
+{#                    ia.push('_V1_UX133_CR0,0,133,200_AL_');#}
                     ia.push(type);
                     var image = ia.join('.');
                     var imdbScore = '';
