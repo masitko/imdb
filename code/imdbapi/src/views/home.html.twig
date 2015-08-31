@@ -6,7 +6,7 @@
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
-            <input class="title-box" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tell me a movie you like'" type="text" placeholder="Tell me a movie you like"></input>
+            <input class="title-box" onfocus="this.placeholder = '';" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="results-container"></ul>
             {#            <a class="action-button green">suggest films</a>#}
             {#            <input id="type-selector" type="range" min="0" max="2" step="1" value="0" />#}
@@ -60,12 +60,12 @@
                 }, 0.01);
             });
 
-            // cue fuzzy seatch
-            $('.title-box').keyup(function () {
-                if (this.value.length > 0) {
+            // cue fuzzy search
+            $('.title-box').keyup(function (e) {
+                if (this.value.length > 0 && (e.which !== 40) && (e.which !== 38)) {
                     getData(this.value.replace(/ /g, '_').toLowerCase());
                 }
-                else {
+                else if (this.value.length < 1) {
                     $('.results-container').html('');
                 }
             });
@@ -79,8 +79,15 @@
         {#            });#}
 
 
+                //typing class
+                $('.title-box').focus(function () {
+                    $('body').addClass('typing');
+                });
+                $('.title-box').blur(function () {
+                    $('body').removeClass('typing');
+                });
 
-            });
+            });//end of doc ready
 
             //fuzzy search
             function getData(title) {
@@ -129,6 +136,56 @@
                             $('.results-container').append(html);
                         }
                     }
+
+                    //keyboard selector
+                    var li = $('.results-container li');
+                    var liSelected;
+        {#                $('.title-box').keydown(function (e) {#}
+                    $('.title-box').keydown(function (e) {
+                        if ($('.results-container li').length > 0) {
+                            if (e.which === 40) { //down key
+                                if (liSelected) {
+                                    liSelected.removeClass('selected');
+                                    next = liSelected.next();
+                                    if (next.length > 0) {
+                                        liSelected = next.addClass('selected');
+                                    } else {
+                                        liSelected = li.eq(0).addClass('selected');
+                                    }
+                                } else {
+                                    liSelected = li.eq(0).addClass('selected');
+                                }
+                                return false;
+                            } else if (e.which === 38) { //up key
+                                if (liSelected) {
+                                    liSelected.removeClass('selected');
+                                    next = liSelected.prev();
+                                    if (next.length > 0) {
+                                        liSelected = next.addClass('selected');
+                                    } else {
+                                        liSelected = li.last().addClass('selected');
+                                    }
+                                } else {
+                                    liSelected = li.last().addClass('selected');
+                                }
+                                return false;
+                            } else if (e.which === 13) { // enter key
+                                if (liSelected) {
+{#                                    var selectedId = $('li.selected .title-container').data('id');#}
+{#                                    var selectedTitle = $('li.selected .title-container').data('title');#}
+            {#                            $('body').addClass('searching');#}
+            {#                            getTitleData(selectedId); //find recommendations#}
+            {#                            $('.title-box').val(selectedTitle);#}
+                                    $('li.selected .title-container').click().stopPropagation();
+                                    return false;
+                                } else {
+                                    return false;
+                                }
+                            }
+                        }
+
+                    });
+
                 });
 
                 //Move title into input field, toggle searching class, start search
@@ -137,6 +194,9 @@
                     getTitleData($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
                 });
+
+
+
             }
 
             //Search for recommendations
@@ -181,7 +241,7 @@
                     if (title.rating) {
                         imdbScore = title.rating;
                     } else {
-                        imdbScore =  '?';
+                        imdbScore = '?';
                     }
                     //populate the slider 
                     if ($('#tv').is(':checked')) {

@@ -11,7 +11,7 @@ body, html {
   height: 100%; }
 
 body {
-  background: url("../img/curtains.jpg") #000 center -64px/1101px no-repeat;
+  background: url("../img/curtains.jpg") #000 center -8px/1101px no-repeat;
   position: relative; }
   body #overlay {
     position: absolute;
@@ -33,7 +33,7 @@ body {
   position: relative;
   width: 100%;
   text-align: center;
-  top: 20px;
+  top: 60px;
   height: 270px;
   /*transform: translateY(-500px);*/ }
   #home-search input.title-box {
@@ -76,8 +76,9 @@ body {
   margin: auto;
   z-index: 9;
   height: 190px;
-  pointer-events: none; 
 }
+
+#home-logo img {  pointer-events: none; }
 
 label.tv {color:white;}
 .tv-checkbox {margin:4px 0 0}
@@ -107,7 +108,7 @@ label.tv {color:white;}
     line-height: 1.3em;
     font-size: 0.9em;
 }
-.results-container li:hover {background:#AEEEEE;}
+.results-container li:hover, .results-container li.selected {background:#AEEEEE;}
 .fuzzy-title {padding-left:0}
 
 /*Suggestions*/
@@ -140,7 +141,7 @@ label.tv {color:white;}
     opacity: 0;
 }
 
-.searching #rex-fill {
+.searching #rex-fill, .typing #rex-fill {
     opacity: 1;z-index: 99999;
 }
 
@@ -148,7 +149,7 @@ label.tv {color:white;}
 .suggestions-container {list-style: none;}
 #suggestive-slider {
     max-width:650px;margin:auto;
-    top: 74px;
+    top: 130px;
 }
 #suggestive-slider a.slider-control {
     position:absolute;
