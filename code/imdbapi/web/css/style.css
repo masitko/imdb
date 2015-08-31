@@ -102,9 +102,10 @@ body {
   margin: auto;
   z-index: 9;
   height: 190px;
+  pointer-events:none;
 }
 
-#home-logo img {  pointer-events: none; }
+#home-logo img, #rex {  pointer-events: none; }
 
 label.tv {color:white;}
 .tv-checkbox {margin:4px 0 0}
@@ -155,7 +156,7 @@ label.tv {color:white;}
 }
 
 .searching #home-logo {
-    /*z-index: 9999;*/
+    z-index: 9999;
 }
 
 #rex-fill {
