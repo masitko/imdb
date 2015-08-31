@@ -183,7 +183,7 @@ label.tv {color:white;}
 .suggestions-container {list-style: none;}
 #suggestive-slider {
     max-width:650px;margin:auto;
-    top: 130px;
+    top: 124px;
 }
 #suggestive-slider a.slider-control {
     position:absolute;
@@ -208,18 +208,18 @@ label.tv {color:white;}
 }
 
 #suggestive-slider .slick-slide {
-    height:250px;
+    height:258px;
     background: url('../img/shadow.png') center bottom no-repeat;
     outline:none;
 }
 
 .suggestion {
-    width:137px;
-    height:204px;
+    width:150px;
+    height:224px;
     margin:auto;
     padding:12px; 
     position:relative;
-    border:2px solid white;
+    border:1px solid white;
     box-sizing:border-box;
     background-size: cover;
 }

@@ -197,6 +197,7 @@
                     $('.title-box').val($(this).data('title'));
                     getTitleData($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
+                    $('#home-search').attr('class','');
                     return false;
                 });
 
