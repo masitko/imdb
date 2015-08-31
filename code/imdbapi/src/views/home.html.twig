@@ -9,10 +9,9 @@
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
-            <input class="title-box" onfocus="this.placeholder = '';" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>
+            <input class="title-box" onfocus="this.placeholder = ''; this.select();" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="results-container"></ul>
             {#            <a class="action-button green">suggest films</a>#}
-            {#            <input id="type-selector" type="range" min="0" max="2" step="1" value="0" />#}
             <div class="tv-checkbox">
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv">
@@ -27,23 +26,7 @@
                       <h4>Movie title here</h4>
                       <h5 class="imdb">8.1</h5>
                   </div>
-              </div>
-              <div>
-                  <div class="suggestion">
-                      
-                      <img src="/img/jpark.jpg" />
-                      <h4>Movie title here</h4>
-                      <h5 class="imdb">9.9</h5>
-                  </div>
-              </div>
-              <div>
-                  <div class="suggestion">
-                      
-                      <img src="/img/jpark.jpg" />
-                      <h4>Movie title here</h4>
-                      <h5 class="imdb">9.9</h5>
-                  </div>
-              </div>#}
+              </div> #}
         </div>
     </main>
     <div id="overlay" class="transition"></div>
@@ -56,7 +39,7 @@
     <script>
 
         $(function () {
-            //for browsers that don't support pointer events none
+            //for browsers that don't support pointer-events:none
             $('#home-logo').click(function () {
                 setTimeout(function () {
                     $('.title-box').focus();
