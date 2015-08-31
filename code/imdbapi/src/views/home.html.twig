@@ -2,7 +2,7 @@
 {% block headEnd %}
     <link rel="stylesheet" type="text/css" href="/css/slick.css"/>
 {% endblock headEnd %}
-    
+
 {% block content %}
     <main>
         <div id="home-search">
@@ -10,14 +10,18 @@
                 <img src="img/movie-rex-fill.png" alt="MovieRex" />
             </h1>
             <input class="title-box" type="text" placeholder="Tell me a movie you like"></input>
-{#            <input class="title-box" onfocus="this.placeholder = ''; this.select();" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>#}
+            {#            <input class="title-box" onfocus="this.placeholder = ''; this.select();" onblur="this.placeholder = 'Tell me a movie you like';" type="text" placeholder="Tell me a movie you like"></input>#}
             <ul class="results-container"></ul>
             {#            <a class="action-button green">suggest films</a>#}
             <div class="tv-checkbox">
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv">
             </div>
-{#            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />#}
+            <div id="tooltip" style=''>
+                <aside class="choose">Select your title when you see it below.</aside>
+                <aside class="spell"><strong>RAWR!</strong> Check your spelling.</aside>
+                <aside class="rawr">RAWR!</aside>
+            </div>
         </div>
 
         <ul class="suggestions-container"></ul>
@@ -73,6 +77,23 @@
                 $('.title-box').blur(function () {
                     this.placeholder = 'Tell me a movie you like';
                     $('body').removeClass('typing');
+                });
+
+                //tooltips
+                $('.title-box').keyup(function () {
+                    setTimeout(function () {
+                        if ($('.title-box').val().length > 1) {
+                            if ($('.results-container li').length > 0) {
+                                $('#home-search').attr('class', 'choose');
+                            } else if (($('.results-container li').length === 0)) {
+                                $('#home-search').attr('class', 'spell');
+                            }
+                        } else {
+                            $('#home-search').attr('class', '');
+                        }
+                    }, 900);
+
+
                 });
 
             });//end of doc ready
@@ -131,6 +152,7 @@
         {#                $('.title-box').keydown(function (e) {#}
                     $('.title-box').off('keydown').keydown(function (e) {
                         if ($('.results-container li').length > 0) {
+
                             if (e.which === 40) { //down key
                                 if (liSelected) {
                                     liSelected.removeClass('selected');
@@ -199,7 +221,12 @@
 
                 //empty the fuzzy search
                 $('.results-container').html('');
-
+                
+                //clear tooltips
+                $('#home-search').attr('class','rawr');
+                setTimeout(function(){
+                    $('#home-search').attr('class','');
+                },1500);
                 //destroy and empty the slider if it exists
                 if ($('#suggestive-slider').hasClass('slick-initialized')) {
                     $('#suggestive-slider').slick('unslick');
