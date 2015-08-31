@@ -57,8 +57,9 @@ body {
 /*HOMEPAGE*/
 #home-search {
   position: relative;
-  width: 100%;
+  width: 380px;
   text-align: center;
+  margin:auto;
   top: 60px;
   height: 270px;
   /*transform: translateY(-500px);*/ }
@@ -102,13 +103,18 @@ body {
   margin: auto;
   z-index: 9;
   height: 190px;
-  pointer-events:none;
+  /*pointer-events:none;*/
 }
 
-#home-logo img, #rex {  pointer-events: none; }
+/*#home-logo img {  pointer-events: none; }*/
 
 label.tv {color:white;}
 .tv-checkbox {margin:4px 0 0}
+
+
+//Tooltips
+
+.choose {color:red}
 
 /*RESULTS*/
 
@@ -286,9 +292,41 @@ transition: all 200ms ease-in-out;
     top: -100px;
     width:133px;
     height:150px;
-    
 }
 
+/*tooltip*/
+
+#tooltip {
+    position: absolute;
+    background: url('/img/bubble.png') center / contain no-repeat;
+    width:150px;
+    height:145px;
+    padding: 14px 14px 40px;
+    font-family: 'comic neue';
+    /*font-style: oblique;*/
+    /*font-weight: bold;*/
+    font-size: 19px;
+    top:-50px;
+    right:-60px;
+    opacity:0;
+    -webkit-transition: all 200ms ease-in-out;
+-moz-transition: all 200ms ease-in-out;
+-ms-transition: all 200ms ease-in-out;
+-o-transition: all 200ms ease-in-out;
+transition: all 200ms ease-in-out;
+}
+
+aside.choose, aside.spell, aside.rawr {display:none;font-size:18px}
+
+aside.spell {font-size: 22px; line-height: 27px}
+aside.rawr {    font-size: 40px;
+    transform: rotate(-20deg);
+    padding-top: 12px;}
+.spell strong {font-style:normal;}
+
+.choose #tooltip, .spell #tooltip, .rawr #tooltip {opacity: 1}
+
+.choose .choose, .spell .spell, .rawr .rawr {display:block}
 
 /*Transitions*/
 /*=============================*/
@@ -350,3 +388,6 @@ transition: all 200ms ease-in-out;
     text-shadow: 0px -2px #003100; }
   .action-button:active {
     border-width: 1px; }
+
+  
+  
