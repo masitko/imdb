@@ -14,6 +14,7 @@
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv">
             </div>
+            <img id="rex-fill" class="transition" src="img/movie-rex-fill.png" alt="MovieRex" />
         </div>
 
         <ul class="suggestions-container"></ul>
@@ -52,6 +53,13 @@
     <script>
 
         $(function () {
+
+            $('#home-logo').click(function () {
+                setTimeout(function () {
+                    $('.title-box').focus();
+                }, 0.01);
+            });
+
             $('.title-box').keyup(function () {
                 if (this.value.length > 0) {
                     getData(this.value.replace(/ /g, '_').toLowerCase());
@@ -61,9 +69,8 @@
                 }
             });
             $('body').addClass('loaded');
-        {#            $('#home-search').delay(800).animate({top: 20}, 700, 'easeOutBack');#}
-                var homeSearch = $('#home-search');
-                TweenMax.from(homeSearch, 2.5, {ease: Bounce.easeOut, top: -600});
+            var homeSearch = $('#home-search');
+            TweenMax.from(homeSearch, 2.5, {ease: Bounce.easeOut, top: -600});
         {#            $('#home-search').from({top: 20}, 700, 'easeOutBack');#}
         {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
         {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
@@ -100,19 +107,19 @@
                         image = ia.join('.');
                     }
                     if ($('#tv').is(':checked')) {
-                        if (title.q && (title.q.indexOf(check3) !== -1 )) {
+                        if (title.q && (title.q.indexOf(check3) !== -1)) {
                             var tvId = ' TV';
                         } else {
                             var tvId = '';
                         }
                         if (title.q && (title.q.indexOf(check1) !== -1 || title.q.indexOf(check2) !== -1 || title.q.indexOf(check3) !== -1)) {
-                            var html = '<li><div class="row title-container" data-id="' + title.id + '" data-title="'+ title.l +'"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')' + tvId + '</div></div></li>';
+                            var html = '<li><div class="row title-container" data-id="' + title.id + '" data-title="' + title.l + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')' + tvId + '</div></div></li>';
                             $('.results-container').append(html);
                         }
                     }
                     else {
                         if (title.q && (title.q.indexOf(check1) !== -1 || title.q.indexOf(check2) !== -1)) {
-                            var html = '<li><div class="row title-container" data-id="' + title.id + '" data-title="'+ title.l +'"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
+                            var html = '<li><div class="row title-container" data-id="' + title.id + '" data-title="' + title.l + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
                             $('.results-container').append(html);
                         }
                     }
@@ -156,45 +163,45 @@
                     ia.push('_V1_UX133_CR0,0,133,200_AL_');
                     ia.push(type);
                     var image = ia.join('.');
-                    
+
                     if ($('#tv').is(':checked')) {
-                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>'+ title.rating +'</h5></div></div>';
-                            $('#suggestive-slider').append(html);
-{#                            $('body').removeClass('searching');#}
+                        var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5></div></div>';
+                        $('#suggestive-slider').append(html);
+        {#                            $('body').removeClass('searching');#}
                     } else {
-                        if (title.years && (title.years.indexOf('Series') === -1 )) {
-                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>'+ title.rating +'</h5></div></div>';
+                        if (title.years && (title.years.indexOf('Series') === -1)) {
+                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + title.rating + '</h5></div></div>';
                             $('#suggestive-slider').append(html);
-{#                            $('body').removeClass('searching');#}
+        {#                            $('body').removeClass('searching');#}
                         }
                     }
-                    
-                    
-                   {# var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
-                    $('#suggestive-slider').append(html);#}
+
+
+        {# var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.id + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>8.1</h5></div></div>';
+         $('#suggestive-slider').append(html);#}
 
         {#                    console.log(title);#}
                 });
                 $('#suggestive-slider').slick({
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    speed: 1200,        {#                    swipeToSlide: true,#}
-                                prevArrow: '<a class="slider-control slick-prev transition"></a>',
-                                nextArrow: '<a class="slider-control slick-next transition"></a>'
-                            });
-                        }
+                    speed: 1200,{#                    swipeToSlide: true,#}
+                    prevArrow: '<a class="slider-control slick-prev transition"></a>',
+                    nextArrow: '<a class="slider-control slick-next transition"></a>'
+                });
+            }
 
-                        $('#suggestive-slider').on('init', function () {
-                            var tl = new TimelineMax();
-                            var $slides = $('.slick-slide');
-                            tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
-                        });
+            $('#suggestive-slider').on('init', function () {
+                var tl = new TimelineMax();
+                var $slides = $('.slick-slide');
+                tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
+            });
 
-                        String.prototype.trimToLength = function (m) {
-                            return (this.length > m)
-                                    ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."
-                                    : this;
-                        };
+            String.prototype.trimToLength = function (m) {
+                return (this.length > m)
+                        ? jQuery.trim(this).substring(0, m).split(" ").slice(0, -1).join(" ") + "..."
+                        : this;
+            };
     </script>
 
 {% endblock postscripts %}
