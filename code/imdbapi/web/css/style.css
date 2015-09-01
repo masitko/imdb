@@ -103,7 +103,7 @@ body {
   margin: auto;
   z-index: 9;
   height: 190px;
-  /*pointer-events:none;*/
+  pointer-events:none;
 }
 
 /*#home-logo img {  pointer-events: none; }*/
@@ -149,16 +149,22 @@ label.tv {color:white;}
 /*=============================*/
 
 .searching:after {
-    content:'MovieRex is Hunting...';
+    content:'Hunting . . .';
     color:white;
     text-align: center;
-    padding-top:250px;
-    font-size: 2em;
+    padding-top:450px;
+    font-size: 2.8em;
     font-weight: bold;
     position: absolute;
-    top:0;left:0;right:0;bottom:0;
+    top:-200px;left:-200px;right:-200px;bottom:-200px;
+    padding-left:40px;
     z-index: 9990;
     background: rgba(0,0,0,0.82);
+    -webkit-transform: rotate(-4deg);
+    -moz-transform: rotate(-4deg);
+    -o-transform: rotate(-4deg);
+    -ms-transform: rotate(-4deg);
+    transform: rotate(-4deg);
 }
 
 .searching #home-logo {
@@ -181,10 +187,32 @@ label.tv {color:white;}
 
 
 .suggestions-container {list-style: none;}
+
+/* SLIDER  */
+#slider-container {
+    max-width: 670px;
+    margin: auto;
+    /*padding-top: 400px;*/
+    top:400px;
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+    /*z-index: -10;*/
+}
+
+#slider-container.hover{
+    z-index: 10;
+    top: 0;
+    padding-top:400px;
+}
+
 #suggestive-slider {
     max-width:650px;margin:auto;
-    top: 124px;
 }
+
+.slick-list {overflow: visible !important;}
+
 #suggestive-slider a.slider-control {
     position:absolute;
     display:block;
@@ -209,7 +237,7 @@ label.tv {color:white;}
 }
 
 #suggestive-slider .slick-slide {
-    height:258px;
+    height:272px;
     background: url('../img/shadow.png') center bottom no-repeat;
     outline:none;
 }
@@ -249,10 +277,10 @@ transition: all 400ms ease-in-out;
     z-index: 1;
     opacity: 0;
     -webkit-transition: all 200ms ease-in-out;
--moz-transition: all 200ms ease-in-out;
--ms-transition: all 200ms ease-in-out;
--o-transition: all 200ms ease-in-out;
-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -ms-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
 }
 
 .suggestion h5 {
@@ -288,11 +316,24 @@ transition: all 200ms ease-in-out;
 .rex-it:hover { background: #148d31;color:white}
 
 .suggestion .synopsis {
-    position:absolute;
-    background-color:white;
-    top: -100px;
-    width:133px;
-    height:150px;
+    position: absolute;
+    background-color: white;
+    top: -220px;
+    width: 180px;
+    height: 200px;
+    border-radius: 6px;
+    left: 0;
+    /* right: 0; */
+    margin-left: -16px;
+}
+
+.suggestion .synopsis:after {
+    content:'';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15.6px 9px 0 9px;
+    border-color: #007bff transparent transparent transparent;
 }
 
 /*tooltip*/
@@ -321,6 +362,10 @@ aside.choose, aside.spell, aside.rawr {display:none;font-size:18px}
 
 aside.spell {font-size: 22px; line-height: 27px}
 aside.rawr {    font-size: 40px;
+    -webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    -o-transform: rotate(-20deg);
+    -ms-transform: rotate(-20deg);
     transform: rotate(-20deg);
     padding-top: 12px;}
 .spell strong {font-style:normal;}

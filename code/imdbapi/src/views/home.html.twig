@@ -26,13 +26,15 @@
         </div>
 
         <ul class="suggestions-container"></ul>
-        <div id="suggestive-slider">
-            {#  <div>
-                  <div class="suggestion" style="background:url('/img/jpark.jpg')">
-                      <h4>Movie title here</h4>
-                      <h5 class="imdb">8.1</h5>
-                  </div>
-              </div> #}
+        <div id="slider-container">
+            <div id="suggestive-slider">
+                {#  <div>
+                      <div class="suggestion" style="background:url('/img/jpark.jpg')">
+                          <h4>Movie title here</h4>
+                          <h5 class="imdb">8.1</h5>
+                      </div>
+                  </div> #}
+            </div>
         </div>
     </main>
     <div id="overlay" class="transition"></div>
@@ -51,7 +53,7 @@
                     $('.title-box').focus();
                 }, 0.01);
             });
-
+            
             // cue fuzzy search
             $('.title-box').keyup(function (e) {
                 if (this.value.length > 0 && (e.which !== 40) && (e.which !== 38)) {
@@ -283,11 +285,12 @@
                     }
                     //populate the slider 
                     if ($('#tv').is(':checked')) {
-                        var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
+                        var html = 
+                            '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis">synopsis</div></div></div>';
                         $('#suggestive-slider').append(html);
                     } else {
                         if (title.years && (title.years.indexOf('Series') === -1)) {
-                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div>';
+                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis">synopsis</div></div></div>';
                             $('#suggestive-slider').append(html);
                         }
                     }
@@ -307,6 +310,17 @@
                     getTitleData($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
                 });
+                
+                //synopsis hovers
+                $('.suggestion').mouseover(function(){
+                    console.log('over');
+                   $('#slider-container').addClass('hover'); 
+                });
+                $('.suggestion').mouseout(function(){
+                    console.log('out');
+                   $('#slider-container').removeClass('hover'); 
+                });
+                
             }
 
             //animate the slides in on creation
