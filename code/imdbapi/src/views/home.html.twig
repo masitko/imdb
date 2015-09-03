@@ -26,7 +26,7 @@
         </div>
 
         <ul class="suggestions-container"></ul>
-        <div id="slider-container">
+        <div id="slider-container" tabindex="">
             <div id="suggestive-slider">
                 {#  <div>
                       <div class="suggestion" style="background:url('/img/jpark.jpg')">
@@ -313,21 +313,23 @@
                 
                 //synopsis hovers
                 $('.suggestion').mouseover(function(){
-                    console.log('over');
                    $('#slider-container').addClass('hover'); 
                 });
                 $('.suggestion').mouseout(function(){
-                    console.log('out');
                    $('#slider-container').removeClass('hover'); 
                 });
                 
             }
 
-            //animate the slides in on creation
+            //animate the slides in on creation and focus on slider
             $('#suggestive-slider').on('init', function () {
                 var tl = new TimelineMax();
                 var $slides = $('.slick-slide');
                 tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
+                $('.slick-track').attr('tabindex', '1');
+                setTimeout(function(){
+                    $('.slick-track').focus();
+                }, 200); 
             });
 
             //truncation function
