@@ -323,10 +323,15 @@
                 
                 //synopsis hovers
                 $('.suggestion').mouseover(function(){
+                    console.log('mouseover');
                    $('#slider-container').addClass('hover'); 
                 });
                 $('.suggestion').mouseout(function(){
-                   $('#slider-container').removeClass('hover'); 
+                    console.log('mouseout');
+{#                    setTimeout(function(){#}
+                        $('#slider-container').removeClass('hover'); 
+{#                    }, 250);  #}
+                   
                 });
                 
             }
