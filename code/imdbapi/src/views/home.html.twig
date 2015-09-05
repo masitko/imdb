@@ -322,17 +322,19 @@
                 });
                 
                 //synopsis hovers
-                $('.suggestion').mouseover(function(){
-                    console.log('mouseover');
-                   $('#slider-container').addClass('hover'); 
+                var timeoutHover;
+                $('.suggestion').mouseenter(function(){
+                    clearTimeout(timeoutHover);
+                    $('#slider-container').addClass('hover'); 
                 });
-                $('.suggestion').mouseout(function(){
-                    console.log('mouseout');
-{#                    setTimeout(function(){#}
+                $('.suggestion').mouseleave(function(){
+                    timeoutHover = setTimeout(function(){
                         $('#slider-container').removeClass('hover'); 
-{#                    }, 250);  #}
+                    }, 250);  
                    
                 });
+                
+                
                 
             }
 
