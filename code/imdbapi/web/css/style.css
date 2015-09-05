@@ -189,8 +189,12 @@ label.tv {color:white;}
 .suggestions-container {list-style: none;}
 
 /* SLIDER  */
+
+.slick-track:focus {outline:none;}
+
 #slider-container {
-    max-width: 670px;
+    max-width: 100%;
+    width: 670px;
     margin: auto;
     /*padding-top: 400px;*/
     top:400px;
@@ -252,6 +256,11 @@ label.tv {color:white;}
     box-sizing:border-box;
     background-size: cover;
 }
+.suggestion *:focus {outline:none;}
+
+.suggestion:focus .synopsis, .suggestion:focus .synopsis:after {outline:none;}
+
+/*poster black overlay*/
 .suggestion:before {
     content:'';
     position:absolute;
@@ -315,25 +324,35 @@ transition: all 400ms ease-in-out;
 
 .rex-it:hover { background: #148d31;color:white}
 
+
 .suggestion .synopsis {
     position: absolute;
     background-color: white;
-    top: -220px;
-    width: 180px;
-    height: 200px;
+    top: -300px;
+    width: 220px;
+    height: 280px;
     border-radius: 6px;
+    -webkit-border-radius: 6px;
     left: 0;
-    /* right: 0; */
-    margin-left: -16px;
+    margin-left: -36px;
+    padding: 6px 12px;
+    display:none;
+    
 }
 
+.suggestion:hover .synopsis {display:block;}
+
 .suggestion .synopsis:after {
-    content:'';
+    content: '';
     width: 0;
     height: 0;
     border-style: solid;
     border-width: 15.6px 9px 0 9px;
-    border-color: #007bff transparent transparent transparent;
+    border-color: #ffffff transparent transparent transparent;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    margin-left: -10px;
 }
 
 /*tooltip*/
