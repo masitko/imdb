@@ -283,9 +283,10 @@
                     } else {
                         outline = outline.trimToLength(260);
                     }
-                    
+                    var posterCheck = '';
                     if( cropText.substring(1,5) === 'CB35') {
                         image = '/img/no-poster.png';
+                        posterCheck = 'no-poster';
                     }
                     var imdbScore = '';
                     if (title.rating) {
@@ -295,12 +296,10 @@
                     }
                     //populate the slider 
                     if ($('#tv').is(':checked')) {
-                        var html = 
-                            '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis">'+ outline +'</div></div></div>';
-                        $('#suggestive-slider').append(html);
+                        var html = '<div><div class="suggestion '+ posterCheck + '" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>'+ title.title +'</h2><span>'+title.genres +'</span>'+ outline +'<hr/><strong>Director:</strong> '+ title.director +'<br/><strong>Stars:</strong> '+ title.actors +'</div></div></div>';
                     } else {
                         if (title.years && (title.years.indexOf('Series') === -1)) {
-                            var html = '<div><div class="suggestion" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>'+ title.title +'</h2><span>'+title.genres +'</span>'+ outline +'<hr/><strong>Director:</strong> '+ title.director +'<br/><strong>Stars:</strong> '+ title.actors +'</div></div></div>';
+                            var html = '<div><div class="suggestion '+ posterCheck + '" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>'+ title.title +'</h2><span>'+title.genres +'</span>'+ outline +'<hr/><strong>Director:</strong> '+ title.director +'<br/><strong>Stars:</strong> '+ title.actors +'</div></div></div>';
                             $('#suggestive-slider').append(html);
                         }
                     }

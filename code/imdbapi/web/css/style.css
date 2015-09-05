@@ -317,7 +317,11 @@ transition: all 400ms ease-in-out;
     background:url('../img/imdb.png') center / cover no-repeat;
 }*/
 
-.suggestion:hover h4, .suggestion:hover h5, .suggestion:hover:before, .suggestion:hover .rex-it {opacity:1}
+/*bring in the black overlay on hover and when no-poster */
+.suggestion:hover h4, .suggestion.no-poster h4,
+.suggestion:hover h5, .suggestion.no-poster h5,
+.suggestion:hover:before, .no-poster:before, 
+.suggestion:hover .rex-it, .suggestion.no-poster .rex-it {opacity:1}
 
 .rex-it {
     font-weight: normal;
