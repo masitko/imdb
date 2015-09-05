@@ -276,6 +276,8 @@
                     var outline = title.outline;
                     if (title.outline.indexOf('Plot is unknown.') !== -1) {
                         outline = '<em>RAWR! MovieRex doesn\'t know the plot to this film yet. Check back later</em>' ;
+                    } else {
+                        outline = outline.trimToLength(260);
                     }
                     
                     if( cropText.substring(1,5) === 'CB35') {
@@ -320,7 +322,7 @@
                    $('#slider-container').addClass('hover'); 
                 });
                 $('.suggestion').mouseout(function(){
-{#                   $('#slider-container').removeClass('hover'); #}
+                   $('#slider-container').removeClass('hover'); 
                 });
                 
             }
