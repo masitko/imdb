@@ -77,10 +77,14 @@
                     this.placeholder = '';
                     $('body').addClass('typing');
                 });
+                $('.title-box').click(function () {
+                    this.select();
+                });
                 $('.title-box').blur(function () {
                     this.placeholder = 'Tell me a movie you like';
                     $('body').removeClass('typing');
                 });
+                
 
                 //tooltips
                 $('.title-box').keyup(function () {
