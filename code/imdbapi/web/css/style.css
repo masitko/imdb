@@ -11,24 +11,30 @@ and open the template in the editor.
 //FONTS
 @font-face {
     font-family: 'comic neue';
-    src: url('fonts/ComicNeue-Regular.woff');
-    font-weight: bold;
-}
-@font-face {
-    font-family: 'comic neue';
-    src: url('fonts/ComicNeue-Regular-Oblique.woff');
-    font-weight: bold;
-    font-style: oblique;
+    src: url('fonts/ComicNeue-Light.woff');
+    font-weight: normal;
+    font-style:normal;
 }
 @font-face {
     font-family: 'comic neue';
     src: url('fonts/ComicNeue-Light.woff');
+    font-weight: bold;
+    font-style:normal;
 }
 @font-face {
     font-family: 'comic neue';
     src: url('fonts/ComicNeue-Light-Oblique.woff');
     font-style: oblique;
+    font-weight:normal;
 }
+
+@font-face {
+    font-family: 'comic neue';
+    src: url('fonts/ComicNeue-Light-Oblique.woff');
+    font-weight: bold;
+    font-style: oblique;
+}
+
 
 
 //STYLES
@@ -328,21 +334,35 @@ transition: all 400ms ease-in-out;
 .suggestion .synopsis {
     position: absolute;
     background-color: white;
-    top: -300px;
+    bottom:242px;
     width: 220px;
-    height: 280px;
+    /*height: 280px;*/
     border-radius: 6px;
     -webkit-border-radius: 6px;
     left: 0;
     margin-left: -36px;
-    padding: 6px 12px;
+    padding: 10px 12px;
     display:none;
-    
+    /*font-family: 'comic neue';*/
+    font-size:13px;
+    line-height:18px;
+    font-weight: normal;
+
 }
+
+.suggestion .synopsis hr {margin:8px}
+.suggestion .synopsis h2 {font-size:14px;font-weight:bold;margin-bottom:0px;}
+.suggestion .synopsis span {
+    display: block;
+    padding: 4px 12px;
+    background-color: #ededed;
+    margin: 6px -12px;
+}
+.suggestion .synopsis strong {color:darkred}
 
 .suggestion:hover .synopsis {display:block;}
 
-.suggestion .synopsis:after {
+/*.suggestion .synopsis:after {
     content: '';
     width: 0;
     height: 0;
@@ -353,6 +373,23 @@ transition: all 400ms ease-in-out;
     left: 50%;
     top: 100%;
     margin-left: -10px;
+}*/
+.suggestion .synopsis:after {
+    content: '▼';
+    font-size: 18px;
+    color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    margin-left: -10px;
+    line-height: 12px;
+    text-shadow: 0 4px 4px rgba(0,0,0,0.5);
+}
+
+/*synopsis shadow*/
+.suggestion .synopsis {
+    box-shadow:0 0px 10px black;
+    -webkit-box-shadow:0 0px 10px black;
 }
 
 /*tooltip*/
