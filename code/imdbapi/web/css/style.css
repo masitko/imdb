@@ -261,11 +261,11 @@ label.tv {color:white;}
     border:1px solid white;
     box-sizing:border-box;
     background-size: cover;
-    -webkit-perspective: 500px;
-    -moz-perspective: 500px;
-    -ms-perspective: 500px;
-    -o-perspective: 500px;
-    perspective: 500px;
+    -webkit-perspective: 100px;
+    -moz-perspective: 100px;
+    -ms-perspective: 100px;
+    -o-perspective: 100px;
+    perspective: 100px;
 }
 .suggestion *:focus {outline:none;}
 
@@ -355,21 +355,21 @@ transition: all 400ms ease-in-out;
     font-weight: normal;
     
     /*Animation*/
-    -webkit-transition: all 200ms ease-in-out;
-    -moz-transition: all 200ms ease-in-out;
-    -ms-transition: all 200ms ease-in-out;
-    -o-transition: all 200ms ease-in-out;
-    transition: all 200ms ease-in-out;
+    -webkit-transition: all 250ms ease-in-out;
+    -moz-transition: all 250ms ease-in-out;
+    -ms-transition: all 250ms ease-in-out;
+    -o-transition: all 250ms ease-in-out;
+    transition: all 250ms ease-in-out;
     -moz-transform-origin: 50% 105%;
     -webkit-transform-origin: 50% 105%;
     -o-transform-origin: 50% 105%;
     -ms-transform-origin: 50% 105%;
     transform-origin: 50% 105%;
-    -moz-transform: rotateX(70deg);
-    -webkit-transform: rotateX(70deg);
-    -o-transform: rotateX(70deg);
-    -ms-transform: rotateX(70deg);
-    transform: rotateX(70deg);
+    -moz-transform: rotateX(45deg);
+    -webkit-transform: rotateX(45deg);
+    -o-transform: rotateX(45deg);
+    -ms-transform: rotateX(45deg);
+    transform: rotateX(45deg);
     opacity:0;
 }
 
