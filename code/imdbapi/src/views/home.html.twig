@@ -272,12 +272,17 @@
                 $.each(titles, function (index, title) {
                     var image1 = (title.i !== undefined) ? title.i[0] : '';
                     var titleShort = title.title.trimToLength(40); //create short title
-                    var ia = title.image.split('.');
-                    var type = ia.pop();
-                    var cropText = cropImage(ia.pop());
-                    ia.push(cropText);
-                    ia.push(type);
-                    var image = ia.join('.');
+                    if( title.image ) {
+                        var ia = title.image.split('.');
+                        var type = ia.pop();
+                        var cropText = cropImage(ia.pop());
+                        ia.push(cropText);
+                        ia.push(type);
+                        var image = ia.join('.');
+                    }
+                    else {
+                        var image = '/img/no-poster.png';
+                    }
                     var outline = title.outline;
                     if (title.outline.indexOf('Plot is unknown.') !== -1) {
                         outline = '<em>RAWR! MovieRex doesn\'t know the plot to this film yet. Check back later</em>' ;
