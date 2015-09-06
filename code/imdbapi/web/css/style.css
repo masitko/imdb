@@ -147,7 +147,7 @@ label.tv {color:white;}
     line-height: 1.3em;
     font-size: 0.9em;
 }
-.search-titles li:hover, .search-titles li.selected {background:#AEEEEE;}
+.search-titles li:hover, .search-titles li.selected {background:powderblue;}
 .fuzzy-title {padding-left:0}
 .fuzzy-image img {width:27px;}
 
