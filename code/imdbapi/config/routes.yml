@@ -11,11 +11,11 @@ _user:
         
 _imdb_api_suggests:
     path:        /s/{name}
-    defaults:    { _controller: "controllers.api:imdbSuggests", name:'' }
+    defaults:    { _controller: "controllers.api:imdbFuzzySearch", name:'' }
         
 _imdb_api_title:
     path:        /t/{id}
-    defaults:    { _controller: "controllers.api:imdbTitle", id:'' }
+    defaults:    { _controller: "controllers.api:imdbRecommends", id:'' }
         
 _home:
     path:       /

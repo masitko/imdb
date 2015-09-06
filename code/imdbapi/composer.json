@@ -6,7 +6,8 @@
         "symfony/config": "^2.6",
         "twig/twig": "^1.18",
         "sunra/php-simple-html-dom-parser": "^1.5",
-        "symfony/twig-bridge": "^2.7"
+        "symfony/twig-bridge": "^2.7",
+        "saxulum/saxulum-doctrine-mongodb-provider": "~1.0"
     },
     "autoload": {
         "psr-4": {

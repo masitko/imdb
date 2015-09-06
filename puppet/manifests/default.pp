@@ -71,8 +71,18 @@ package { "php5-curl": }
 
 package { "php5-gd": }
 
+package { "php5-dev": }
+
+package { "php-pear": }
+
 }
 
+class php::pecl {
+    include php
+     exec { "pecl install mongo":
+    require => Package["php-pear"]
+    }
+}
 
 class mysql {
   package { "mysql-server": }
@@ -130,32 +140,33 @@ class groups {
 
 #}
 
-#class mongodb {
-#    exec { "import_public_key":
-#        command => "apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10",
-#    }
-#    exec { "create_list_file":
-#        command => 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list',
-#        require => Exec["import_public_key"],
-#    }
-#    exec { "reload_packages":
-#        command => "apt-get update",
-#        require => Exec["create_list_file"],
-#    }
-#    exec { "install_mongodb":
-#        command => "apt-get install -y mongodb-org",
-#        require => Exec["reload_packages"],
-#    }
-#    service{ "mongod":
-#        require => Exec["install_mongodb"],
-#    }
-#}
+class mongodb {
+    exec { "import_public_key":
+        command => "apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10",
+    }
+    exec { "create_list_file":
+        command => 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list',
+        require => Exec["import_public_key"],
+    }
+    exec { "reload_packages":
+        command => "apt-get update",
+        require => Exec["create_list_file"],
+    }
+    exec { "install_mongodb":
+        command => "apt-get install -y mongodb-org",
+        require => Exec["reload_packages"],
+    }
+    service{ "mongod":
+        require => Exec["install_mongodb"],
+    }
+}
 
 include apache
 include curl
 include php
+include php::pecl
 #include mysql
-#include mongodb
+include mongodb
 include groups
 include git
 #include nodejs

@@ -12,7 +12,7 @@ class Dependencies {
     static function configure($app) {
 
         $app["controllers.api"] = $app->share(function($app) {
-            return new controllers\Api($app["services.guzzle.client"], $app["services.crawler"]);
+            return new controllers\Api($app["services.guzzle.client"], $app["services.crawler"], $app['mongodb']);
         });        
         
         $app["controllers.home"] = $app->share(function($app) {
