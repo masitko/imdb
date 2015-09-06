@@ -56,12 +56,53 @@ class Api {
         ));
     }
 
+   /**
+     * 
+     * @param Request $request
+     * @param type $id - in imdb format tt1553656
+     * @return string
+     */
+    function imdbRecommends(Request $request, $id) {
+
+        $source = 'database';
+        $collection = 'recommendations';
+        $key = '/t/' . $id;
+        $document = $this->mongodb
+                ->selectCollection($collection)
+                ->findOne(['_id' => $key])
+        ;
+
+        if ($document) {
+            if ($this->expiryCheck($document['timestamp'])) {
+                $source = 'updated';
+                $document = $this->prepareRecDocument($id, $key);
+                $this->mongodb
+                    ->selectCollection($collection)
+                    ->update(['_id' => $key], $document)
+                ;
+            }
+        } else {
+
+            $source = 'external';
+            $document = $this->prepareRecDocument($id, $key);
+            $this->mongodb
+                    ->selectCollection($collection)
+                    ->insert($document)
+            ;
+        }
+
+        return new Response($document['result'], 200, array(
+            'Content-Type' => 'application/json',
+            'Source-Type' => $source
+        ));
+    }
+
     /**
      * 
      * @param type $name
      * @return type
      */
-    function prepareFSDocument($name, $key) {
+    private function prepareFSDocument($name, $key) {
         
         try {
             $response = $this->client->get('http://sg.media-imdb.com/suggests/' . $name[0] . '/' . $name . '.json', [ 'headers' => $this->headers]);
@@ -79,23 +120,25 @@ class Api {
 
     /**
      * 
-     * @param Request $request
-     * @param type $id - in imdb format tt1553656
-     * @return string
+     * @param type $name
+     * @return type
      */
-    function imdbRecommends(Request $request, $id) {
-
+    private function prepareRecDocument($id, $key) {
+        
         try {
             $response = $this->client->get('http://www.imdb.com/title/' . $id, [ 'headers' => $this->headers]);
             $response2 = $this->client->get('http://m.imdb.com/title/' . $id, [ 'headers' => $this->headers]);
 
-//            $response = $this->client->get('http://www.google.co.uk' );
             $result = $this->crawler->getRecommendations($response->getBody()->getContents(), $response2->getBody()->getContents());
         } catch (ClientException $e) {
             $result = '{error}';
         }
-
-        return new Response($result, 200, array('Content-Type' => 'application/json'));
+        $timestamp = new \DateTime();
+        return array(
+            '_id' => $key,
+            'result' => $result,
+            'timestamp' => $timestamp->format('c')
+        );
     }
 
     /**
@@ -106,7 +149,7 @@ class Api {
      * @param int $expiryDays
      * @return boolean
      */
-    function expiryCheck($date, $expiryDays = 7) {
+    private function expiryCheck($date, $expiryDays = 7) {
 
         return ( round(abs(time() - strtotime($date)) / 86400) >= $expiryDays );
     }
