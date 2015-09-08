@@ -41,5 +41,35 @@ class Crawler {
         
         return $rec;
     }
-    
+
+    public function getSearchResult($html) {
+
+        $dom = HtmlDomParser::str_get_html($html);
+        
+        $elem = $dom->find('.findList > tbody', 0);
+
+        $result = [];
+        foreach( $elem->children as $child ) {
+            $result[] = $this->parseSearchResult($child );
+        }
+
+       return json_encode($result);
+    }
+
+    private function parseSearchResult( $node ) {
+        
+//        $href = $node->find('.result_text > a', 0)->attr['href'];
+        $id = split('/', $node->find('.result_text > a', 0)->attr['href'] )[2];
+        $title = $node->find('.result_text > a', 0)->plaintext;
+        $node->find('.result_text > a', 0)->outertext = '';
+        
+        $result = [
+            'id' => $id,
+            'image' => $node->find('.primary_photo > img', 0)->attr["src"],
+            'title' => $title,
+            'additional' => $node->find('.result_text', 0)->innertext,            
+        ];
+        
+        return $result;
+    }
 }

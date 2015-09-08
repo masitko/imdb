@@ -57,8 +57,12 @@
             
             // cue fuzzy search
             $('.title-box').keyup(function (e) {
+                if (e.which === 13 && $('.title-box').val().length > 0) { // enter key                        
+                    getSearchData(this.value.replace(/ /g, '_').toLowerCase());
+                    return;
+                }
                 if (this.value.length > 0 && (e.which !== 40) && (e.which !== 38)) {
-                    getData(this.value.replace(/ /g, '_').toLowerCase());
+                    getFSData(this.value.replace(/ /g, '_').toLowerCase());
                 }
                 else if (this.value.length < 1) {
                     $('.results-container').html('');
@@ -88,7 +92,7 @@
                 
 
                 //tooltips
-                $('.title-box').keyup(function () {
+                $('.title-box').keyup(function (e) {
                     setTimeout(function () {
                         if ($('.title-box').val().length > 1) {
                             if ($('.results-container li').length > 0) {
@@ -106,20 +110,32 @@
 
             });//end of doc ready
 
+            function getSearchData(title) {
+                var url = "{{ url('_imdb_api_search') }}";
+                $.ajax({
+                    url: url + '/' + title
+                }).success(function (data) {
+                    if (data !== undefined) {
+{#                        console.log(data);#}
+                        displaySearchTitles(data);
+                    }
+                });
+            }
+            
             //fuzzy search
-            function getData(title) {
-                var url = "{{ url('_imdb_api_suggests') }}";
+            function getFSData(title) {
+                var url = "{{ url('_imdb_api_fuzzy_search') }}";
                 return $.ajax({
                     url: url + '/' + title
                 }).success(function (data) {
                     if (data.d !== undefined) {
-                        displayTitles(data.d);
+                        displayFSTitles(data.d);
                     }
                 });
             }
 
             //fuzzy search results
-            function displayTitles(titles) {
+            function displayFSTitles(titles) {
                 $('.results-container').html('');
                 $.each(titles, function (index, title) {
                     var check1 = "movie";
@@ -152,12 +168,59 @@
                             var html = '<li><div class="row title-container" data-id="' + title.id + '" data-title="' + title.l + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.l + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.l + '</strong> (' + title.y + ')</div></div></li>';
                             $('.results-container').append(html);
                         }
-                    }
+                    }                    
+                    setResultEvents();
+                });
+                //Move title into input field, toggle searching class, start search
+                $('.title-container').click(function (e) {
+                    $('.title-box').val($(this).data('title'));
+                    getTitleData($(this).data('id')); //find recommendations
+                    $('body').toggleClass('searching');
+                    $('#home-search').attr('class','');
+                    return false;
+                });
 
+            }
+            
+            //'enter' search results
+            function displaySearchTitles(titles) {
+                $('.results-container').html('');
+                $.each(titles, function (index, title) {
+console.log(title);
+                    var check1 = "TV";
+                    var image = '/img/no-poster.png';
+
+                    if (title.image !== undefined) {
+                        var ia = title.image.split('.');
+                        var type = ia.pop();
+                        ia.pop();
+{#                        ia.push('_V1');#}
+                        ia.push('_UX40_CR0,0,40,54_');
+                        ia.push(type);
+                        image = ia.join('.');
+                    }
+                    if (title.title && (title.title.indexOf(check1) === -1 )) {
+                        var html = '<li tabindex="0"><div class="row title-container" data-id="' + title.id + '" data-title="' + title.title + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.title + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong>' + title.additional + '</div></div></li>';
+                        $('.results-container').append(html);
+                    }
+                    setResultEvents();
+                });
+
+                //Move title into input field, toggle searching class, start search
+                $('.title-container').click(function (e) {
+                    $('.title-box').val($(this).data('title'));
+                    getTitleData($(this).data('id')); //find recommendations
+                    $('body').toggleClass('searching');
+                    $('#home-search').attr('class','');
+                    return false;
+                });
+
+            }
+            
+            function setResultEvents() {
                     //keyboard selector
                     var li = $('.results-container li');
                     var liSelected = null;
-        {#                $('.title-box').keydown(function (e) {#}
                     $('.title-box').off('keydown').keydown(function (e) {
                         if ($('.results-container li').length > 0) {
 
@@ -173,6 +236,7 @@
                                 } else {
                                     liSelected = li.eq(0).addClass('selected');
                                 }
+                                $('.results-container > .selected').focus();
                                 return false;
                             } else if (e.which === 38) { //up key
                                 if (liSelected) {
@@ -186,6 +250,7 @@
                                 } else {
                                     liSelected = li.last().addClass('selected');
                                 }
+                                $('.results-container > .selected').focus();
                                 return false;
                             } else if (e.which === 13) { // enter key
                                 if (liSelected) {
@@ -194,23 +259,9 @@
                                 return false;
                             }
                         }
-
                     });
-
-                });
-
-                //Move title into input field, toggle searching class, start search
-                $('.title-container').click(function (e) {
-                    $('.title-box').val($(this).data('title'));
-                    getTitleData($(this).data('id')); //find recommendations
-                    $('body').toggleClass('searching');
-                    $('#home-search').attr('class','');
-                    return false;
-                });
-
-
-
-            }
+                    
+                }
             
             //crop poster images
             var cropImageX = 198;

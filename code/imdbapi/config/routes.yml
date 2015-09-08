@@ -9,9 +9,13 @@ _user:
     requirements:
         id:  \d+
         
-_imdb_api_suggests:
-    path:        /s/{name}
+_imdb_api_fuzzy_search:
+    path:        /fs/{name}
     defaults:    { _controller: "controllers.api:imdbFuzzySearch", name:'' }
+        
+_imdb_api_search:
+    path:        /s/{name}
+    defaults:    { _controller: "controllers.api:imdbSearch", name:'' }
         
 _imdb_api_title:
     path:        /t/{id}

@@ -23,9 +23,9 @@ class Api {
     }
 
     function imdbFuzzySearch(Request $request, $name) {
-
+        
         $source = 'database';
-        $key = '/s/' . $name;
+        $key = $request->getRequestUri();
         $document = $this->mongodb
                 ->selectCollection('fuzzysearch')
                 ->findOne(['_id' => $key])
@@ -56,6 +56,40 @@ class Api {
         ));
     }
 
+    function imdbSearch(Request $request, $name) {
+        
+        $source = 'database';
+        $key = $request->getRequestUri();
+        $document = $this->mongodb
+                ->selectCollection('fuzzysearch')
+                ->findOne(['_id' => $key])
+        ;
+
+        if ($document) {
+            if ($this->expiryCheck($document['timestamp'])) {
+                $source = 'updated';
+                $document = $this->prepareSearchDocument($name, $key);
+                $this->mongodb
+                    ->selectCollection('fuzzysearch')
+                    ->update(['_id' => $key], $document)
+                ;
+            }
+        } else {
+
+            $source = 'external';
+            $document = $this->prepareSearchDocument($name, $key);
+            $this->mongodb
+                    ->selectCollection('fuzzysearch')
+                    ->insert($document)
+            ;
+        }
+
+        return new Response($document['result'], 200, array(
+            'Content-Type' => 'application/json',
+            'Source-Type' => $source
+        ));
+    }
+
    /**
      * 
      * @param Request $request
@@ -66,7 +100,8 @@ class Api {
 
         $source = 'database';
         $collection = 'recommendations';
-        $key = '/t/' . $id;
+//        $key = '/t/' . $id;
+        $key = $request->getRequestUri();
         $document = $this->mongodb
                 ->selectCollection($collection)
                 ->findOne(['_id' => $key])
@@ -109,6 +144,27 @@ class Api {
             $result = rtrim(strstr($response->getBody()->getContents(), '{'), ')');
         } catch (ClientException $e) {
             $result = '{}';
+        }
+        $timestamp = new \DateTime();
+        return array(
+            '_id' => $key,
+            'result' => $result,
+            'timestamp' => $timestamp->format('c')
+        );
+    }
+
+    /**
+     * 
+     * @param type $name
+     * @return type
+     */
+    private function prepareSearchDocument($name, $key) {
+        
+        try {
+            $response = $this->client->get('http://www.imdb.com/find?ref_=nv_sr_fn&s=tt&q=' . $name, [ 'headers' => $this->headers]);
+            $result = $this->crawler->getSearchResult($response->getBody()->getContents());
+        } catch (ClientException $e) {
+            $result = '{error}';
         }
         $timestamp = new \DateTime();
         return array(
