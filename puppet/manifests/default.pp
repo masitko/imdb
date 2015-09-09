@@ -80,7 +80,7 @@ package { "php-pear": }
 class php::pecl {
     include php
      exec { "pecl install mongo":
-    require => Package["php-pear"]
+    require => Package["php-pear", "php5-dev"]
     }
 }
 
