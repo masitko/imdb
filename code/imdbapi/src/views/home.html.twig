@@ -129,13 +129,13 @@
                     url: url + '/' + title
                 }).success(function (data) {
                     if (data.d !== undefined) {
-                        searchAssistResults(data.d);
+                        displaySearchAssist(data.d);
                     }
                 });
             }
 
             //search Assist results
-            function searchAssistResults(titles) {
+            function displaySearchAssist(titles) {
                 $('.results-container').html('');
                 $.each(titles, function (index, title) {
                     var check1 = "movie";
@@ -169,7 +169,7 @@
                             $('.results-container').append(html);
                         }
                     }                    
-                    setResultEvents();
+                    searchAssistSelect();
                 });
                 //Move title into input field, toggle searching class, start search
                 $('.title-container').click(function (e) {
@@ -203,7 +203,7 @@ console.log(title);
                         var html = '<li tabindex="0"><div class="row title-container" data-id="' + title.id + '" data-title="' + title.title + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.title + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong>' + title.additional + '</div></div></li>';
                         $('.results-container').append(html);
                     }
-                    setResultEvents();
+                    searchAssistSelect();
                 });
 
                 //Move title into input field, toggle searching class, start search
@@ -217,7 +217,7 @@ console.log(title);
 
             }
             
-            function setResultEvents() {
+            function searchAssistSelect() {
                     //keyboard selector
                     var li = $('.results-container li');
                     var liSelected = null;
