@@ -107,6 +107,11 @@
 
 
                 });
+                
+                //empty searchAssist
+                $('#slider-container').click(function(){
+                    $('.results-container').html('');
+                });
 
             });//end of doc ready
 
@@ -136,7 +141,7 @@
 
             //search Assist results
             function displaySearchAssist(titles) {
-                $('.results-container').html('');
+                $('.results-container').html(''); //empty search assist
                 $.each(titles, function (index, title) {
                     var check1 = "movie";
                     var check2 = "feature";
