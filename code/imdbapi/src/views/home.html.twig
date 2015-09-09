@@ -55,14 +55,14 @@
                 }, 0.01);
             });
             
-            // cue fuzzy search
+            // cue Search Assist
             $('.title-box').keyup(function (e) {
                 if (e.which === 13 && $('.title-box').val().length > 0) { // enter key                        
                     getSearchData(this.value.replace(/ /g, '_').toLowerCase());
                     return;
                 }
                 if (this.value.length > 0 && (e.which !== 40) && (e.which !== 38)) {
-                    getFSData(this.value.replace(/ /g, '_').toLowerCase());
+                    getSearchAssist(this.value.replace(/ /g, '_').toLowerCase());
                 }
                 else if (this.value.length < 1) {
                     $('.results-container').html('');
@@ -122,20 +122,20 @@
                 });
             }
             
-            //fuzzy search
-            function getFSData(title) {
+            //search Assist
+            function getSearchAssist(title) {
                 var url = "{{ url('_imdb_api_fuzzy_search') }}";
                 return $.ajax({
                     url: url + '/' + title
                 }).success(function (data) {
                     if (data.d !== undefined) {
-                        displayFSTitles(data.d);
+                        searchAssistResults(data.d);
                     }
                 });
             }
 
-            //fuzzy search results
-            function displayFSTitles(titles) {
+            //search Assist results
+            function searchAssistResults(titles) {
                 $('.results-container').html('');
                 $.each(titles, function (index, title) {
                     var check1 = "movie";
@@ -353,15 +353,16 @@ console.log(title);
                         imdbScore = '?';
                     }
                     //populate the slider 
-                    if ($('#tv').is(':checked')) {
+                    if ($('#tv').is(':checked') || (title.years && (title.years.indexOf('Series') === -1))) {
                         var html = '<div><div class="suggestion '+ posterCheck + '" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>'+ title.title +'</h2><span>'+title.genres +'</span>'+ outline +'<hr/><strong>Director:</strong> '+ title.director +'<br/><strong>Stars:</strong> '+ title.actors +'</div></div></div>';
                         $('#suggestive-slider').append(html);
-                    } else {
+                    } 
+                    {#else {
                         if (title.years && (title.years.indexOf('Series') === -1)) {
                             var html = '<div><div class="suggestion '+ posterCheck + '" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>'+ title.title +'</h2><span>'+title.genres +'</span>'+ outline +'<hr/><strong>Director:</strong> '+ title.director +'<br/><strong>Stars:</strong> '+ title.actors +'</div></div></div>';
                         $('#suggestive-slider').append(html);
                         }
-                    }
+                    }#}
                 });
                 //initialise the slider
                 $('#suggestive-slider').slick({
