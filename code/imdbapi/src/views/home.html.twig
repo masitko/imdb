@@ -248,7 +248,9 @@
                                     }
                                     break;
                             }
-                            liSelected.addClass('selected').focus();                    
+                            if( liSelected ) {
+                                liSelected.addClass('selected').focus();                    
+                            }
                         }
                     });
                     
