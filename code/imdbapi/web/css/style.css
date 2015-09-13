@@ -124,7 +124,7 @@ label.tv {color:white;}
 
 /*RESULTS*/
 
-.results-container {
+.search-list {
     list-style: none;
     text-align: left;
     position: absolute;
@@ -141,13 +141,13 @@ label.tv {color:white;}
     border-radius: 0 0 6px 6px;
     -webkit-border-radius: 0 0 6px 6px;
 }
-.results-container li {
+.search-list li {
     border-bottom: 1px solid #eee;
     padding: 4px 0;
     line-height: 1.3em;
     font-size: 0.9em;
 }
-.results-container li:hover, .results-container li.selected {background:#AEEEEE;}
+.search-list li:hover, .search-list li.selected {background:#AEEEEE;}
 .fuzzy-title {padding-left:0}
 .fuzzy-image img {width:27px;}
 
