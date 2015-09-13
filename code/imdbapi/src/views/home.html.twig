@@ -61,13 +61,17 @@
                     getSearchData(this.value.replace(/ /g, '_').toLowerCase());
                     return;
                 }
-                if (this.value.length > 0 && (e.which !== 40) && (e.which !== 38)) {
+{#                if (this.value.length > 0 && (e.which !== 40) && (e.which !== 38)) {
                     getSearchAssist(this.value.replace(/ /g, '_').toLowerCase());
                 }
                 else if (this.value.length < 1) {
                     $('.search-list').html('');
                 }
-            });
+#}            });
+            
+            $('.title-box').on('input', function() { 
+                (this.value.length > 0) ? getSearchAssist(this.value.replace(/ /g, '_').toLowerCase()) : $('.search-list').html('');
+            });            
 
             //fade in and animate logo
             $('body').addClass('loaded');
