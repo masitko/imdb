@@ -177,7 +177,7 @@
                 //Move title into input field, toggle searching class, start search
                 $('.title-container').click(function (e) {
                     $('.title-box').val($(this).data('title'));
-                    getTitleData($(this).data('id')); //find recommendations
+                    movieRex($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
                     $('#home-search').attr('class','');
                     return false;
@@ -211,7 +211,7 @@
                 //Move title into input field, toggle searching class, start search
                 $('.title-container').click(function (e) {
                     $('.title-box').val($(this).data('title'));
-                    getTitleData($(this).data('id')); //find recommendations
+                    movieRex($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
                     $('#home-search').attr('class','');
                     return false;
@@ -280,20 +280,20 @@
             }
 
             //Search for recommendations
-            function getTitleData(id) {
+            function movieRex(id) {
         {#                console.log(id);#}
                 var url = "{{ url('_imdb_api_title') }}";
                 return $.ajax({
                     url: url + '/' + id
                 }).success(function (data) {
                     if (data !== undefined) {
-                        displaySuggestions(data);
+                        displayRex(data);
                     }
                 });
             }
 
             //display recommendations
-            function displaySuggestions(titles) {
+            function displayRex(titles) {
 
                 //empty the fuzzy search
                 $('.search-list').html('');
@@ -329,7 +329,7 @@
                         var cropText = 'ACB35';
                     }
                     var outline = title.outline;
-                    if (title.outline.indexOf('Plot is unknown.') !== -1) {
+                    if (outline == null || outline.indexOf('Plot is unknown.') !== -1) {
                         outline = '<em>RAWR! MovieRex doesn\'t know the plot to this film yet. Check back later</em>' ;
                     } else {
                         outline = outline.trimToLength(260);
@@ -369,7 +369,7 @@
                 //rex it 
                 $('.rex-it').click(function (e) {
                     $('.title-box').val($(this).data('title'));
-                    getTitleData($(this).data('id')); //find recommendations
+                    movieRex($(this).data('id')); //find recommendations
                     $('body').toggleClass('searching');
                 });
                 
