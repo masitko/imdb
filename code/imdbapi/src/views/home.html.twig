@@ -47,6 +47,35 @@
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script>
 
+        function setTitleBoxEvents() {
+            // callback for changes in title-box
+            $('.title-box').on('input', function() { 
+                (this.value.length > 0) ? getSearchAssist(this.value.replace(/ /g, '_').toLowerCase()) : $('.search-list').html('');
+            });            
+
+            $('.title-box').keyup(function (e) {
+                switch(e.which) {
+                    case 13: // if Enter 
+                        if( $('li.selected').length > 0 ) { 
+                            $('li.selected .title-container').click();                            
+                        }
+                        else if ( $('.title-box').val().length > 0 ) {
+                            getSearchData(this.value.replace(/ /g, '_').toLowerCase());
+                        }
+                        break
+                }
+            });
+            
+        }
+        
+        $( document ).ajaxStart(function() {
+            $('body').toggleClass('searching');
+        });
+        
+        $( document ).ajaxComplete(function() {
+            $('body').toggleClass('searching');
+        });        
+
         $(function () {
             //for browsers that don't support pointer-events:none
             $('#home-logo').click(function () {
@@ -55,18 +84,8 @@
                 }, 0.01);
             });
             
-            // cue Search Assist
-            $('.title-box').keyup(function (e) {
-                if (e.which === 13 && $('.title-box').val().length > 0 && !$('li.selected').length) { // enter key                        
-                    getSearchData(this.value.replace(/ /g, '_').toLowerCase());
-                    return;
-                }
-            });
+            setTitleBoxEvents();            
             
-            $('.title-box').on('input', function() { 
-                (this.value.length > 0) ? getSearchAssist(this.value.replace(/ /g, '_').toLowerCase()) : $('.search-list').html('');
-            });            
-
             //fade in and animate logo
             $('body').addClass('loaded');
             var homeSearch = $('#home-search');
@@ -102,8 +121,6 @@
                             $('#home-search').attr('class', '');
                         }
                     }, 900);
-
-
                 });
                 
                 //empty searchAssist
@@ -119,7 +136,6 @@
                     url: url + '/' + title
                 }).success(function (data) {
                     if (data !== undefined) {
-{#                        console.log(data);#}
                         displaySearchTitles(data);
                     }
                 });
@@ -129,6 +145,7 @@
             function getSearchAssist(title) {
                 var url = "{{ url('_imdb_api_fuzzy_search') }}";
                 return $.ajax({
+                    global: false,
                     url: url + '/' + title
                 }).success(function (data) {
                     if (data.d !== undefined) {
@@ -178,7 +195,7 @@
                 $('.title-container').click(function (e) {
                     $('.title-box').val($(this).data('title'));
                     movieRex($(this).data('id')); //find recommendations
-                    $('body').toggleClass('searching');
+{#                    $('body').toggleClass('searching');#}
                     $('#home-search').attr('class','');
                     return false;
                 });
@@ -196,13 +213,12 @@
                         var ia = title.image.split('.');
                         var type = ia.pop();
                         ia.pop();
-{#                        ia.push('_V1');#}
                         ia.push('_UX40_CR0,0,40,54_');
                         ia.push(type);
                         image = ia.join('.');
                     }
                     if (title.title && (title.title.indexOf(check1) === -1 )) {
-                        var html = '<li tabindex="0"><div class="row title-container" data-id="' + title.id + '" data-title="' + title.title + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.title + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong>' + title.additional + '</div></div></li>';
+                        var html = '<li tabindex="-1"><div class="row title-container" data-id="' + title.id + '" data-title="' + title.title + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.title + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong>' + title.additional + '</div></div></li>';
                         $('.search-list').append(html);
                     }
                     searchAssistSelect();
@@ -212,7 +228,7 @@
                 $('.title-container').click(function (e) {
                     $('.title-box').val($(this).data('title'));
                     movieRex($(this).data('id')); //find recommendations
-                    $('body').toggleClass('searching');
+{#                    $('body').toggleClass('searching');#}
                     $('#home-search').attr('class','');
                     return false;
                 });
@@ -226,11 +242,6 @@
                     $('.title-box').off('keydown').keydown(function (e) {
                         if ($('.search-list li').length > 0) {
                             switch( e.which ) {
-                                case 13:
-                                    if (liSelected) {
-                                        $('li.selected .title-container').click();
-                                    }
-                                    return;
                                 case 40:
                                     $('li.selected').removeClass('selected');
                                     if (liSelected && liSelected.next().length > 0 ) {
@@ -238,6 +249,7 @@
                                     } else {
                                         liSelected = li.eq(0);
                                     }
+                                    liSelected.addClass('selected');
                                     break;
                                 case 38:
                                     $('li.selected').removeClass('selected');
@@ -246,10 +258,8 @@
                                     } else {
                                         liSelected = li.last();
                                     }
+                                    liSelected.addClass('selected');
                                     break;
-                            }
-                            if( liSelected ) {
-                                liSelected.addClass('selected').focus();                    
                             }
                         }
                     });
@@ -281,7 +291,6 @@
 
             //Search for recommendations
             function movieRex(id) {
-        {#                console.log(id);#}
                 var url = "{{ url('_imdb_api_title') }}";
                 return $.ajax({
                     url: url + '/' + id
@@ -310,7 +319,7 @@
                 $('#suggestive-slider').html('');
 
                 //remove searching class
-                $('body').toggleClass('searching');
+{#                $('body').toggleClass('searching');#}
 
                 //create results
                 $.each(titles, function (index, title) {
@@ -370,7 +379,7 @@
                 $('.rex-it').click(function (e) {
                     $('.title-box').val($(this).data('title'));
                     movieRex($(this).data('id')); //find recommendations
-                    $('body').toggleClass('searching');
+{#                    $('body').toggleClass('searching');#}
                 });
                 
                 //synopsis hovers
