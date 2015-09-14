@@ -46,7 +46,8 @@
 {% block postscripts %}
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script>
-
+        var liSelected = null;
+        
         function setTitleBoxEvents() {
             // callback for changes in title-box
             $('.title-box').on('input', function() { 
@@ -66,6 +67,32 @@
                 }
             });
             
+            $('.title-box').keydown(function (e) {
+                if ($('.search-list li').length > 0) {
+                    switch( e.which ) {
+                        case 40:
+                            $('li.selected').removeClass('selected');
+                            if (liSelected && liSelected.next().length > 0 ) {
+                                liSelected = liSelected.next();
+                            } else {
+                                liSelected = $('.search-list li').first();
+                            }
+                            liSelected.addClass('selected').focus();
+                            break;
+                        case 38:
+                            $('li.selected').removeClass('selected');
+                            if (liSelected && liSelected.prev().length > 0 ) {
+                                liSelected = liSelected.prev();
+                            } else {
+                                liSelected = $('.search-list li').last();
+                            }
+                            liSelected.addClass('selected').focus();
+                            break;
+                    }
+                    $('.title-box').focus();
+                }
+            });
+                    
         }
         
         $( document ).ajaxStart(function() {
@@ -235,36 +262,9 @@
 
             }
             
-            function searchAssistSelect() {
-                    //keyboard selector
-                    var li = $('.search-list li');
-                    var liSelected = null;
-                    $('.title-box').off('keydown').keydown(function (e) {
-                        if ($('.search-list li').length > 0) {
-                            switch( e.which ) {
-                                case 40:
-                                    $('li.selected').removeClass('selected');
-                                    if (liSelected && liSelected.next().length > 0 ) {
-                                        liSelected = liSelected.next();
-                                    } else {
-                                        liSelected = li.eq(0);
-                                    }
-                                    liSelected.addClass('selected');
-                                    break;
-                                case 38:
-                                    $('li.selected').removeClass('selected');
-                                    if (liSelected && liSelected.prev().length > 0 ) {
-                                        liSelected = liSelected.prev();
-                                    } else {
-                                        liSelected = li.last();
-                                    }
-                                    liSelected.addClass('selected');
-                                    break;
-                            }
-                        }
-                    });
-                    
-                }
+            function searchAssistSelect() {            
+                liSelected = null;
+            }
             
             //crop poster images
             var cropImageX = 198;
