@@ -23,7 +23,20 @@
                 <aside class="spell"><strong>RAWR!</strong> Check your spelling.</aside>
                 <aside class="rawr">RAWR!</aside>
             </div>
+            <div id ="rexinfo">
+                <h2>MovieRex knows what you should watch next.</h2> 
+                <p>Get movie and TV series recommendations based on what you like. Type in a film or series and choose from the dropdown to get started.
+                </p>
+            </div>
         </div>
+        <div class="onoffswitch">
+            <input type="checkbox" name="tvm" class="onoffswitch-checkbox" id="tvm" >
+            <label class="onoffswitch-label" for="tvm">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+            
 
         <ul class="suggestions-container"></ul>
         <div id="slider-container" tabindex="">
@@ -116,11 +129,11 @@
             //fade in and animate logo
             $('body').addClass('loaded');
             var homeSearch = $('#home-search');
-            TweenMax.from(homeSearch, 2.5, {ease: Bounce.easeOut, top: -600});
-        {#            $('<img/>').attr('src', '/img/curtains.jpg').load(function () {#}
-        {#            $(this).remove(); // prevent memory leaks as @benweet suggested#}
-        {#            });#}
-
+            
+            if (mobileVersion == false) {
+                TweenMax.from(homeSearch, 2.5, {ease: Bounce.easeOut, top: -600});
+                TweenMax.from($('#rexinfo'), 1, {opacity: 0, delay: 2.5});
+            }
                 //typing class
                 $('.title-box').focus(function () {
                     this.placeholder = '';
