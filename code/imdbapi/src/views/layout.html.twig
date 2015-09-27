@@ -30,6 +30,30 @@
  
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="/js/TweenMax.min.js"></script>
+        
+        <script>
+            var mobileVersion = false;
+            var windowSize;
+            
+            //check size
+            function whichVersion() {
+                windowSize = $(window).outerWidth();
+                if (windowSize < 501) {
+                    mobileVersion = true; 
+                } else {
+                    mobileVersion = false;
+                }
+            }
+            
+            $(function (){
+               whichVersion();
+            });
+            
+            $(window).resize(function(){
+               whichVersion(); 
+            });
+            
+        </script>
         {% block postscripts %}
         {% endblock postscripts %}
     </body>

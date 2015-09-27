@@ -1,8 +1,3 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
     Created on : 15-Jul-2015, 22:06:07
     Author     : Amon Jafarbay
@@ -63,7 +58,7 @@ body {
 /*HOMEPAGE*/
 #home-search {
   position: relative;
-  width: 380px;
+  /*width: 380px;*/
   text-align: center;
   margin:auto;
   top: 60px;
@@ -117,6 +112,22 @@ body {
 label.tv {color:white;}
 .tv-checkbox {margin:4px 0 0}
 
+#rexinfo {
+    max-width: 500px;margin: auto;
+    background: rgba(0,0,0,0.6);
+    border-radius: 6px;
+    padding: 1em 2em .2em;
+    margin-top: 2em;
+}
+#rexinfo h2 {
+    color: white;
+    font-size: 20px;
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+}
+
+#rexinfo p {
+    color:white;
+}
 
 //Tooltips
 
@@ -443,7 +454,8 @@ transition: all 400ms ease-in-out;
     /*font-weight: bold;*/
     font-size: 19px;
     top:-50px;
-    right:-60px;
+    right:50%;
+    margin-right:-250px;
     opacity:0;
     -webkit-transition: all 200ms ease-in-out;
 -moz-transition: all 200ms ease-in-out;
@@ -529,5 +541,59 @@ aside.rawr {    font-size: 40px;
   .action-button:active {
     border-width: 1px; }
 
+  /*TV SWITCH*/
   
+  .onoffswitch {
+    position: relative; width: 73px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 26px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 22px; padding: 0; line-height: 22px;
+    font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "TV";
+    padding-left: 10px;
+    background-color: #37AC2C; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "NO TV";
+    padding-right: 10px;
+    background-color: #D92E2E; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 30px; margin: -2.5px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 47px;
+    border: 2px solid #999999; border-radius: 26px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+  
+  /*Mobile view */
+  /*====================================================*/
+  /*====================================================*/
+  
+  @media only screen and (max-width:500px) {
+      #home-search input.title-box {display:none;}
+  }
   
