@@ -22,7 +22,7 @@
                 <aside class="spell"><strong>RAWR!</strong> Check your spelling.</aside>
                 <aside class="rawr">RAWR!</aside>
             </div>
-            <div id ="rexinfo">
+            <div id ="rexinfo" class="transition">
                 <h2>MovieRex knows what you should watch next.</h2> 
                 <p>Get movie and TV series recommendations based on what you like. Type a film or TV show to get started.
                 </p>
@@ -338,6 +338,9 @@
                     $('#suggestive-slider').slick('unslick');
                 }
                 $('#suggestive-slider').html('');
+                
+                //clear the welcome text 
+                $('#rexinfo').css('opacity','0');
 
                 //remove searching class
         {#                $('body').toggleClass('searching');#}
