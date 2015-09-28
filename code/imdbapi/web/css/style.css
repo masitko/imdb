@@ -552,7 +552,7 @@ aside.rawr {    font-size: 40px;
 }
 .onoffswitch-label {
     display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 26px;
+    border: 1px solid rgba(0,0,0,0.15); border-radius: 26px;
 }
 .onoffswitch-inner {
     display: block; width: 200%; margin-left: -100%;
@@ -579,7 +579,9 @@ aside.rawr {    font-size: 40px;
     background: #FFFFFF;
     position: absolute; top: 0; bottom: 0;
     right: 47px;
-    border: 2px solid #999999; border-radius: 26px;
+    border-radius: 26px;
+    box-shadow: 1px 2px 6px black;
+    -webkit-box-shadow: 1px 2px 6px black;
     transition: all 0.3s ease-in 0s; 
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
@@ -605,23 +607,47 @@ aside.rawr {    font-size: 40px;
     /*mobilesearch*/
     #mobileSearch {
         position:fixed;
-        padding:6px;
+        padding:15px 12px;
         top:0;
+        z-index: 9;
         width:100%;
         /*background: #61bc57;*/ 
         background: #CE2626;
         box-shadow:0 2px 6px rgba(0,0,0,0.7);
+        -webkit-box-shadow:0 2px 6px rgba(0,0,0,0.7);
+        background:url('../img/search.png') 12px center / 30px no-repeat #333;
     }
     #mobileSearch .title-box {
-        margin-left: 10%;
-        width: 90%;
-        border-radius: 6px;
+        margin-left: 11%;
+        width: 89%;
+        border-radius: 12px;
+        -webkit-border-radius: 12px;
         border: none;
-        box-shadow: inset 1px 1px #aaa;
-        -webkit-box-shadow: inset 1px 1px #aaa;
+        /*box-shadow: inset 1px 1px #aaa;*/
+        /*-webkit-box-shadow: inset 1px 1px #aaa;*/
         padding: 6px;
+        height:38px;
         font-size: 16px;
     }
+    #mobileSearch .title-box:focus {outline:none;}
+    
+    .onoffswitch {
+        position: absolute;
+        right:12px;
+        top:82px;
+    }
+    
+    .search-list {
+        top:62px;
+        width:100%;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        max-height: 100vh;
+        box-shadow: 0 1px 20px;
+        -webkit-box-shadow: 0 1px 20px;
+    }
+    
+    .search-list li {padding:10px 0;min-height:57px;}
 
     /*info*/
     #rexinfo {background:none;padding:0 1em 1em;margin-top:0}
@@ -631,7 +657,10 @@ aside.rawr {    font-size: 40px;
         border: 1px solid rgba(255,255,255,0.15);
         border-radius: 8px;
         -webkit-border-radius: 8px;
-        box-shadow: 0px 4px 8px rgba(0,0,0,0.5);
+        background:white;
+        color:black;
+        box-shadow: 0px 4px 4px rgba(0,0,0,0.5);
+        -webkit-box-shadow: 0px 4px 4px rgba(0,0,0,0.5);
     }
 
 
