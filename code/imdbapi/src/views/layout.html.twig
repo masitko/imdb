@@ -10,7 +10,7 @@
     <title>
 
     </title>
-
+    {% block prestyles %}{% endblock %} 
     <!-- Include External CSS Files -->
     <link rel="stylesheet" href="/css/foundation.min.css" />
 {#    <link rel="stylesheet" href="/css/foundation-icons/foundation-icons.css" />#}
@@ -35,6 +35,7 @@
             var mobileVersion = false;
             var windowSize;
             
+            
             //check size
             function whichVersion() {
                 windowSize = $(window).outerWidth();
@@ -44,6 +45,7 @@
                     $('#home-search .search-list').attr('class', 'moot');
                     $('#mobileSearch input').first().attr('class','title-box');
                     $('#mobileSearch ul').attr('class','search-list');
+                    
                 } else {
                     mobileVersion = false;
                     $('#mobileSearch input').first().attr('class','moot');
