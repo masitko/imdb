@@ -39,9 +39,17 @@
             function whichVersion() {
                 windowSize = $(window).outerWidth();
                 if (windowSize < 501) {
-                    mobileVersion = true; 
+                    mobileVersion = true;
+                    $('#home-search input').first().attr('class', 'moot');
+                    $('#home-search .search-list').attr('class', 'moot');
+                    $('#mobileSearch input').first().attr('class','title-box');
+                    $('#mobileSearch ul').attr('class','search-list');
                 } else {
                     mobileVersion = false;
+                    $('#mobileSearch input').first().attr('class','moot');
+                    $('#mobileSearch ul').attr('class','moot');
+                    $('#home-search input').first().attr('class', 'title-box');
+                    $('#home-search .search-list').attr('class', 'search-list');
                 }
             }
             
