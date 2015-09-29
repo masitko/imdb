@@ -673,7 +673,7 @@ aside.rawr {    font-size: 40px;
     /*background:white;*/
     }
     #suggestive-slider {background:white;}
-    .slick-list {overflow: auto !important;}
+    .slick-list {overflow: hidden !important;}
     #suggestive-slider .slick-slide {background: white;height:auto}
     #suggestive-slider a.slick-next {right:20px}
     #suggestive-slider a.slick-prev {left:20px}
