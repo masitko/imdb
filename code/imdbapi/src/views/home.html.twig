@@ -388,14 +388,17 @@
                         //mobile settings
                         if (mobileVersion === true) { 
                             $('#slider-container').css('bottom','0'); 
-                            $('#suggestive-silder').on('afterChange', function(){
+                            $('#suggestive-silder').on('afterChange', function(event,slick,currentSlide){
+                                console.log('changed');
                                 $(window).scrollTop(0);
                             });
+                           
                         } else { 
                             $('#slider-container').css('bottom','initial'); 
                         }
                     }
                 });
+             
                 //initialise the slider
                 $('#suggestive-slider').slick({
                     slidesToShow: 3,
