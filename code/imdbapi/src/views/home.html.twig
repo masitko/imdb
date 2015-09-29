@@ -385,8 +385,15 @@
                         var html = '<div><div class="mobile-suggestion ' + posterCheck +'" data-id="' + title.imdbID + '"><div class="mobile-poster"><img src="' + image + '" alt="movie poster" /></div><h3><img src="img/imdb.png" alt="imdb"/>' + imdbScore + '</h3><h2>'+ title.title +'</h2><h4>'+ title.genres +'</h4></div><div class="mobile-synopsis"><strong>Director:</strong>'+ title.director +' <strong>Stars:</strong>'+ title.actors + '<hr/><p>' + outline + '</p><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div></div>'; 
                     };
                         $('#suggestive-slider').append(html);
-                        if (mobileVersion === true) { $('#slider-container').css('bottom','0'); 
-                            } else { $('#slider-container').css('bottom','initial'); }
+                        //mobile settings
+                        if (mobileVersion === true) { 
+                            $('#slider-container').css('bottom','0'); 
+                            $('#suggestive-silder').on('afterChange', function(){
+                                $(window).scrollTop(0);
+                            });
+                        } else { 
+                            $('#slider-container').css('bottom','initial'); 
+                        }
                     }
                 });
                 //initialise the slider
