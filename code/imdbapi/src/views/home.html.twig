@@ -14,7 +14,7 @@
             {#            <a class="action-button green">suggest films</a>#}
             <div class="tv-checkbox">
                 <label class="tv" for="tv">include TV?</label>
-                <input  id= "tv" type="checkbox" name="tv" value="tv">
+                <input  id= "tv" type="checkbox" name="tv" value="tv" checked>
             </div>
             {#            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />#}
             <div id="tooltip" style=''>
@@ -32,7 +32,7 @@
             <input class="title-box" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="search-list"></ul>
             <div class="onoffswitch">
-                <input type="checkbox" name="tvm" class="onoffswitch-checkbox" id="tvm" >
+                <input type="checkbox" name="tvm" class="onoffswitch-checkbox" id="tvm" checked>
                 <label class="onoffswitch-label" for="tvm">
                     <span class="onoffswitch-inner"></span>
                     <span class="onoffswitch-switch"></span>
@@ -119,12 +119,21 @@
             $('body').toggleClass('searching');
         });
 
+        //DOCUMENT READY =======================================================
         $(function () {
             //for browsers that don't support pointer-events:none
             $('#home-logo').click(function () {
                 setTimeout(function () {
                     $('.title-box').focus();
                 }, 0.01);
+            });
+
+            //sync checkboxes
+            $("#tv").change(function () {
+                $("#tvm").prop("checked", this.checked);
+            });
+            $("#tvm").change(function () {
+                $("#tv").prop("checked", this.checked);
             });
 
             setTitleBoxEvents();
