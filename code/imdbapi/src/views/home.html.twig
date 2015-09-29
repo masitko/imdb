@@ -338,9 +338,9 @@
                     $('#suggestive-slider').slick('unslick');
                 }
                 $('#suggestive-slider').html('');
-                
+
                 //clear the welcome text 
-                $('#rexinfo').css('opacity','0');
+                $('#rexinfo').css('opacity', '0');
 
                 //remove searching class
         {#                $('body').toggleClass('searching');#}
@@ -381,24 +381,25 @@
                     //populate the slider 
                     if ($('#tv').is(':checked') || (title.years && (title.years.indexOf('Series') === -1))) {
                         if (mobileVersion === false) {
-                        var html = '<div><div class="suggestion ' + posterCheck + '" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>' + title.title + '</h2><span>' + title.genres + '</span>' + outline + '<hr/><strong>Director:</strong> ' + title.director + '<br/><strong>Stars:</strong> ' + title.actors + '</div></div></div>'; } else { 
-                        var html = '<div><div class="mobile-suggestion ' + posterCheck +'" data-id="' + title.imdbID + '"><div class="mobile-poster"><img src="' + image + '" alt="movie poster" /></div><h3><img src="img/imdb.png" alt="imdb"/>' + imdbScore + '</h3><h2>'+ title.title +'</h2><h4>'+ title.genres +'</h4></div><div class="mobile-synopsis"><strong>Director:</strong>'+ title.director +' <strong>Stars:</strong>'+ title.actors + '<hr/><p>' + outline + '</p><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div></div>'; 
-                    };
-                        $('#suggestive-slider').append(html);
-                        //mobile settings
-                        if (mobileVersion === true) { 
-                            $('#slider-container').css('bottom','0'); 
-                            $('#suggestive-silder').on('afterChange', function(event,slick,currentSlide){
-                                console.log('changed');
-                                $(window).scrollTop(0);
-                            });
-                           
-                        } else { 
-                            $('#slider-container').css('bottom','initial'); 
+                            var html = '<div><div class="suggestion ' + posterCheck + '" style="background-image:url(' + image + ')" data-id="' + title.imdbId + '"><h4>' + titleShort + ' <i>' + title.years + '</i></h4><h5>' + imdbScore + '</h5><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a><div class="synopsis"><h2>' + title.title + '</h2><span>' + title.genres + '</span>' + outline + '<hr/><strong>Director:</strong> ' + title.director + '<br/><strong>Stars:</strong> ' + title.actors + '</div></div></div>';
+                        } else {
+                            var html = '<div><div class="mobile-suggestion ' + posterCheck + '" data-id="' + title.imdbID + '"><div class="mobile-poster"><img src="' + image + '" alt="movie poster" /></div><h3><img src="img/imdb.png" alt="imdb"/>' + imdbScore + '</h3><h2>' + title.title + '</h2><h4>' + title.genres + '</h4></div><div class="mobile-synopsis"><strong>Director:</strong>' + title.director + ' <strong>Stars:</strong>' + title.actors + '<hr/><p>' + outline + '</p><a class="rex-it" href="#" data-title="' + titleShort + '" data-id="' + title.imdbId + '">Rex this!</a></div></div></div>';
                         }
+                        ;
+                        $('#suggestive-slider').append(html);
+
                     }
                 });
-             
+                //mobile settings
+                if (mobileVersion === true) {
+                    $('#slider-container').css('bottom', '0');
+                    $('#suggestive-slider').off('afterChange').on('afterChange', function (event, slick, currentSlide) {
+                        $('#slider-container').animate({scrollTop: 0});
+                    });
+
+                } else {
+                    $('#slider-container').css('bottom', 'initial');
+                }
                 //initialise the slider
                 $('#suggestive-slider').slick({
                     slidesToShow: 3,
