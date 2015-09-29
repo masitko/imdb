@@ -607,7 +607,7 @@ aside.rawr {    font-size: 40px;
     /*mobilesearch*/
     #mobileSearch {
         position:fixed;
-        padding:15px 12px;
+        padding:12px;
         top:0;
         z-index: 12;
         width:100%;
@@ -667,10 +667,14 @@ aside.rawr {    font-size: 40px;
     #slider-container {
     width:100%;
     top:0;
-    padding-top:67px;
+    padding-top:60px;
     z-index:10;
+    overflow:auto;
+    /*background:white;*/
     }
-    #suggestive-slider .slick-slide {background: white; min-height:100vh}
+    #suggestive-slider {background:white;height:100%;}
+    .slick-list {overflow: auto !important;}
+    #suggestive-slider .slick-slide {background: white;height:auto}
     #suggestive-slider a.slick-next {right:20px}
     #suggestive-slider a.slick-prev {left:20px}
     .mobile-poster {background: #444;}
@@ -704,8 +708,9 @@ aside.rawr {    font-size: 40px;
         text-align: center;
         background:#ccc;
         margin:0;
-        padding:4px
+        padding:4px;
     }
+    
     .mobile-synopsis hr {margin:6px;}
     .mobile-synopsis {padding:6px;font-size:15px;line-height:20px}
     .mobile-synopsis strong {
