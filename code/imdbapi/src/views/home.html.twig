@@ -403,7 +403,7 @@
                 if (mobileVersion === true) {
                     $('#slider-container').css('bottom', '0');
                     $('#suggestive-slider').on('afterChange', function (event, slick, currentSlide) {
-                        $('#slider-container').stop().animate({scrollTop: 0});
+{#                        $('#slider-container').animate({scrollTop: 0}).stop();#}
 {#                        $('#suggestive-slider').off('afterChange');#}
                         
                     });
