@@ -183,6 +183,7 @@ label.tv {color:white;}
     -ms-transform: rotate(-4deg);
     transform: rotate(-4deg);
 }
+.searching {overflow:hidden;}
 
 .searching #searching-animation {display:block;}
 
