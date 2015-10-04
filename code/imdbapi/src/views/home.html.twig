@@ -413,8 +413,8 @@
                 }
                 //initialise the slider
                 $('#suggestive-slider').slick({
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
                     speed: 1200,{#                    swipeToSlide: true,#}
                     prevArrow: '<a class="slider-control slick-prev transition"></a>',
                     nextArrow: '<a class="slider-control slick-next transition"></a>',
@@ -426,6 +426,15 @@
                                 slidesToScroll: 1,
                                 infinite: true,
                                 speed: 300
+                            }
+                        },
+                        {
+                            breakpoint: 1600,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll:3,
+                                infinite: true,
+                                speed: 1200
                             }
                         }
                     ]

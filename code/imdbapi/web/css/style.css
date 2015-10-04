@@ -739,3 +739,17 @@ aside.rawr {    font-size: 40px;
 @media only screen and (min-width:501px) {
     #mobileSearch {display:none;}
 }
+
+/*Large Desktop*/
+/*=================================================*/
+@media only screen and (min-width:1600px) {
+    body {
+        background-size:1500px;
+    }
+    #slider-container {top:616px;width:990px}
+    #suggestive-slider {max-width:970px}
+    #suggestive-slider .slick-slide {height:292px}
+    #slider-container.hover{padding-top:616px}
+    .suggestion {width:180px;height:263px;}
+    .suggestion .synopsis {width:240px;margin-left:-30px;bottom:280px;}
+}
