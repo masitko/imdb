@@ -739,7 +739,7 @@ aside.rawr {    font-size: 40px;
 /*=================================================*/
 @media only screen and (min-width:501px) {
     #mobileSearch {display:none;}
-    #fb-box {position:absolute;top:0;left:20px;}
+    #fb-box {position:absolute;top:20px;left:20px;}
 }
 
 /*Large Desktop*/
