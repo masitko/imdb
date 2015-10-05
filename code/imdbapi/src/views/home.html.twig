@@ -27,6 +27,10 @@
                 <p>Get movie and TV series recommendations based on what you like. Type a film or TV show to get started.
                 </p>
             </div>
+            <div id="fb-box">
+              <div class="fb-like" data-href="https://www.facebook.com/movierexfilms" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            </div>
+                          
         </div>
         <div id ="mobileSearch">
             <input class="title-box" type="text" placeholder="Tell me a movie you like"></input>
@@ -60,6 +64,14 @@
 
 {% endblock content %}
 {% block postscripts %}
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.4&appId=466019430249255";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script>
         var liSelected = null;
