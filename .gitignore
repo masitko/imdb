@@ -1,6 +1,6 @@
 
 .vagrant
-
+.DS_Store
 vendor/
 
 /nbproject/private/
