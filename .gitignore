@@ -4,3 +4,5 @@
 vendor/
 
 /nbproject/private/
+
+/code/imdbapi/web/robots.txt
