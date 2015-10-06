@@ -48,6 +48,7 @@ body #overlay {
     right: 0;
     background: #000;
     z-index: 10;
+    
     opacity: 1;
     transition-duration: 2000ms; }
 body.loaded #overlay {
