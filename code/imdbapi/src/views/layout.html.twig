@@ -5,11 +5,15 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="referrer" content="no-referrer">
-
+        {% block title %}
         <!-- Page Title -->
         <title>
-
+            Movie-Rex Film and tv series recommendations based on what you like.
         </title>
+        {% endblock title %}
+        {% block metadescript %}
+            <meta name="description" content="Movie-Rex suggests film and tv series recommendations based on what you like. Try entering your favourite film and Movie-Rex will tell you what you should watch next!" />
+        {% endblock metadescript %}
     {% block prestyles %}{% endblock %} 
     <!-- Include External CSS Files -->
     <link rel="stylesheet" href="/css/foundation.min.css" />
