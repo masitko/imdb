@@ -138,6 +138,7 @@
 
         //DOCUMENT READY =======================================================
         $(function () {
+            
             //for browsers that don't support pointer-events:none
             $('#home-logo').click(function () {
                 setTimeout(function () {
@@ -201,6 +202,12 @@
             $('#slider-container').click(function () {
                 $('.search-list').html('');
             });
+
+            if( window.location.hash.length > 0 ) {
+                hashChanged();
+            }
+        
+            window.onhashchange = hashChanged;
 
         });//end of doc ready
 
@@ -336,20 +343,27 @@
                 return ct.join(',');
             }
 
-            //Search for recommendations
-            function movieRex(id, title) {
+            function hashChanged() {
+                var hash = window.location.hash;
+                var hashArray = hash.split('/');
                 
-                if( title !== undefined);{
-                    window.location.hash = "#rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
-                }
-                var url = "{{ url('_imdb_api_title') }}";
-                return $.ajax({
-                    url: url + '/' + id
-                }).success(function (data) {
-                    if (data !== undefined) {
-                        displayRex(data);
+                switch( hashArray[0] ) {
+                    case '#rex':
+                        var url = "{{ url('_imdb_api_title') }}";
+                        return $.ajax({
+                            url: url + '/' + hashArray[1]
+                        }).success(function (data) {
+                            if (data !== undefined) {
+                                $('.title-box').val(hashArray[2].replace(/_+/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+                                displayRex(data);
+                            }
+                        });
                     }
-                });
+            }
+
+            //Search for recommendations
+            function movieRex(id, title) {                
+                window.location.hash = "#rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
             }
 
             //display recommendations
