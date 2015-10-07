@@ -340,7 +340,7 @@
             function movieRex(id, title) {
                 
                 if( title !== undefined);{
-                    window.location.hash = "#rex/" + id + "/" + title.replace(/\s+/g, '-').toLowerCase();
+                    window.location.hash = "#rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
                 }
                 var url = "{{ url('_imdb_api_title') }}";
                 return $.ajax({
