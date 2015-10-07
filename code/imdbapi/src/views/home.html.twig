@@ -1,4 +1,6 @@
 {% extends "layout.html.twig" %}
+
+
 {% block prestyles %}
     <link rel="stylesheet" type="text/css" href="/css/slick.css"/>
 {% endblock prestyles %}
@@ -6,6 +8,7 @@
 {% block content %}
     <main>
         <div id="home-search">
+
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
@@ -16,17 +19,18 @@
                 <label class="tv" for="tv">include TV?</label>
                 <input  id= "tv" type="checkbox" name="tv" value="tv" checked>
             </div>
-            {#            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />#}
+            {#            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />#}       
+            <div id ="rexinfo" class="transition">
+                <h2>Movie-Rex knows what you should watch next!</h2> 
+                <p>Get movie and TV series recommendations based on what you like. Type a film or TV show to get started.
+            </p>
+            </div>
             <div id="tooltip" style=''>
                 <aside class="choose">Select your title when you see it below.</aside>
                 <aside class="spell"><strong>RAWR!</strong> Check your spelling.</aside>
                 <aside class="rawr">RAWR!</aside>
             </div>
-            <div id ="rexinfo" class="transition">
-                <h2>Movie-Rex knows what you should watch next!</h2> 
-                <p>Get movie and TV series recommendations based on what you like. Type a film or TV show to get started.
-                </p>
-            </div>
+            
             
                           
         </div>
