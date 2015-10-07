@@ -355,6 +355,9 @@
                         }).success(function (data) {
                             if (data !== undefined) {
                                 $('.title-box').val(hashArray[2].replace(/_+/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+                                //clear the welcome text 
+                                $('#rexinfo').css('margin-top', '0').css('padding','10px 6px 1px').css('max-width','600px').html("<p>Showing viewing recommendations based on '" + $('.title-box').val() + "'</p>");
+                                
                                 displayRex(data);
                             }
                         });
