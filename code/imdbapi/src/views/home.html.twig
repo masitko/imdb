@@ -79,6 +79,21 @@
 }(document, 'script', 'facebook-jssdk'));</script>
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script>
+    
+    var myob = {
+        foo: "bar",
+        func: function() {
+            var self = this;
+            console.log("1:" + this.foo);
+            console.log("2:" + self.foo);
+            ( function() {
+                console.log("3:" + this);
+                console.log("4:" + self.foo);
+                
+            }());
+        }
+    }
+    myob.func();
         var liSelected = null;
 
         function setTitleBoxEvents() {
@@ -349,6 +364,7 @@
                 
                 switch( hashArray[0] ) {
                     case '#rex':
+                    case '#!rex':
                         var url = "{{ url('_imdb_api_title') }}";
                         return $.ajax({
                             url: url + '/' + hashArray[1]
@@ -366,7 +382,8 @@
 
             //Search for recommendations
             function movieRex(id, title) {                
-                window.location.hash = "#rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
+                window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
+                ga('send', 'pageview', window.location.hash);
             }
 
             //display recommendations
