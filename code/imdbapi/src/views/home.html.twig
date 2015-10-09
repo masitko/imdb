@@ -384,7 +384,7 @@
             function movieRex(id, title) {                
                 window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
                 ga('set', 'page', window.location.hash);
-                ga('send', 'pageview', );
+                ga('send', 'pageview' );
                 ga('send', 'event', 'Movies', 'search', title );
             }
 
