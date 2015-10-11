@@ -23,20 +23,22 @@
             <div id ="rexinfo" class="transition">
                 <h2>Movie-Rex knows what you should watch next!</h2> 
                 <p>Get movie and TV series recommendations based on what you like. Type a film or TV show to get started.
-            </p>
+                </p>
             </div>
             <div id="tooltip" style=''>
                 <aside class="choose">Select your title when you see it below.</aside>
                 <aside class="spell"><strong>RAWR!</strong> Check your spelling.</aside>
                 <aside class="rawr">RAWR!</aside>
             </div>
-            
-            
-                          
+
+
+
         </div>
-            <div id="fb-box">
-              <div class="fb-like" data-href="https://www.facebook.com/movierexfilms" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-            </div>
+        <div id="fb-box">
+            <div class="row"><div class="columns small-12">
+                    <div class="fb-like" data-href="https://www.facebook.com/movierexfilms" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+                </div></div>
+        </div>
         <div id ="mobileSearch">
             <input class="title-box" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="search-list"></ul>
@@ -69,14 +71,16 @@
 
 {% endblock content %}
 {% block postscripts %}
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.4&appId=466019430249255";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.4&appId=466019430249255";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     <script type="text/javascript" src="/js/slick.min.js"></script>
     <script>
         var liSelected = null;
@@ -138,7 +142,7 @@
 
         //DOCUMENT READY =======================================================
         $(function () {
-            
+
             //for browsers that don't support pointer-events:none
             $('#home-logo').click(function () {
                 setTimeout(function () {
@@ -203,10 +207,10 @@
                 $('.search-list').html('');
             });
 
-            if( window.location.hash.length > 0 ) {
+            if (window.location.hash.length > 0) {
                 hashChanged();
             }
-        
+
             window.onhashchange = hashChanged;
 
         });//end of doc ready
@@ -346,26 +350,28 @@
             function hashChanged() {
                 var hash = window.location.hash;
                 var hashArray = hash.split('/');
-                
-                switch( hashArray[0] ) {
+
+                switch (hashArray[0]) {
                     case '#rex':
                         var url = "{{ url('_imdb_api_title') }}";
                         return $.ajax({
                             url: url + '/' + hashArray[1]
                         }).success(function (data) {
                             if (data !== undefined) {
-                                $('.title-box').val(hashArray[2].replace(/_+/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+                                $('.title-box').val(hashArray[2].replace(/_+/g, ' ').replace(/\w\S*/g, function (txt) {
+                                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                                }));
                                 //clear the welcome text 
-                                $('#rexinfo').css('margin-top', '0').css('padding','10px 6px 1px').css('max-width','600px').html("<p>Film and TV recommendations based on '" + $('.title-box').val() + "'</p>");
-                                
+                                $('#rexinfo').css('margin-top', '0').css('padding', '10px 6px 1px').css('max-width', '600px').html("<p>Film and TV recommendations based on '" + $('.title-box').val() + "'</p>");
+
                                 displayRex(data);
                             }
                         });
-                    }
+                }
             }
 
             //Search for recommendations
-            function movieRex(id, title) {                
+            function movieRex(id, title) {
                 window.location.hash = "#rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
             }
 
@@ -441,9 +447,9 @@
                 if (mobileVersion === true) {
                     $('#slider-container').css('bottom', '0');
                     $('#suggestive-slider').on('afterChange', function (event, slick, currentSlide) {
-{#                        $('#slider-container').animate({scrollTop: 0}).stop();#}
-{#                        $('#suggestive-slider').off('afterChange');#}
-                        
+        {#                        $('#slider-container').animate({scrollTop: 0}).stop();#}
+        {#                        $('#suggestive-slider').off('afterChange');#}
+
                     });
 
                 } else {
@@ -470,7 +476,7 @@
                             breakpoint: 1600,
                             settings: {
                                 slidesToShow: 3,
-                                slidesToScroll:3,
+                                slidesToScroll: 3,
                                 infinite: true,
                                 speed: 1200
                             }
