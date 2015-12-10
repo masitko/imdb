@@ -7,13 +7,13 @@ vagrantfile-local:
         memory: '1024'
         chosen_provider: virtualbox
         network:
-            private_network: 192.168.56.78
+            private_network: 192.168.56.71
             forwarded_port:
                 9Oeu3EHVNZgh:
-                    host: '7822'
+                    host: '7122'
                     guest: '22'
                 u6G8nZDSen8S:
-                    host: '7880'
+                    host: '7180'
                     guest: '80'
         provider:
             virtualbox:
@@ -183,9 +183,9 @@ mysql:
     adminer: 0
     databases: {  }
 postgresql:
-    install: 0
+    install: 1
     settings:
-        root_password: '123'
+        root_password: 'vagrant'
         user_group: postgres
         encoding: UTF8
         version: '9.3'
