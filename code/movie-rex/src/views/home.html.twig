@@ -14,6 +14,11 @@
             </h1>
             <input ng-model="movieTitle" ng-change="titleChange()" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="search-list"></ul>
+            <ul class="search-list2">
+                <li ng-repeat="title in fuzzySearch">
+                    {{'{{ title.l }}'}}
+                </li>
+            </ul>
             {#            <a class="action-button green">suggest films</a>#}
             <div class="tv-checkbox">
                 <label class="tv" for="tv">include TV?</label>
