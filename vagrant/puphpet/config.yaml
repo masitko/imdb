@@ -3,7 +3,7 @@ vagrantfile-local:
     vm:
         box: puphpet/ubuntu1404-x64
         box_url: puphpet/ubuntu1404-x64
-        hostname: null
+        hostname: movie-rex.dev
         memory: '1024'
         chosen_provider: virtualbox
         network:
@@ -49,11 +49,13 @@ vagrantfile-local:
         port: null
         private_key_path: null
         username: vagrant
+        password: vagrant
         guest_port: null
         keep_alive: true
         forward_agent: false
         forward_x11: false
         shell: 'bash -l'
+        insert_key: false 
     vagrant:
         host: detect
 server:
@@ -70,6 +72,7 @@ server:
         - python-software-properties
         - yui-compressor
         - acl
+        - mc
     dot_files:
         -
             bash_aliases: null
@@ -150,6 +153,7 @@ php:
             - mcrypt
             - memcache
             - curl
+            - pgsql
 #            - mysql
 #            - sqlite
             - gd

@@ -8,11 +8,11 @@
 {% block content %}
     <main>
       <h1>{{'{{movieTitle}}'}}</h1>
-        <div id="home-search">
+        <div id="home-search" ng-controller="SearchController">
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
-            <input ng-model="movieTitle" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
+            <input ng-model="movieTitle" ng-change="titleChange()" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="search-list"></ul>
             {#            <a class="action-button green">suggest films</a>#}
             <div class="tv-checkbox">
