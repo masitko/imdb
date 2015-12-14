@@ -37,8 +37,7 @@ homeControllers.controller('SearchController', ['$scope', '$resource',
 
         $scope.titleEnter = function () {
             var searchFor = $scope.movieTitle.replace(/ /g, '_').toLowerCase();
-            enterSearch.query({title: searchFor}, function (data) {
-                console.log(data);
+            enterSearch.get({title: searchFor}, function (data) {
                 $scope.searchContainer = data;
                 angular.forEach($scope.searchContainer, function (title, key) {
                     console.log(title);  
@@ -52,20 +51,25 @@ homeControllers.controller('SearchController', ['$scope', '$resource',
                     title.movie = true;
                     title.tv = title.q && title.q.match(/TV/);
                 });
+                
             });
         };
 
         $scope.titleClick = function (title) {
-            movieRex(title.id, title.l);
+            $scope.movieRex(title.id, title.l);
         };
 
         $scope.titleBoxKeyUp = function (e) {
+            console.log(e);
             switch (e.which) {
                 case 13: // if Enter 
                     if ($('li.selected').length > 0) {
-                        $('li.selected .title-container').click();
+                        console.log('CLICK');
+//                                          $('li.selected .title-container').click();
+                        $scope.movieRex( liSelected.find('.title-container').data('id'), liSelected.find('.title-container').data('title') );
                     }
                     else if ($scope.movieTitle.length > 0) {
+                        console.log('ENTER');
                         $scope.titleEnter();
 //                        getSearchData(this.value.replace(/ /g, '_').toLowerCase());
                     }
@@ -74,6 +78,12 @@ homeControllers.controller('SearchController', ['$scope', '$resource',
             }
         };
 
-
+        $scope.movieRex = function( id, title ) {
+            window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
+            ga('send', 'event', 'Movies', 'search', title);
+            ga('set', 'page', window.location.hash);
+            ga('send', 'pageview');            
+            $scope.searchContainer = [];
+        };
 
     }]);

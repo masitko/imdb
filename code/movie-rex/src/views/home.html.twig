@@ -122,8 +122,8 @@
                     switch (e.which) {
                         case 40:
                             $('li.selected').removeClass('selected');
-                            if (liSelected && liSelected.next().length > 0) {
-                                liSelected = liSelected.next();
+                            if (liSelected && liSelected.nextAll(':visible:first').length > 0) {
+                                liSelected = liSelected.nextAll(':visible:first');
                             } else {
                                 liSelected = $('.search-list li').first();
                             }
@@ -131,8 +131,8 @@
                             break;
                         case 38:
                             $('li.selected').removeClass('selected');
-                            if (liSelected && liSelected.prev().length > 0) {
-                                liSelected = liSelected.prev();
+                            if (liSelected && liSelected.prevAll(':visible:first').length > 0) {
+                                liSelected = liSelected.prevAll(':visible:first');
                             } else {
                                 liSelected = $('.search-list li').last();
                             }
@@ -303,7 +303,7 @@
                 */
 
             //'enter' search results
-            function displaySearchTitles(titles) {
+{#            function displaySearchTitles(titles) {
                 $('.search-list').html('');
                 $.each(titles, function (index, title) {
                     var check1 = "TV";
@@ -328,13 +328,12 @@
                 $('.title-container').click(function (e) {
                     $('.title-box').val($(this).data('title'));
                     movieRex($(this).data('id'), $(this).data('title')); //find recommendations
-        {#                    $('body').toggleClass('searching');#}
                     $('#home-search').attr('class', '');
                     return false;
                 });
 
             }
-
+#}
             function searchAssistSelect() {
                 liSelected = null;
             }
@@ -387,13 +386,14 @@
             }
 
             //Search for recommendations
-            function movieRex(id, title) {
+{#            function movieRex(id, title) {
                 window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
                 ga('send', 'event', 'Movies', 'search', title);
                 ga('set', 'page', window.location.hash);
                 ga('send', 'pageview');
+                $('.search-list').html('');
             }
-
+#}
             //display recommendations
             function displayRex(titles) {
 
