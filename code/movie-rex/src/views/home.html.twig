@@ -12,15 +12,15 @@
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
-            <input ng-model="movieTitle" ng-change="titleChange()" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
+            <input ng-model="movieTitle" ng-change="titleChange()" ng-keyup="titleBoxKeyUp($event)" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
 {#            <ul class="search-list"></ul>#}
             <ul class="search-list">
-                <li ng-repeat="title in fuzzySearch" ng-show="title.movie || (title.tv && includeTV)" ng-click="titleClick(title)">
-                    <div class="row title-container" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.l }}'}}">
+                <li ng-repeat="title in searchContainer" ng-show="title.movie || (title.tv && includeTV)" tabindex="-1">
+                    <div class="row title-container" ng-click="titleClick(title)" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}">
                         <div class="columns small-2 fuzzy-image">
-                            <img src="{{'{{ title.image }}'}}" alt="{{'{{ title.l }}'}}"/>
+                            <img src="{{'{{ title.img }}'}}" alt="{{'{{ title.title }}'}}"/>
                         </div>
-                        <div class="columns small-10 fuzzy-title"><strong>{{'{{ title.l }}'}}</strong> ({{'{{ title.y }}'}})
+                        <div class="columns small-10 fuzzy-title"><strong>{{'{{ title.title }}'}}</strong> {{'{{ title.additional }}'}}
                         </div>
                     </div>
                 </li>
@@ -99,11 +99,12 @@
 
         function setTitleBoxEvents() {
             // callback for changes in title-box
-            $('.title-box').on('input', function () {
+{#            $('.title-box').on('input', function () {
                 (this.value.length > 0) ? getSearchAssist(this.value.replace(/ /g, '_').toLowerCase()) : $('.search-list').html('');
             });
-
-            $('.title-box').keyup(function (e) {
+#}
+    
+{#            $('.title-box').keyup(function (e) {
                 switch (e.which) {
                     case 13: // if Enter 
                         if ($('li.selected').length > 0) {
@@ -115,7 +116,7 @@
                         break
                 }
             });
-
+#}
             $('.title-box').keydown(function (e) {
                 if ($('.search-list li').length > 0) {
                     switch (e.which) {
@@ -397,7 +398,7 @@
             function displayRex(titles) {
 
                 //empty the fuzzy search
-                $('.search-list').html('');
+{#                $('.search-list').html('');#}
 
                 //clear tooltips
                 $('#home-search').attr('class', 'rawr');
