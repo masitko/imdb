@@ -37,7 +37,7 @@ homeControllers.controller('SearchController', ['$scope', '$resource',
 
         $scope.titleEnter = function () {
             var searchFor = $scope.movieTitle.replace(/ /g, '_').toLowerCase();
-            enterSearch.get({title: searchFor}, function (data) {
+            enterSearch.query({title: searchFor}, function (data) {
                 $scope.searchContainer = data;
                 angular.forEach($scope.searchContainer, function (title, key) {
                     console.log(title);  

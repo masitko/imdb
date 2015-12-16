@@ -60,7 +60,7 @@ class Crawler {
     private function parseSearchResult( $node ) {
         
 //        $href = $node->find('.result_text > a', 0)->attr['href'];
-        $id = split('/', $node->find('.result_text > a', 0)->attr['href'] )[2];
+        $id = explode('/', $node->find('.result_text > a', 0)->attr['href'] )[2];
         $title = $node->find('.result_text > a', 0)->plaintext;
         $node->find('.result_text > a', 0)->outertext = '';
         
