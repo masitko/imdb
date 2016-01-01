@@ -67,12 +67,12 @@
             });
 
             //sync checkboxes
-            $("#tv").change(function () {
-                $("#tvm").prop("checked", this.checked);
-            });
-            $("#tvm").change(function () {
-                $("#tv").prop("checked", this.checked);
-            });
+//            $("#tv").change(function () {
+//                $("#tvm").prop("checked", this.checked);
+//            });
+//            $("#tvm").change(function () {
+//                $("#tv").prop("checked", this.checked);
+//            });
 
             setTitleBoxEvents();
 
@@ -132,7 +132,7 @@
         });//end of doc ready
 
         function getSearchData(title) {
-            var url = "{{ url('_imdb_api_search') }}";
+            var url = "/s";
             $.ajax({
                 url: url + '/' + title
             }).success(function (data) {
@@ -271,7 +271,7 @@
                 switch (hashArray[0]) {
                     case '#rex':
                     case '#!rex':
-                        var url = "{{ url('_imdb_api_title') }}";
+                        var url = "/t";
                         return $.ajax({
                             url: url + '/' + hashArray[1]
                         }).success(function (data) {

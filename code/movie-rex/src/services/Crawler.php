@@ -68,7 +68,8 @@ class Crawler {
             'id' => $id,
             'image' => $node->find('.primary_photo > img', 0)->attr["src"],
             'title' => $title,
-            'additional' => $node->find('.result_text', 0)->innertext,            
+            'additional' => trim($node->find('.result_text', 0)->innertext, '"'),
+//            'additional' => $node->find('.result_text', 0)->plaintext,
         ];
         
         return $result;

@@ -7,8 +7,9 @@
 
 {% block content %}
     <main>
-        <h1>{{'{{movieTitle}}'}}</h1>
-        <div id="home-search" ng-controller="SearchController">
+{#        <h1>{{'{{movieTitle}}'}}</h1>#}
+{#        <h2 ng-show="loadingService.isLoading()">XXXXXXXXXXXXXXXXXX</h2>#}
+        <div id="home-search">
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
@@ -20,7 +21,7 @@
                         <div class="columns small-2 fuzzy-image">
                             <img src="{{'{{ title.img }}'}}" alt="{{'{{ title.title }}'}}"/>
                         </div>
-                        <div class="columns small-10 fuzzy-title"><strong>{{'{{ title.title }}'}}</strong> {{'{{ title.additional }}'}}
+                            <div class="columns small-10 fuzzy-title"><strong>{{'{{ title.title }}'}}</strong><span ng-bind-html="title.additional|to_trusted"></span>
                         </div>
                     </div>
                 </li>
@@ -28,7 +29,7 @@
             {#            <a class="action-button green">suggest films</a>#}
             <div class="tv-checkbox">
                 <label class="tv" for="tv">include TV?</label>
-                <input ng-model="includeTV" id= "tv" type="checkbox" name="tv" value="tv" checked>
+                <input ng-model="includeTV" id= "tv" type="checkbox" value="tv">
             </div>
             {#            <img id="rex-fill" class="transition slow" src="img/movie-rex-fill.png" alt="MovieRex" />#}       
             <div id ="rexinfo" class="transition">
@@ -54,7 +55,7 @@
             <input class="title-box" type="text" placeholder="Tell me a movie you like"></input>
             <ul class="search-list"></ul>
             <div class="onoffswitch">
-                <input ng-model="includeTV" type="checkbox" name="tvm" class="onoffswitch-checkbox" id="tvm" checked>
+                <input ng-model="includeTV" type="checkbox" class="onoffswitch-checkbox" id="tvm">
                 <label class="onoffswitch-label" for="tvm">
                     <span class="onoffswitch-inner"></span>
                     <span class="onoffswitch-switch"></span>
@@ -75,8 +76,9 @@
             </div>
         </div>
     </main>
+{#    <img id="searching-animation" ng-show="loadingService.isLoading()" src="img/rex-ani-2.gif" alt="hunting-rex"/>#}
     <img id="searching-animation" src="img/rex-ani-2.gif" alt="hunting-rex"/>
-    <div id="overlay" class="transition"></div>
+        <div id="overlay" class="transition"></div>
 
 
 

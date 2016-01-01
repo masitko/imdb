@@ -1,19 +1,28 @@
 
-var homeControllers = angular.module('homeControllers', ['ngResource']);
+var homeControllers = angular.module('homeControllers', ['ngResource', 'homeServices']);
 
 
-
-homeControllers.controller('SearchController', ['$scope', '$resource',
-    function ($scope, $resource) {
+homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '$timeout', 'loadingService',
+    function ($scope, $log, $resource, $timeout, loadingService) {
 
         var fuzzySearch = $resource('/fs/:title');
         var enterSearch = $resource('/s/:title');
 
         var searchContainer = [];
+        
+        $scope.loadingService = loadingService;
 
         $scope.$watch('includeTV', function () {
-            console.log($scope.includeTV);
+            $log.info('TV: '+$scope.includeTV);
         });
+
+        $timeout(function() {
+            $scope.includeTV = true;
+        });
+        
+        $scope.mainInit = function() {
+            $scope.includeTV = 'true';
+        };
 
         $scope.titleChange = function () {
             var searchFor = $scope.movieTitle.replace(/ /g, '_').toLowerCase();
@@ -36,11 +45,12 @@ homeControllers.controller('SearchController', ['$scope', '$resource',
         };
 
         $scope.titleEnter = function () {
+//            $log.info($scope.movieTitle);
             var searchFor = $scope.movieTitle.replace(/ /g, '_').toLowerCase();
             enterSearch.query({title: searchFor}, function (data) {
                 $scope.searchContainer = data;
                 angular.forEach($scope.searchContainer, function (title, key) {
-                    console.log(title);  
+//                    $log.info(title);  
                     title.img = title.image === undefined ? '/img/no-poster.png' : (function () {
                         var ia = title.image.split('.');
                         var type = ia.pop();
@@ -56,20 +66,20 @@ homeControllers.controller('SearchController', ['$scope', '$resource',
         };
 
         $scope.titleClick = function (title) {
-            $scope.movieRex(title.id, title.l);
+            $scope.movieRex(title.id, title.title);
         };
 
         $scope.titleBoxKeyUp = function (e) {
-            console.log(e);
+//            $log.info(e);
             switch (e.which) {
                 case 13: // if Enter 
                     if ($('li.selected').length > 0) {
-                        console.log('CLICK');
+//                        $log.info('CLICK');
 //                                          $('li.selected .title-container').click();
                         $scope.movieRex( liSelected.find('.title-container').data('id'), liSelected.find('.title-container').data('title') );
                     }
                     else if ($scope.movieTitle.length > 0) {
-                        console.log('ENTER');
+//                        $log.info('ENTER');
                         $scope.titleEnter();
 //                        getSearchData(this.value.replace(/ /g, '_').toLowerCase());
                     }
