@@ -1,7 +1,6 @@
 
 var homeControllers = angular.module('homeControllers', ['ngResource', 'homeServices']);
 
-
 homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '$timeout', 'loadingService',
     function($scope, $log, $resource, $timeout, loadingService) {
 
@@ -73,7 +72,6 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         };
 
         $scope.updateTitleList = function() {
-            console.log(searchContainer);
             if( searchContainer === undefined ) {
                 return;
             }
@@ -82,9 +80,9 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
             });            
         };
 
-        $scope.titleClick = function(title) {
-            $scope.movieRex(title.id, title.title);
-        };
+//        $scope.titleClick = function(title) {
+//            $scope.movieRex(title.id, title.title);
+//        };
 
         $scope.titleBoxKeyUp = function(e) {
             switch (e.which) {
@@ -139,7 +137,9 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
 
 
         $scope.movieRex = function(id, title) {
+//            console.log('REX1!!!, '+window.location.hash);
             window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
+//            console.log('REX2!!!, '+window.location.hash);
             ga('send', 'event', 'Movies', 'search', title);
             ga('set', 'page', window.location.hash);
             ga('send', 'pageview');
@@ -147,3 +147,5 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         };
 
     }]);
+
+

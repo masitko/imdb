@@ -1,11 +1,11 @@
 
         //animate loading on ajax calls
-        $(document).ajaxStart(function () {
-            $('body').toggleClass('searching');
-        });
-        $(document).ajaxComplete(function () {
-            $('body').toggleClass('searching');
-        });
+//        $(document).ajaxStart(function () {
+//            $('body').toggleClass('searching');
+//        });
+//        $(document).ajaxComplete(function () {
+//            $('body').toggleClass('searching');
+//        });
 
         //DOCUMENT READY =======================================================
         $(function () {
@@ -218,8 +218,11 @@
             function hashChanged() {
                 var hash = window.location.hash;
                 var hashArray = hash.split('/');
+                console.log(hashArray);
 
                 switch (hashArray[0]) {
+                    case '#':
+                        hashArray.shift();
                     case '#rex':
                     case '#!rex':
                         var url = "/t";

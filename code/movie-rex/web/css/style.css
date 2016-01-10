@@ -160,7 +160,7 @@ label.tv {color:white;}
     font-size: 0.9em;
 }
 .search-list li:hover, .search-list li.selected {background:#AEEEEE;}
-.fuzzy-title {padding-left:0}
+.fuzzy-title {padding-left:0; cursor: default}
 .fuzzy-image img {width:27px;}
 
 /*Suggestions*/

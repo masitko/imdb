@@ -16,10 +16,10 @@ homeServices.value('loadingService', {
         return this.loadingCount > 0;
     },
     requested: function() {
-        this.loadingCount += 1;
+        this.loadingCount++;
     },
     responded: function() {
-        this.loadingCount -= 1;
+        this.loadingCount--;
     }
 });
 

@@ -6,24 +6,16 @@
 {% endblock prestyles %}
 
 {% block content %}
+
     <main>
-{#        <h1>{{'{{movieTitle}}'}}</h1>#}
-{#        <h2 ng-show="loadingService.isLoading()">XXXXXXXXXXXXXXXXXX</h2>#}
         <div id="home-search">
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
             <input ng-model="movieTitle" ng-change="titleChange()" ng-keydown="titleBoxKeyDown($event)"  ng-keyup="titleBoxKeyUp($event)" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
-{#            <ul class="search-list"></ul>#}
+            {#            <ul class="search-list"></ul>#}
             <ul class="search-list">
-                <li  ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" tabindex="-1">
-                    <div class="row title-container" ng-click="titleClick(title)" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}">
-                        <div class="columns small-2 fuzzy-image">
-                            <img src="{{'{{ title.img }}'}}" alt="{{'{{ title.title }}'}}"/>
-                        </div>
-                            <div class="columns small-10 fuzzy-title"><strong>{{'{{ title.title }}'}}</strong><span ng-bind-html="title.additional|to_trusted"></span>
-                        </div>
-                    </div>
+                <li fs-title ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}" tabindex="-1">
                 </li>
             </ul>
             {#            <a class="action-button green">suggest films</a>#}
@@ -76,9 +68,9 @@
             </div>
         </div>
     </main>
-{#    <img id="searching-animation" ng-show="loadingService.isLoading()" src="img/rex-ani-2.gif" alt="hunting-rex"/>#}
+    {#    <img id="searching-animation" ng-show="loadingService.isLoading()" src="img/rex-ani-2.gif" alt="hunting-rex"/>#}
     <img id="searching-animation" src="img/rex-ani-2.gif" alt="hunting-rex"/>
-        <div id="overlay" class="transition"></div>
+    <div id="overlay" class="transition"></div>
 
 
 
