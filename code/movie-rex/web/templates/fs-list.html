@@ -1,0 +1,13 @@
+
+<ul class="search-list">
+    <!--<li ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}" tabindex="-1">-->
+    <li ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" tabindex="-1" ng-click="clicked(title)">
+        <div class="row title-container">
+            <div class="columns small-2 fuzzy-image">
+                <img src="{{ title.img}}" alt="{{ title.title}}"/>
+            </div>
+            <div class="columns small-10 fuzzy-title"><strong>{{ title.title}}</strong><span ng-bind-html="title.additional | to_trusted"></span>
+            </div>
+        </div>
+    </li>
+</ul>

@@ -13,12 +13,12 @@
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
             <input ng-model="movieTitle" ng-change="titleChange()" ng-keydown="titleBoxKeyDown($event)"  ng-keyup="titleBoxKeyUp($event)" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
-            {#            <ul class="search-list"></ul>#}
-            <ul class="search-list">
-                <li fs-title ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}" tabindex="-1">
+            <fs-list selectedTitle="selectedTitle" searchContainer="searchContainer"> </fs-list>
+{#            <ul class="search-list">
+                <li fs-title ng-class="{selected:$index === selectedTitle}" title="title" ng-repeat="title in searchContainer" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}" tabindex="-1">
                 </li>
             </ul>
-            {#            <a class="action-button green">suggest films</a>#}
+#}
             <div class="tv-checkbox">
                 <label class="tv" for="tv">include TV?</label>
                 <input ng-model="includeTV" id= "tv" type="checkbox" value="tv">

@@ -15,6 +15,10 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         $scope.$watch('includeTV', function() {
 //            $log.info('TV: ' + $scope.includeTV);
         });
+        
+        $scope.$watch( function(){return searchContainer;}, function() {
+            $scope.updateTitleList();
+        });
 
         $timeout(function() {
             $scope.includeTV = true;
@@ -47,7 +51,6 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                 searchContainer = searchContainer && searchContainer.filter(function(title) {
                     return title.movie || title.tv;
                 });
-                $scope.updateTitleList();
             });
         };
 
@@ -80,10 +83,6 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
             });            
         };
 
-//        $scope.titleClick = function(title) {
-//            $scope.movieRex(title.id, title.title);
-//        };
-
         $scope.titleBoxKeyUp = function(e) {
             switch (e.which) {
                 case 13: // if Enter 
@@ -97,7 +96,6 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                 case 27: // if ESC
                     $scope.movieTitle = '';
                     searchContainer = [];
-                    $scope.searchContainer = [];
                     break
 
             }
@@ -137,13 +135,12 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
 
 
         $scope.movieRex = function(id, title) {
-//            console.log('REX1!!!, '+window.location.hash);
             window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
-//            console.log('REX2!!!, '+window.location.hash);
             ga('send', 'event', 'Movies', 'search', title);
             ga('set', 'page', window.location.hash);
             ga('send', 'pageview');
-            $scope.searchContainer = [];
+            searchContainer = [];
+//            $scope.$apply();
         };
 
     }]);

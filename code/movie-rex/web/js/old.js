@@ -218,7 +218,7 @@
             function hashChanged() {
                 var hash = window.location.hash;
                 var hashArray = hash.split('/');
-                console.log(hashArray);
+//                console.log(hashArray);
 
                 switch (hashArray[0]) {
                     case '#':
