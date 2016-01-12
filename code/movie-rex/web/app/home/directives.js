@@ -17,22 +17,28 @@ homeControllers.directive( 'fsTitle', function(){
 });
 
 
-homeControllers.directive( 'fsList', function(){
+homeControllers.directive( 'fsList', ['$interval', function($interval){
     return {
-        restrict: 'E',
+        restrict: 'EA',
         templateUrl: 'templates/fs-list.html',
-//        scope: {
-//            searchContainer: '=',
-//            selectedTitle: '='
-//        },
-        link: function( scope, element, attrs ) {
+        scope: {
+            searchContainer: '=',
+            selectedTitle: '=',
+            movieRex: '&'
         },
         controller: function( $scope, $element ) {
-            $scope.clicked = function( title ) {
-                $scope.movieRex(title.id, title.title);
+        },
+        link: function( scope, element, attrs ) {
+            var movieRexHandler = scope.movieRex();
+            scope.titleClicked = function( title ) {
+                movieRexHandler(title.id, title.title);
             };
+                        
+//            timeoutId = $interval(function() {
+//                console.log(scope.searchContainer);
+//            }, 1000);            
         }
     };
-});
+}]);
 
 

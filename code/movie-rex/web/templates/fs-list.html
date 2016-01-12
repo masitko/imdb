@@ -1,7 +1,7 @@
 
 <ul class="search-list">
     <!--<li ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}" tabindex="-1">-->
-    <li ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" tabindex="-1" ng-click="clicked(title)">
+    <li ng-class="{selected:$index === selectedTitle}" ng-repeat="title in searchContainer" tabindex="-1" ng-click="titleClicked(title)">
         <div class="row title-container">
             <div class="columns small-2 fuzzy-image">
                 <img src="{{ title.img}}" alt="{{ title.title}}"/>

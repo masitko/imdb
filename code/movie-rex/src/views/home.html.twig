@@ -13,7 +13,8 @@
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
             <input ng-model="movieTitle" ng-change="titleChange()" ng-keydown="titleBoxKeyDown($event)"  ng-keyup="titleBoxKeyUp($event)" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
-            <fs-list selectedTitle="selectedTitle" searchContainer="searchContainer"> </fs-list>
+{#            <fs-list> </fs-list>#}
+            <fs-list selected-title="selectedTitle" search-container="searchContainer" movie-rex="movieRex"> </fs-list>
 {#            <ul class="search-list">
                 <li fs-title ng-class="{selected:$index === selectedTitle}" title="title" ng-repeat="title in searchContainer" data-id="{{'{{ title.id }}'}}" data-title="{{'{{ title.title }}'}}" tabindex="-1">
                 </li>
