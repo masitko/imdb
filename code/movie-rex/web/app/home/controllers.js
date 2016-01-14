@@ -19,11 +19,32 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         $scope.$watch( function(){return searchContainer;}, function() {
             $scope.updateTitleList();
         });
+        
+        $scope.$on('$locationChangeSuccess', function(event, newLocation, oldLocation ){
+            if( $location.path().length > 0 ) {
+                hashChanged();
+            }
+        });      
 
         $timeout(function() {
             $scope.includeTV = true;
+            $('body').addClass('loaded'); 
+            
+            if (mobileVersion == false) {
+                TweenMax.from($('#home-search'), 2.5, {ease: Bounce.easeOut, top: -600});
+                TweenMax.from($('#rexinfo'), 1, {opacity: 0, delay: 2.5});
+            } else {
+                TweenMax.from($('#home-search h1'), 2.5, {ease: Bounce.easeOut, top: -600});
+                TweenMax.from($('#mobileSearch'), 1, {top: -200, delay: 1.5});
+                TweenMax.from($('#rexinfo h2'), 1, {delay: 1.5, opacity: 0});
+                TweenMax.from($('#rexinfo p'), 1, {delay: 1.5, opacity: 0, y: '+=6'});
+            }            
         });
 
+        $scope.clearSearch = function() {
+            searchContainer = [];            
+        };
+        
         $scope.titleChange = function() {
             if( $scope.movieTitle.length === 0 ) {
                 searchContainer = [];
@@ -147,7 +168,3 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
     }]);
 
 
-homeControllers.config(['$locationProvider', function( $locationProvider ){
-    $locationProvider.html5Mode(false);
-    $locationProvider.hashPrefix('!');        
-}]);

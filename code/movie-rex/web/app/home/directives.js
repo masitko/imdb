@@ -1,5 +1,45 @@
 
 
+homeControllers.directive( 'll', ['$timeout', function( $timeout ) {
+        
+}]);
+
+homeControllers.directive( 'fsInput', ['$timeout', function( $timeout ) {
+    return {
+        restrict: 'A',
+        link: function( scope, element, attrs ) {
+            element.bind('input', function() {
+                scope.titleChange();
+            });
+            element.bind('keyup', function() {
+                $timeout(function () {
+                    if ($('.title-box').val().length > 1) {
+                        if ($('.search-list li').length > 0) {
+                            $('#home-search').attr('class', 'choose');
+                        } else if (($('.search-list li').length === 0)) {
+                            $('#home-search').attr('class', 'spell');
+                        }
+                    } else {
+                        $('#home-search').attr('class', '');
+                    }
+                }, 900);
+            });
+            element.bind('focus', function() {
+                element.placeholder = '';
+                $('body').addClass('typing');
+            });
+            element.bind('blur', function() {
+                element.placeholder = 'Tell me a movie you like';
+                $('body').removeClass('typing');
+            });
+            element.bind('click', function() {
+                element.select();                
+            });
+            
+        }
+    };
+}]);
+
 homeControllers.directive( 'fsTitle', function(){
     return {
         restrict: 'A',

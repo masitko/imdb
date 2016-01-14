@@ -12,7 +12,7 @@
             <h1 id="home-logo">
                 <img src="img/movie-rex.png" alt="MovieRex" />
             </h1>
-            <input ng-model="movieTitle" ng-change="titleChange()" ng-keydown="titleBoxKeyDown($event)"  ng-keyup="titleBoxKeyUp($event)" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
+            <input fs-input ng-model="movieTitle" ng-keydown="titleBoxKeyDown($event)"  ng-keyup="titleBoxKeyUp($event)" class="title-box" type="text" placeholder="Tell me a movie you like"></input>
 {#            <fs-list> </fs-list>#}
             <fs-list selected-title="selectedTitle" search-container="searchContainer" movie-rex="movieRex"> </fs-list>
 {#            <ul class="search-list">
@@ -58,7 +58,7 @@
 
 
         <ul class="suggestions-container"></ul>
-        <div id="slider-container" tabindex="">
+        <div id="slider-container" tabindex="" ng-click="clearSearch()">
             <div id="suggestive-slider">
                 {#  <div>
                       <div class="suggestion" style="background:url('/img/jpark.jpg')">
