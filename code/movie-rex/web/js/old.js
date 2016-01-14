@@ -82,16 +82,16 @@
 
         });//end of doc ready
 
-        function getSearchData(title) {
-            var url = "/s";
-            $.ajax({
-                url: url + '/' + title
-            }).success(function (data) {
-                if (data !== undefined) {
-                    displaySearchTitles(data);
-                }
-            });
-        }
+//        function getSearchData(title) {
+//            var url = "/s";
+//            $.ajax({
+//                url: url + '/' + title
+//            }).success(function (data) {
+//                if (data !== undefined) {
+//                    displaySearchTitles(data);
+//                }
+//            });
+//        }
 /*
         //search Assist
         function getSearchAssist(title) {
@@ -221,8 +221,9 @@
 //                console.log(hashArray);
 
                 switch (hashArray[0]) {
-                    case '#':
+                    case '#!':
                         hashArray.shift();
+                    case 'rex':
                     case '#rex':
                     case '#!rex':
                         var url = "/t";

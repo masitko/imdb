@@ -1,8 +1,8 @@
 
 var homeControllers = angular.module('homeControllers', ['ngResource', 'homeServices']);
 
-homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '$timeout', 'loadingService',
-    function($scope, $log, $resource, $timeout, loadingService) {
+homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '$timeout', '$location', 'loadingService',
+    function($scope, $log, $resource, $timeout, $location, loadingService) {
 
         var fuzzySearch = $resource('/fs/:title');
         var enterSearch = $resource('/s/:title');
@@ -135,7 +135,8 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
 
 
         $scope.movieRex = function(id, title) {
-            window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
+            $location.path("rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase());
+//            window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
             ga('send', 'event', 'Movies', 'search', title);
             ga('set', 'page', window.location.hash);
             ga('send', 'pageview');
@@ -146,3 +147,7 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
     }]);
 
 
+homeControllers.config(['$locationProvider', function( $locationProvider ){
+    $locationProvider.html5Mode(false);
+    $locationProvider.hashPrefix('!');        
+}]);
