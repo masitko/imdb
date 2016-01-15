@@ -1,46 +1,65 @@
 
 
-homeControllers.directive( 'll', ['$timeout', function( $timeout ) {
-        
-}]);
+homeControllers.directive('fsInput', ['$timeout', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
 
-homeControllers.directive( 'fsInput', ['$timeout', function( $timeout ) {
-    return {
-        restrict: 'A',
-        link: function( scope, element, attrs ) {
-            element.bind('input', function() {
-                scope.titleChange();
-            });
-            element.bind('keyup', function() {
-                $timeout(function () {
-                    if ($('.title-box').val().length > 1) {
-                        if ($('.search-list li').length > 0) {
-                            $('#home-search').attr('class', 'choose');
-                        } else if (($('.search-list li').length === 0)) {
-                            $('#home-search').attr('class', 'spell');
-                        }
-                    } else {
-                        $('#home-search').attr('class', '');
+                element.bind('input', function () {
+                    scope.titleChange();
+                });
+
+                element.bind('keyup', function (e) {
+                    switch (e.which) {
+                        case 13: // if Enter 
+                            if (scope.selectedTitle !== null) {
+                                scope.movieRex(scope.searchContainer[scope.selectedTitle].id, scope.searchContainer[scope.selectedTitle].title);
+                            }
+                            else if (scope.movieTitle.length > 0) {
+                                scope.titleEnter();
+                            }
+                            break
+                        case 27: // if ESC
+                            scope.movieTitle = '';
+                            scope.clearSearchContainer();
+                            break
                     }
-                }, 900);
-            });
-            element.bind('focus', function() {
-                element.placeholder = '';
-                $('body').addClass('typing');
-            });
-            element.bind('blur', function() {
-                element.placeholder = 'Tell me a movie you like';
-                $('body').removeClass('typing');
-            });
-            element.bind('click', function() {
-                element.select();                
-            });
-            
-        }
-    };
-}]);
 
-homeControllers.directive( 'fsTitle', function(){
+                    $timeout(function () {
+                        if (scope.movieTitle.length > 1) {
+                            if (scope.searchContainer.length > 0) {
+                                $('#home-search').attr('class', 'choose');
+                            } else {
+                                $('#home-search').attr('class', 'spell');
+                            }
+                        } else {
+                            $('#home-search').attr('class', '');
+                        }
+                    }, 900);
+                });
+
+                element.bind('keydown', function (e) {
+                });
+
+                element.bind('focus', function () {
+                    element.placeholder = '';
+                    $('body').addClass('typing');
+                });
+
+                element.bind('blur', function () {
+                    element.placeholder = 'Tell me a movie you like';
+                    $('body').removeClass('typing');
+                });
+
+                element.bind('click', function () {
+                    element.select();
+                });
+
+            }
+        };
+    }]);
+
+homeControllers.directive('fsTitle', function () {
     return {
         restrict: 'A',
         templateUrl: 'templates/fs-title.html',
@@ -48,8 +67,8 @@ homeControllers.directive( 'fsTitle', function(){
 //            title: '=',
 //            movieRex: '&'
 //        },
-        link: function( scope, element, attrs ) {
-            element.bind('click', function() {
+        link: function (scope, element, attrs) {
+            element.bind('click', function () {
                 scope.movieRex(scope.title.id, scope.title.title);
             });
         }
@@ -57,28 +76,28 @@ homeControllers.directive( 'fsTitle', function(){
 });
 
 
-homeControllers.directive( 'fsList', ['$interval', function($interval){
-    return {
-        restrict: 'EA',
-        templateUrl: 'templates/fs-list.html',
-        scope: {
-            searchContainer: '=',
-            selectedTitle: '=',
-            movieRex: '&'
-        },
-        controller: function( $scope, $element ) {
-        },
-        link: function( scope, element, attrs ) {
-            var movieRexHandler = scope.movieRex();
-            scope.titleClicked = function( title ) {
-                movieRexHandler(title.id, title.title);
-            };
-                        
+homeControllers.directive('fsList', ['$interval', function ($interval) {
+        return {
+            restrict: 'EA',
+            templateUrl: 'templates/fs-list.html',
+            scope: {
+                searchContainer: '=',
+                selectedTitle: '=',
+                movieRex: '&'
+            },
+            controller: function ($scope, $element) {
+            },
+            link: function (scope, element, attrs) {
+                var movieRexHandler = scope.movieRex();
+                scope.titleClicked = function (title) {
+                    movieRexHandler(title.id, title.title);
+                };
+
 //            timeoutId = $interval(function() {
 //                console.log(scope.searchContainer);
 //            }, 1000);            
-        }
-    };
-}]);
+            }
+        };
+    }]);
 
 

@@ -2,34 +2,39 @@
 var homeControllers = angular.module('homeControllers', ['ngResource', 'homeServices']);
 
 homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '$timeout', '$location', 'loadingService',
-    function($scope, $log, $resource, $timeout, $location, loadingService) {
+    function ($scope, $log, $resource, $timeout, $location, loadingService) {
 
         var fuzzySearch = $resource('/fs/:title');
         var enterSearch = $resource('/s/:title');
         var searchContainer = [];
 
         $scope.searchContainer = [];
-        
+        $scope.selectedTitle = null;
+        $scope.movieTitle = '';
+
+
         $scope.loadingService = loadingService;
 
-        $scope.$watch('includeTV', function() {
+        $scope.$watch('includeTV', function () {
 //            $log.info('TV: ' + $scope.includeTV);
         });
-        
-        $scope.$watch( function(){return searchContainer;}, function() {
+
+        $scope.$watch(function () {
+            return searchContainer;
+        }, function () {
             $scope.updateTitleList();
         });
-        
-        $scope.$on('$locationChangeSuccess', function(event, newLocation, oldLocation ){
-            if( $location.path().length > 0 ) {
+
+        $scope.$on('$locationChangeSuccess', function (event, newLocation, oldLocation) {
+            if ($location.path().length > 0) {
                 hashChanged();
             }
-        });      
+        });
 
-        $timeout(function() {
+        $timeout(function () {
             $scope.includeTV = true;
-            $('body').addClass('loaded'); 
-            
+            $('body').addClass('loaded');
+
             if (mobileVersion == false) {
                 TweenMax.from($('#home-search'), 2.5, {ease: Bounce.easeOut, top: -600});
                 TweenMax.from($('#rexinfo'), 1, {opacity: 0, delay: 2.5});
@@ -38,25 +43,20 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                 TweenMax.from($('#mobileSearch'), 1, {top: -200, delay: 1.5});
                 TweenMax.from($('#rexinfo h2'), 1, {delay: 1.5, opacity: 0});
                 TweenMax.from($('#rexinfo p'), 1, {delay: 1.5, opacity: 0, y: '+=6'});
-            }            
+            }
         });
 
-        $scope.clearSearch = function() {
-            searchContainer = [];            
-        };
-        
-        $scope.titleChange = function() {
-            if( $scope.movieTitle.length === 0 ) {
-                searchContainer = [];
-                $scope.searchContainer = [];
+        $scope.titleChange = function () {
+            if ($scope.movieTitle.length === 0) {
+                $scope.clearSearchContainer();
                 return;
             }
             var searchFor = $scope.movieTitle.replace(/ /g, '_').toLowerCase();
             $scope.selectedTitle = null;
-            fuzzySearch.get({title: searchFor}, function(data) {
+            fuzzySearch.get({title: searchFor}, function (data) {
                 searchContainer = data.d;
-                angular.forEach(searchContainer, function(title, key) {
-                    title.img = title.i === undefined ? '/img/no-poster.png' : (function() {
+                angular.forEach(searchContainer, function (title, key) {
+                    title.img = title.i === undefined ? '/img/no-poster.png' : (function () {
                         var ia = title.i[0].split('.');
                         var type = ia.pop();
                         ia.pop();
@@ -69,19 +69,19 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                     title.additional = '(' + title.y + ')';
                 });
                 // remove all non-tv or non-movie items
-                searchContainer = searchContainer && searchContainer.filter(function(title) {
+                searchContainer = searchContainer && searchContainer.filter(function (title) {
                     return title.movie || title.tv;
                 });
             });
         };
 
-        $scope.titleEnter = function() {
+        $scope.titleEnter = function () {
             var searchFor = $scope.movieTitle.replace(/ /g, '_').toLowerCase();
             $scope.selectedTitle = null;
-            enterSearch.query({title: searchFor}, function(data) {
+            enterSearch.query({title: searchFor}, function (data) {
                 searchContainer = data;
-                angular.forEach(searchContainer, function(title, key) {
-                    title.img = title.image === undefined ? '/img/no-poster.png' : (function() {
+                angular.forEach(searchContainer, function (title, key) {
+                    title.img = title.image === undefined ? '/img/no-poster.png' : (function () {
                         var ia = title.image.split('.');
                         var type = ia.pop();
                         ia.pop();
@@ -95,74 +95,63 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
             });
         };
 
-        $scope.updateTitleList = function() {
-            if( searchContainer === undefined ) {
+        $scope.updateTitleList = function () {
+            if (searchContainer === undefined) {
                 return;
             }
-            $scope.searchContainer = searchContainer.filter(function(title) {
+            $scope.searchContainer = searchContainer.filter(function (title) {
                 return title.movie || (title.tv && $scope.includeTV);
-            });            
+            });
         };
 
-        $scope.titleBoxKeyUp = function(e) {
-            switch (e.which) {
-                case 13: // if Enter 
-                    if( $scope.selectedTitle !== null) {
-                        $scope.movieRex($scope.searchContainer[$scope.selectedTitle].id, $scope.searchContainer[$scope.selectedTitle].title);
-                    }
-                    else if ($scope.movieTitle.length > 0) {
-                        $scope.titleEnter();
-                    }
-                    break
-                case 27: // if ESC
-                    $scope.movieTitle = '';
-                    searchContainer = [];
-                    break
-
-            }
-        };
-
-        $scope.titleBoxKeyDown = function(e) {
+        $scope.titleBoxKeyDown = function (e) {
             if ($scope.searchContainer.length > 0) {
                 switch (e.which) {
                     case 40:
-                        if( $scope.selectedTitle === null) {
+                        if ($scope.selectedTitle === null) {
                             $scope.selectedTitle = 0;
                         }
                         else {
-                            if( $scope.searchContainer.length-1 > $scope.selectedTitle ) {
+                            if ($scope.searchContainer.length - 1 > $scope.selectedTitle) {
                                 $scope.selectedTitle++;
                             }
                         }
                         break;
                     case 38:
-                        if( $scope.selectedTitle === null) {
-                            $scope.selectedTitle = $scope.searchContainer.length-1;
+                        if ($scope.selectedTitle === null) {
+                            $scope.selectedTitle = $scope.searchContainer.length - 1;
                         }
                         else {
-                            if( $scope.selectedTitle > 0 ) {
+                            if ($scope.selectedTitle > 0) {
                                 $scope.selectedTitle--;
                             }
                         }
                         break;
                 }
-                $timeout(function(){
-                    angular.element('li.selected').focus();
-                    angular.element('.title-box').focus();
-                });
+                $scope.scFocus();
             }
 
         };
 
+        $scope.clearSearchContainer = function () {
+            searchContainer = [];
+            $scope.selectedTitle = null;
+        };
 
-        $scope.movieRex = function(id, title) {
+        $scope.scFocus = function () {
+            $timeout(function () {
+                angular.element('li.selected').focus();
+                angular.element('.title-box').focus();
+            });
+        };
+
+        $scope.movieRex = function (id, title) {
             $location.path("rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase());
 //            window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
             ga('send', 'event', 'Movies', 'search', title);
             ga('set', 'page', window.location.hash);
             ga('send', 'pageview');
-            searchContainer = [];
-//            $scope.$apply();
+            $scope.clearSearchContainer();
         };
 
     }]);
