@@ -1,0 +1,15 @@
+<div id="suggestive-slider">
+    <div ng-repeat="title in suggestionsData">
+        <div class="suggestion {{ title.posterCheck }}" style="background-image:url({{ title.image }})" data-id="{{ title.imdbId }}">
+            <h4>{{ title.titleShort }} <i>{{ title.years }}</i></h4>
+            <h5>{{ title.imdbScore }}</h5>
+            <a class="rex-it" ng-click="titleClicked(title)">Rex this!</a>
+            <div class="synopsis">
+                <h2>{{ title.title }}</h2>
+                <span>{{ title.genres }}</span>{{title.outline}}<hr/>
+                <strong>Director: </strong>{{title.director}}<br/>
+                <strong>Stars: </strong>{{ title.actors }}
+            </div>
+        </div>
+    </div>
+</div>

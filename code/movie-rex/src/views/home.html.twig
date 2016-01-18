@@ -59,14 +59,10 @@
 
         <ul class="suggestions-container"></ul>
         <div id="slider-container" tabindex="" ng-click="clearSearchContainer()">
-            <div id="suggestive-slider">
-                {#  <div>
-                      <div class="suggestion" style="background:url('/img/jpark.jpg')">
-                          <h4>Movie title here</h4>
-                          <h5 class="imdb">8.1</h5>
-                      </div>
-                  </div> #}
+            <sugg-list suggestions-data="suggestionsData" movie-rex="movieRex"></sugg-list>
+{#            <div id="suggestive-slider">
             </div>
+#}
         </div>
     </main>
     {#    <img id="searching-animation" ng-show="loadingService.isLoading()" src="img/rex-ani-2.gif" alt="hunting-rex"/>#}

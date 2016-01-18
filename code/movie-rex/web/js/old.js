@@ -204,33 +204,11 @@
                 return ct.join(',');
             }
 
-            function hashChanged() {
-                var hash = window.location.hash;
-                var hashArray = hash.split('/');
-//                console.log(hashArray);
-
-                switch (hashArray[0]) {
-                    case '#!':
-                        hashArray.shift();
-                    case 'rex':
-                    case '#rex':
-                    case '#!rex':
-                        var url = "/t";
-                        return $.ajax({
-                            url: url + '/' + hashArray[1]
-                        }).success(function (data) {
-                            if (data !== undefined) {
-                                $('.title-box').val(hashArray[2].replace(/_+/g, ' ').replace(/\w\S*/g, function (txt) {
-                                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                                }));
-                                //clear the welcome text 
-                                $('#rexinfo').css('margin-top', '0').css('padding', '10px 6px 1px').css('max-width', '600px').html("<p>Film and TV recommendations based on '" + $('.title-box').val() + "'</p>");
-
-                                displayRex(data);
-                            }
-                        });
-                }
-            }
+//            function hashChanged() {
+//                var hash = window.location.hash;
+//                var hashArray = hash.split('/');
+//
+//            }
 
             //Search for recommendations
 /*           function movieRex(id, title) {
@@ -247,56 +225,13 @@
                 //empty the fuzzy search
 //                $('.search-list').html('');
 
-                //clear tooltips
-                $('#home-search').attr('class', 'rawr');
-                setTimeout(function () {
-                    $('#home-search').attr('class', '');
-                }, 1500);
-                //destroy and empty the slider if it exists
-                if ($('#suggestive-slider').hasClass('slick-initialized')) {
-                    $('#suggestive-slider').slick('unslick');
-                }
-                $('#suggestive-slider').html('');
-
-                //clear the welcome text 
-                $('#rexinfo').css('opacity', '0');
 
                 //remove searching class
 //                        $('body').toggleClass('searching');
 
                 //create results
                 $.each(titles, function (index, title) {
-                    var image1 = (title.i !== undefined) ? title.i[0] : '';
-                    var titleShort = title.title.trimToLength(40); //create short title
-                    var image;
-                    if (title.image) {
-                        var ia = title.image.split('.');
-                        var type = ia.pop();
-                        var cropText = cropImage(ia.pop());
-                        ia.push(cropText);
-                        ia.push(type);
-                        image = ia.join('.');
-                    }
-                    else {
-                        var cropText = 'ACB35';
-                    }
-                    var outline = title.outline;
-                    if (outline == null || outline.indexOf('Plot is unknown.') !== -1) {
-                        outline = '<em>RAWR! MovieRex doesn\'t know the plot to this film yet. Check back later</em>';
-                    } else {
-                        outline = outline.trimToLength(260);
-                    }
-                    var posterCheck = '';
-                    if (cropText.substring(1, 5) === 'CB35') {
-                        image = '/img/no-poster.png';
-                        posterCheck = 'no-poster';
-                    }
-                    var imdbScore = '';
-                    if (title.rating) {
-                        imdbScore = title.rating;
-                    } else {
-                        imdbScore = '?';
-                    }
+//                    var image1 = (title.i !== undefined) ? title.i[0] : '';
                     //populate the slider 
                     if ($('#tv').is(':checked') || (title.years && (title.years.indexOf('Series') === -1))) {
                         if (mobileVersion === false) {

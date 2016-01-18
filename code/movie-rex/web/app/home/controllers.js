@@ -6,11 +6,14 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
 
         var fuzzySearch = $resource('/fs/:title');
         var enterSearch = $resource('/s/:title');
+        var sugestionsSearch = $resource('/t/:id');
         var searchContainer = [];
 
         $scope.searchContainer = [];
         $scope.selectedTitle = null;
         $scope.movieTitle = '';
+        $scope.suggestionsData = [];
+        $scope.suggestions = [];
 
 
         $scope.loadingService = loadingService;
@@ -27,7 +30,7 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
 
         $scope.$on('$locationChangeSuccess', function (event, newLocation, oldLocation) {
             if ($location.path().length > 0) {
-                hashChanged();
+                $scope.hashChanged($location.path());
             }
         });
 
@@ -93,6 +96,81 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                 });
                 $scope.updateTitleList();
             });
+        };
+
+        $scope.hashChanged = function (hash) {
+            var hashArray = hash.split('/');
+            hashArray.shift();
+            switch (hashArray[0]) {
+                case 'rex':
+                    sugestionsSearch.query({id: hashArray[1]}, function (data) {
+                        if (data !== undefined) {
+                            $('.title-box').val(hashArray[2].replace(/_+/g, ' ').replace(/\w\S*/g, function (txt) {
+                                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                            }));
+                            //clear the welcome text 
+                            $('#rexinfo').css('margin-top', '0').css('padding', '10px 6px 1px').css('max-width', '600px').html("<p>Film and TV recommendations based on '" + $('.title-box').val() + "'</p>");
+
+                            $scope.displaySuggestions(data);
+                        }
+                    });
+                    break;
+            }
+        };
+
+        $scope.displaySuggestions = function (titles) {
+            //clear tooltips
+            $('#home-search').attr('class', 'rawr');
+            $timeout(function () {
+                $('#home-search').attr('class', '');
+            }, 1500);
+            //destroy and empty the slider if it exists
+            if ($('#suggestive-slider').hasClass('slick-initialized')) {
+                $('#suggestive-slider').slick('unslick');
+            }
+//            $('#suggestive-slider').html('');
+
+            //clear the welcome text 
+            $('#rexinfo').css('opacity', '0');
+
+            angular.forEach(titles, function (title, key) {
+                title.titleShort = title.title.trimToLength(40); //create short title
+                var image;
+                if (title.image) {
+                    var ia = title.image.split('.');
+                    var type = ia.pop();
+                    var cropText = cropImage(ia.pop());
+                    ia.push(cropText);
+                    ia.push(type);
+                    title.image = ia.join('.');
+                }
+                else {
+                    var cropText = 'ACB35';
+                }
+                var outline = title.outline;
+                if (outline == null || outline.indexOf('Plot is unknown.') !== -1) {
+                    outline = '<em>RAWR! MovieRex doesn\'t know the plot to this film yet. Check back later</em>';
+                } else {
+                    outline = outline.trimToLength(260);
+                }
+                title.outline = outline;
+                
+                title.posterCheck = '';
+                if (cropText.substring(1, 5) === 'CB35') {
+                    title.image = '/img/no-poster.png';
+                    title.posterCheck = 'no-poster';
+                }
+                title.imdbScore = '';
+                if (title.rating) {
+                    title.imdbScore = title.rating;
+                } else {
+                    title.imdbScore = '?';
+                }
+
+            });
+            $scope.suggestionsData = titles;
+            
+            console.log($scope.suggestionsData);
         };
 
         $scope.updateTitleList = function () {
