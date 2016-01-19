@@ -73,6 +73,7 @@ server:
         - yui-compressor
         - acl
         - mc
+        - npm
     dot_files:
         -
             bash_aliases: null
