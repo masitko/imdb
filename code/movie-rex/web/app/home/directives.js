@@ -65,7 +65,7 @@ homeControllers.directive('suggList', ['$interval', function ($interval) {
             restrict: 'EA',
             templateUrl: 'templates/sugg-list.html',
             scope: {
-                suggestionsData: '=',
+                suggestions: '=',
 //                selectedTitle: '=',
                 movieRex: '&'
             },

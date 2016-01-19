@@ -247,12 +247,6 @@
                 //mobile settings
                 if (mobileVersion === true) {
                     $('#slider-container').css('bottom', '0');
-                    $('#suggestive-slider').on('afterChange', function (event, slick, currentSlide) {
-//                                $('#slider-container').animate({scrollTop: 0}).stop();
-//                                $('#suggestive-slider').off('afterChange');
-
-                    });
-
                 } else {
                     $('#slider-container').css('bottom', 'initial');
                 }
@@ -293,33 +287,7 @@
         //                    $('body').toggleClass('searching');
                 });
 
-                //synopsis hovers
-                var timeoutHover;
-                $('.suggestion').mouseenter(function () {
-                    clearTimeout(timeoutHover);
-                    $('#slider-container').addClass('hover');
-                });
-                $('.suggestion').mouseleave(function () {
-                    timeoutHover = setTimeout(function () {
-                        $('#slider-container').removeClass('hover');
-                    }, 250);
-
-                });
-
-
-
             }
-
-            //animate the slides in on creation and focus on slider
-            $('#suggestive-slider').on('init', function () {
-                var tl = new TimelineMax();
-                var $slides = $('.slick-slide');
-                tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
-                $('.slick-track').attr('tabindex', '1');
-                setTimeout(function () {
-                    $('.slick-track').focus();
-                }, 200);
-            });
 
             //truncation function
             String.prototype.trimToLength = function (m) {

@@ -19,6 +19,7 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         $scope.loadingService = loadingService;
 
         $scope.$watch('includeTV', function () {
+            $scope.updateSuggestions();
 //            $log.info('TV: ' + $scope.includeTV);
         });
 
@@ -26,6 +27,10 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
             return searchContainer;
         }, function () {
             $scope.updateTitleList();
+        });
+
+        $scope.$watch('suggestionsData', function () {
+            $scope.updateSuggestions();
         });
 
         $scope.$on('$locationChangeSuccess', function (event, newLocation, oldLocation) {
@@ -124,10 +129,6 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
             $timeout(function () {
                 $('#home-search').attr('class', '');
             }, 1500);
-            //destroy and empty the slider if it exists
-            if ($('#suggestive-slider').hasClass('slick-initialized')) {
-                $('#suggestive-slider').slick('unslick');
-            }
 //            $('#suggestive-slider').html('');
 
             //clear the welcome text 
@@ -154,7 +155,7 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                     outline = outline.trimToLength(260);
                 }
                 title.outline = outline;
-                
+
                 title.posterCheck = '';
                 if (cropText.substring(1, 5) === 'CB35') {
                     title.image = '/img/no-poster.png';
@@ -166,11 +167,11 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                 } else {
                     title.imdbScore = '?';
                 }
+                title.id = title.imdbId;
+                title.movie = title.years && (title.years.indexOf('Series') === -1) && (title.years.indexOf('–') === -1);
 
             });
             $scope.suggestionsData = titles;
-            
-            console.log($scope.suggestionsData);
         };
 
         $scope.updateTitleList = function () {
@@ -180,6 +181,17 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
             $scope.searchContainer = searchContainer.filter(function (title) {
                 return title.movie || (title.tv && $scope.includeTV);
             });
+        };
+
+        $scope.updateSuggestions = function () {
+            if ($scope.suggestionsData === undefined) {
+                return;
+            }
+            $scope.suggestions = $scope.suggestionsData.filter(function (title) {
+                return title.movie || $scope.includeTV;
+            });
+
+            $scope.initSLider();
         };
 
         $scope.titleBoxKeyDown = function (e) {
@@ -225,11 +237,79 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
 
         $scope.movieRex = function (id, title) {
             $location.path("rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase());
-//            window.location.hash = "#!rex/" + id + "/" + title.replace(/\s+/g, '_').toLowerCase();
             ga('send', 'event', 'Movies', 'search', title);
             ga('set', 'page', window.location.hash);
             ga('send', 'pageview');
             $scope.clearSearchContainer();
+        };
+
+        $scope.initSLider = function () {
+            //destroy and empty the slider if it exists
+            if ($('#suggestive-slider').hasClass('slick-initialized')) {
+                $('#suggestive-slider').slick('unslick');
+            }
+            //mobile settings
+            if (mobileVersion === true) {
+                $('#slider-container').css('bottom', '0');
+            } else {
+                $('#slider-container').css('bottom', 'initial');
+            }
+            $timeout(function () {
+                $('#suggestive-slider').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                    speed: 1200,
+                    //                    swipeToSlide: true,
+                    prevArrow: '<a class="slider-control slick-prev transition"></a>',
+                    nextArrow: '<a class="slider-control slick-next transition"></a>',
+                    responsive: [
+                        {
+                            breakpoint: 500,
+                            settings: {
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                speed: 300
+                            }
+                        },
+                        {
+                            breakpoint: 1600,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3,
+                                infinite: true,
+                                speed: 1200
+                            }
+                        }
+                    ]
+                });
+
+                //animate the slides in on creation and focus on slider
+//                $('#suggestive-slider').on('init', function () {
+//                    var tl = new TimelineMax();
+//                    var $slides = $('.slick-slide');
+//                    tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
+//                    $('.slick-track').attr('tabindex', '1');
+//                    $timeout(function () {
+//                        $('.slick-track').focus();
+//                    }, 200);
+//                });
+
+                //synopsis hovers
+                var timeoutHover;
+                $('.suggestion').mouseenter(function () {
+                    clearTimeout(timeoutHover);
+                    $('#slider-container').addClass('hover');
+                });
+                $('.suggestion').mouseleave(function () {
+                    timeoutHover = setTimeout(function () {
+                        $('#slider-container').removeClass('hover');
+                    }, 250);
+
+                });
+
+
+            });
         };
 
     }]);
