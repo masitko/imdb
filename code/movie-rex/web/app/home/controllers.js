@@ -191,7 +191,9 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                 return title.movie || $scope.includeTV;
             });
 
-            $scope.initSLider();
+            if( $scope.suggestions.length > 0 ) {
+                $scope.initSLider();
+            }
         };
 
         $scope.titleBoxKeyDown = function (e) {
@@ -244,8 +246,11 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         };
 
         $scope.initSLider = function () {
+            console.log('SLICK !!!');
+
             //destroy and empty the slider if it exists
             if ($('#suggestive-slider').hasClass('slick-initialized')) {
+                console.log('UNSLICK!!!');
                 $('#suggestive-slider').slick('unslick');
             }
             //mobile settings
@@ -284,16 +289,16 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                     ]
                 });
 
-                //animate the slides in on creation and focus on slider
-//                $('#suggestive-slider').on('init', function () {
-//                    var tl = new TimelineMax();
+//                animate the slides in on creation and focus on slider
+                $('#suggestive-slider').on('init', function () {
+                    var tl = new TimelineMax();
 //                    var $slides = $('.slick-slide');
-//                    tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
-//                    $('.slick-track').attr('tabindex', '1');
-//                    $timeout(function () {
-//                        $('.slick-track').focus();
-//                    }, 200);
-//                });
+                    tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
+                    $('.slick-track').attr('tabindex', '1');
+                    $timeout(function () {
+                        $('.slick-track').focus();
+                    }, 200);
+                });
 
                 //synopsis hovers
                 var timeoutHover;
