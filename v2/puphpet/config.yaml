@@ -17,6 +17,9 @@ vagrantfile:
                 vflnp_pow5bhyfk5uj:
                     host: '7380'
                     guest: '80'
+                vflnp_sails:
+                    host: '7337'
+                    guest: '1337'
         post_up_message: ''
         provider:
             virtualbox:
@@ -299,6 +302,8 @@ nodejs:
         version: '5'
     npm_packages:
         - bower
+        - sails
+        - grunt-cli
 hhvm:
     install: '0'
     nightly: 0
