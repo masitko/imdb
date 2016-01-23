@@ -188,7 +188,7 @@ label.tv {color:white;}
 .searching {overflow:hidden;}
 
 .searching #searching-animation {display:block;}
-
+.typing.searching:after, .typing.searching #searching-animation {display:none !important;}
 
 .searching #home-logo {
     z-index: 9999;

@@ -1,6 +1,6 @@
 <div id="suggestive-slider">
     <div ng-repeat="title in suggestions">
-        <div class="suggestion {{ title.posterCheck }}" style="background-image:url({{ title.image }})" data-id="{{ title.imdbId }}">
+        <div ng-mouseover="sugMouseover();" ng-mouseleave="sugMouseleave();" class="suggestion {{ title.posterCheck }}" style="background-image:url({{ title.image }})" data-id="{{ title.imdbId }}">
             <h4>{{ title.titleShort }} <i>{{ title.years }}</i></h4>
             <h5>{{ title.imdbScore }}</h5>
             <a class="rex-it" ng-click="titleClicked(title)">Rex this!</a>

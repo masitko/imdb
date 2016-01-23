@@ -13,6 +13,7 @@ homeControllers.directive('fsInput', ['$timeout', function ($timeout) {
                     switch (e.which) {
                         case 13: // if Enter 
                             if (scope.selectedTitle !== null) {
+                                $('body').removeClass('typing');
                                 scope.movieRex(scope.searchContainer[scope.selectedTitle].id, scope.searchContainer[scope.selectedTitle].title);
                             }
                             else if (scope.movieTitle.length > 0) {
@@ -60,7 +61,8 @@ homeControllers.directive('fsInput', ['$timeout', function ($timeout) {
     }]);
 
 
-homeControllers.directive('suggList', ['$interval', function ($interval) {
+homeControllers.directive('suggList', ['$timeout', function ($timeout) {
+        var timeoutHover = null;
         return {
             restrict: 'EA',
             templateUrl: 'templates/sugg-list.html',
@@ -70,12 +72,23 @@ homeControllers.directive('suggList', ['$interval', function ($interval) {
                 movieRex: '&'
             },
             controller: function ($scope, $element) {
+                
             },
             link: function (scope, element, attrs) {
-                console.log(scope);
+                
                 var movieRexHandler = scope.movieRex();
                 scope.titleClicked = function (title) {
                     movieRexHandler(title.id, title.title);
+                };
+  
+                scope.sugMouseover= function() {
+                    $timeout.cancel(timeoutHover);
+                    angular.element('#slider-container').addClass('hover');
+                };
+                scope.sugMouseleave= function() {
+                    timeoutHover = $timeout(function () {
+                        angular.element('#slider-container').removeClass('hover');
+                    }, 250);
                 };
             }
         };
@@ -84,7 +97,7 @@ homeControllers.directive('suggList', ['$interval', function ($interval) {
 
 homeControllers.directive('fsList', ['$interval', function ($interval) {
         return {
-            restrict: 'EA',
+            restrict: 'E',
             templateUrl: 'templates/fs-list.html',
             scope: {
                 searchContainer: '=',
@@ -93,7 +106,7 @@ homeControllers.directive('fsList', ['$interval', function ($interval) {
             },
             controller: function ($scope, $element) {
             },
-            link: function (scope, element, attrs) {
+            link: function (scope, element, attrs) {           
                 var movieRexHandler = scope.movieRex();
                 scope.titleClicked = function (title) {
                     movieRexHandler(title.id, title.title);
@@ -116,6 +129,12 @@ homeControllers.directive('fsTitle', function () {
 //            movieRex: '&'
 //        },
         link: function (scope, element, attrs) {
+            element.bind('click', function () {
+                scope.movieRex(scope.title.id, scope.title.title);
+            });
+            element.bind('click', function () {
+                scope.movieRex(scope.title.id, scope.title.title);
+            });
             element.bind('click', function () {
                 scope.movieRex(scope.title.id, scope.title.title);
             });

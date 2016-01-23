@@ -15,6 +15,7 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         $scope.suggestionsData = [];
         $scope.suggestions = [];
 
+        $scope.hunting = false;
 
         $scope.loadingService = loadingService;
 
@@ -40,6 +41,19 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         });
 
         $timeout(function () {
+            
+//                animate the slides in on creation and focus on slider
+                $('#suggestive-slider').on('init', function () {
+                    console.log( 'SLIDER INIT' );
+                    var tl = new TimelineMax();
+//                    var $slides = $('.slick-slide');
+                    tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
+                    $('.slick-track').attr('tabindex', '1');
+                    $timeout(function () {
+                        $('.slick-track').focus();
+                    }, 200);
+                });
+
             $scope.includeTV = true;
             $('body').addClass('loaded');
 
@@ -246,13 +260,14 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
         };
 
         $scope.initSLider = function () {
-            console.log('SLICK !!!');
-
             //destroy and empty the slider if it exists
             if ($('#suggestive-slider').hasClass('slick-initialized')) {
                 console.log('UNSLICK!!!');
                 $('#suggestive-slider').slick('unslick');
             }
+
+            console.log('SLICK !!!');
+
             //mobile settings
             if (mobileVersion === true) {
                 $('#slider-container').css('bottom', '0');
@@ -289,29 +304,18 @@ homeControllers.controller('SearchController', ['$scope', '$log', '$resource', '
                     ]
                 });
 
-//                animate the slides in on creation and focus on slider
-                $('#suggestive-slider').on('init', function () {
-                    var tl = new TimelineMax();
-//                    var $slides = $('.slick-slide');
-                    tl.staggerFrom($('.slick-slide'), 1, {x: 1000}, 0.1);
-                    $('.slick-track').attr('tabindex', '1');
-                    $timeout(function () {
-                        $('.slick-track').focus();
-                    }, 200);
-                });
-
                 //synopsis hovers
-                var timeoutHover;
-                $('.suggestion').mouseenter(function () {
-                    clearTimeout(timeoutHover);
-                    $('#slider-container').addClass('hover');
-                });
-                $('.suggestion').mouseleave(function () {
-                    timeoutHover = setTimeout(function () {
-                        $('#slider-container').removeClass('hover');
-                    }, 250);
-
-                });
+//                var timeoutHover;
+//                $('.suggestion').mouseenter(function () {
+//                    clearTimeout(timeoutHover);
+//                    $('#slider-container').addClass('hover');
+//                });
+//                $('.suggestion').mouseleave(function () {
+//                    timeoutHover = setTimeout(function () {
+//                        $('#slider-container').removeClass('hover');
+//                    }, 250);
+//
+//                });
 
 
             });
