@@ -304,6 +304,7 @@ nodejs:
         - bower
         - sails
         - grunt-cli
+        - gulp
 hhvm:
     install: '0'
     nightly: 0
