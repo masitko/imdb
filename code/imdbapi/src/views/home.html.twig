@@ -270,7 +270,7 @@
                     ia.push('_V1');
                     ia.push('_UX40_CR0,0,40,54_');
                     ia.push(type);
-                    image = ia.join('.');
+                    image = ia.join('.').replace('http:', 'https:');
                 }
                 if ($('#tv').is(':checked') || $('#tvm').is(':checked')) {
                     if (title.q && (title.q.indexOf(check3) !== -1)) {
@@ -315,7 +315,7 @@
                         ia.pop();
                         ia.push('_UX40_CR0,0,40,54_');
                         ia.push(type);
-                        image = ia.join('.');
+                        image = ia.join('.').replace('http:', 'https:');
                     }
                     if (title.title && (title.title.indexOf(check1) === -1)) {
                         var html = '<li tabindex="-1"><div class="row title-container" data-id="' + title.id + '" data-title="' + title.title + '"><div class="columns small-2 fuzzy-image"><img src="' + image + '" alt="' + title.title + '"/></div><div class="columns small-10 fuzzy-title"><strong>' + title.title + '</strong>' + title.additional + '</div></div></li>';
@@ -428,7 +428,7 @@
                         var cropText = cropImage(ia.pop());
                         ia.push(cropText);
                         ia.push(type);
-                        image = ia.join('.');
+                        image = ia.join('.').replace('http:', 'https:');
                     }
                     else {
                         var cropText = 'ACB35';
